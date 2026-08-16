@@ -119,3 +119,28 @@ NanyangYS_Agent/
 - 不能宣称 Agent 已训练模型、调用 LLM/GPU，或已取得发布审批。
 
 运行时合同以 `configs/agent_system_v001.yaml`、`src/kuairand_longseq/` 与安全回归测试为准。
+
+## 许可证
+
+### 代码许可证
+
+本项目代码以 **Apache License 2.0** 授权，详见 [LICENSE](LICENSE)。
+
+### 数据集声明
+
+本项目使用以下真实开源视频推荐数据集进行研究：
+
+| 数据集 | 来源 | 数据集许可证 | 引用 |
+|---|---|---|---|
+| **KuaiRand-1K** | 快手 (Kuaishou) | [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/) | Gao et al., CIKM 2022 |
+| 腾讯视频数据 | 腾讯 (Tencent) | 待接入 | 待补充 |
+| 字节跳动数据 | 字节跳动 (ByteDance) | 待接入 | 待补充 |
+| YouTube 数据 | YouTube | 待接入 | 待补充 |
+
+**KuaiRand 数据集使用声明：**
+
+- KuaiRand 数据集由 Chongming Gao, Shijun Li, Yuan Zhang, Jiawei Chen, Biao Li, Wenqiang Lei, Peng Jiang, Xiangnan He 等人发布，原始论文为：
+  > Gao, C., Li, S., Zhang, Y., Chen, J., Li, B., Lei, W., Jiang, P., & He, X. (2022). KuaiRand: An Unbiased Sequential Recommendation Dataset with Randomly Exposed Videos. *CIKM '22*, Atlanta, GA, USA. [DOI: 10.1145/3511808.3557624](https://doi.org/10.1145/3511808.3557624)
+- 数据集主页：<https://kuairand.com> · GitHub 仓库：<https://github.com/chongminggao/KuaiRand>
+- 该数据集以 **CC-BY-SA-4.0** 许可发布，使用时需署名，且基于该数据集的衍生作品须以相同许可证共享。
+- 本项目**不分发数据集本身**，仅提供基于该数据集的研究代码与实验结果。使用者需自行从官方渠道获取数据集并遵守其许可证条款。
