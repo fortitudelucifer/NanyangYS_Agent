@@ -28,13 +28,12 @@ GPU 快照中，BL2 相对 BL1 的初步结果为：AP `+0.041295`、event-weigh
 
 ## 直接运行 Demo
 
-以下 PowerShell 命令可从任意当前目录执行：
+clone 仓库后，在仓库根目录下执行：
 
 ```powershell
-$AgentRoot = "D:\BaiduSyncdisk\master\NTU\course\CA6002\GOAI\NanyangYS_Agent"
-python "$AgentRoot\scripts\run_agent_system_demo_v001.py" `
-  --config "$AgentRoot\configs\agent_system_v001.yaml" `
-  --output-root "$AgentRoot\artifacts\agent_runs" `
+python scripts/run_agent_system_demo_v001.py `
+  --config configs/agent_system_v001.yaml `
+  --output-root artifacts/agent_runs `
   --verify
 ```
 
@@ -50,9 +49,8 @@ verification.verified = true
 运行测试：
 
 ```powershell
-$AgentRoot = "D:\BaiduSyncdisk\master\NTU\course\CA6002\GOAI\NanyangYS_Agent"
-python -m pip install -e "${AgentRoot}[test]"
-python -m pytest "$AgentRoot\tests\agent_system" -q
+python -m pip install -e ".[test]"
+python -m pytest tests/agent_system -q
 ```
 
 完整的 3 分钟展示顺序见 [demo/DEMO_GUIDE.md](demo/DEMO_GUIDE.md)。
