@@ -7,17 +7,16 @@
 
 ## 演示前准备
 
-下面所有 PowerShell 命令都可从任意当前目录运行：
+下面所有 PowerShell 命令都在 clone 仓库后的根目录下运行：
 
 ```powershell
-$AgentRoot = "D:\BaiduSyncdisk\master\NTU\course\CA6002\GOAI\NanyangYS_Agent"
-$Snapshot = Join-Path $AgentRoot "demo\gpu_train_only_snapshot"
+$Snapshot = "demo\gpu_train_only_snapshot"
 ```
 
 如环境尚未安装项目：
 
 ```powershell
-python -m pip install -e "${AgentRoot}[test]"
+python -m pip install -e ".[test]"
 ```
 
 ## 0:00–0:40：先讲清研究边界
@@ -70,9 +69,9 @@ Import-Csv (Join-Path $Snapshot "daily_metrics.csv") |
 不要给 Agent 传入快照中的任何 manifest，直接运行默认 Demo：
 
 ```powershell
-$Run = python "$AgentRoot\scripts\run_agent_system_demo_v001.py" `
-  --config "$AgentRoot\configs\agent_system_v001.yaml" `
-  --output-root "$AgentRoot\artifacts\agent_runs" `
+$Run = python scripts/run_agent_system_demo_v001.py `
+  --config configs/agent_system_v001.yaml `
+  --output-root artifacts/agent_runs `
   --verify | ConvertFrom-Json
 
 $Run
@@ -109,8 +108,8 @@ verification.verified = true
 ## 演示失败时的快速检查
 
 ```powershell
-python -m pytest "$AgentRoot\tests\agent_system" -q
-python "$AgentRoot\scripts\run_agent_system_demo_v001.py" --help
+python -m pytest tests/agent_system -q
+python scripts/run_agent_system_demo_v001.py --help
 ```
 
 如果当前机器没有全局 `python`，将命令中的 `python` 替换为已安装 Python 3.11+ 的完整可执行文件路径。
