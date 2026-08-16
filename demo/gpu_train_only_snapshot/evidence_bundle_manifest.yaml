@@ -1,0 +1,102 @@
+schema_version: "0.1"
+bundle_id: "gate2b-gpu-train-only-snapshot-v001"
+source_run_id: "gate2b-gpu-v001-20260816-224409"
+created_for: "NanyangYS_Agent minimal demo"
+
+scope:
+  dataset: "KuaiRand-1K"
+  partition_role: "train_only"
+  origins:
+    - "2022-04-11"
+    - "2022-04-12"
+    - "2022-04-13"
+    - "2022-04-14"
+    - "2022-04-15"
+    - "2022-04-16"
+    - "2022-04-17"
+  assessment_rows: 1641098
+  assessment_users: 943
+  positives: 525942
+  models:
+    - "BL0"
+    - "BL1"
+    - "BL2"
+
+verification:
+  scientific_result_status: "numerically_verified"
+  agent_admission_status: "pending_provenance_completion"
+  claim_eligible: false
+  release_eligible: false
+
+core_metrics:
+  BL2_minus_BL1:
+    average_precision: 0.04129522566356314
+    average_precision_ci95:
+      lower: 0.037660818671470225
+      upper: 0.04505401065445733
+    user_gauc_event_weighted: 0.04875807245052832
+    log_loss: -0.022952506199715783
+    brier: -0.008907188334427857
+  daily_direction_consistency:
+    origins_improved: 7
+    origins_total: 7
+    criteria:
+      - "average_precision increases"
+      - "user-GAUC increases"
+      - "log loss decreases"
+      - "Brier score decreases"
+
+artifacts:
+  - path: "run_manifest.json"
+    size_bytes: 44580
+    sha256: "bbb251ec681612849e13df4715f24f68ae779d9935ed6b1d1040ca9cb99daec1"
+    producer_source_sha256: "bbb251ec681612849e13df4715f24f68ae779d9935ed6b1d1040ca9cb99daec1"
+    text_normalization: "none"
+  - path: "pooled_metrics.csv"
+    size_bytes: 946
+    sha256: "2cc7ee74f97627d06e6f4f160504d963108ff122faf8b53c89edff9bf7b69850"
+    producer_source_sha256: "56ea0c03709eb6b411099a2dbecb89656f2aa0226a08ddcc21aa003fb863d2a5"
+    text_normalization: "CRLF_to_LF"
+  - path: "daily_metrics.csv"
+    size_bytes: 5729
+    sha256: "6dc6777fe6424c00340692d26f502f7bf56ef05801c61eb1a26a63c2ac476f14"
+    producer_source_sha256: "5645e778f024be5c3e8a6856d86a28470a5f76b76cd45e3c1977c76c07a9de79"
+    text_normalization: "CRLF_to_LF"
+  - path: "paired_user_cluster_bootstrap.csv"
+    size_bytes: 1576
+    sha256: "9d1ad10669ee8513ed8449b0097f083f51e1f531641081c624f88ea5f717da12"
+    producer_source_sha256: "6289e1477480c92456dfdd616044c987d594cb3fad32ec7c69f524e6ecb930a0"
+    text_normalization: "CRLF_to_LF"
+
+missing_provenance:
+  - component: "producer_contract"
+    expected_path: "configs/gate2b_gpu_experiment_contract_v001.yaml"
+    note: "run manifest records a digest, but the file body is not in this snapshot"
+  - component: "producer_runner"
+    expected_path: "scripts/run_gate2b_gpu_experiment_v001.py"
+    note: "the implementation body is not in this snapshot"
+  - component: "execution_authorization"
+    expected_path: null
+    note: "no execution authorization artifact has been supplied"
+  - component: "assessment_identity"
+    expected_path: null
+    note: "no standalone assessment identity artifact has been supplied"
+  - component: "result_report"
+    expected_path: "reports/analysis/gate2b_gpu_experiment_results_v001.md"
+    note: "the producer artifact registry names this report, but its file is missing"
+
+intentionally_excluded_from_demo:
+  - "daily_predictions.parquet"
+  - "training_audit.csv"
+  - "calibration_audit.csv"
+  - "history_depth_slice_metrics.csv"
+  - "probability_distribution_audit.csv"
+  - "artifact_hash_manifest.json"
+
+claim_boundary:
+  permitted:
+    - "describe the frozen Train-only GPU protocol and its observed BL0/BL1/BL2 metrics"
+    - "demonstrate fail-closed evidence intake while provenance remains incomplete"
+  forbidden:
+    - "treat this snapshot as canonical Agent evidence"
+    - "claim Validation, Test, Gold, sequence-model, release, or out-of-time generalization results"
