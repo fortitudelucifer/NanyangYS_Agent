@@ -1,0 +1,84 @@
+{
+  "snapshot_id": "v010_v011_frozen_predecessors_for_target_retraining_v012",
+  "created_at_local": "2026-08-23",
+  "status": "all_declared_inputs_verified_before_v012_implementation",
+  "inputs": [
+    {
+      "role": "target_domain_features",
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/features.parquet",
+      "size_bytes": 1760552,
+      "sha256": "89304ef3c5a830bb14ff8bc13501d61494b43d93752235423e34ff6d3e9a622f"
+    },
+    {
+      "role": "sealed_frozen_models",
+      "path": "reports/generated/sealed_model_reconstruction_diagnostic_v010/reconstructed_frozen_models.pkl",
+      "size_bytes": 61165697,
+      "sha256": "7e4a073e673ea8e7dc6e9aafe1b96c9c6349790191e2113f459ce6325d151861"
+    },
+    {
+      "role": "sealed_frozen_model_state",
+      "path": "reports/generated/sealed_model_reconstruction_diagnostic_v010/reconstructed_frozen_model_state.npz",
+      "size_bytes": 4927967,
+      "sha256": "c36c6bec407569d81734d1809c13d4fe2b96e410da6493dee04af77b6dfaeb60"
+    },
+    {
+      "role": "v010_final_claim",
+      "path": "reports/generated/history_value_adam_random_v010/final_claim_decision.json",
+      "size_bytes": 1027,
+      "sha256": "18860a6f6a738d54a11f6b56a47f6af6b039750cdb291f615e64ec631177ca80"
+    },
+    {
+      "role": "v010_random_manifest",
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/artifact_hash_manifest.json",
+      "size_bytes": 4108,
+      "sha256": "ceffc7d48361008c276792b6fc6ebb137b3c5e67ac068fffb79ecb1c27b9331a"
+    },
+    {
+      "role": "v011_selected_calibrator",
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/final_refit/selected_calibrator.json",
+      "size_bytes": 841,
+      "sha256": "a2cc92617f0d2121020d97760cea2d4dcefde9ed38956882e7eee5a840d05be2"
+    },
+    {
+      "role": "v011_old_model_predictions",
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/predictions.parquet",
+      "size_bytes": 726079,
+      "sha256": "6113666356ccb4bcbf9682bcc7ddc3c5f2b2b2e18534ceac5433ea4a198606b2"
+    },
+    {
+      "role": "v011_final_decision",
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/final_decision.json",
+      "size_bytes": 895,
+      "sha256": "08ea5f09be4f075647657a428805d68bcf6366a6fdbf7e1d69cd3405a6a78fe7"
+    },
+    {
+      "role": "v011_root_manifest",
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/artifact_hash_manifest.json",
+      "size_bytes": 706,
+      "sha256": "15c8d6ac3ed341532de66072cf118a04bf9e8c08340fa6ea8062cf50427296c0"
+    },
+    {
+      "role": "v011_report",
+      "path": "experiments/bl2_target_domain_calibration_v011/results_v011.md",
+      "size_bytes": 1923,
+      "sha256": "4d8510047eee8c84719bd98d61d6a304773c843b48a2bca93a5a026ab1b5045b"
+    }
+  ],
+  "verified_structure": {
+    "target_rows": 43027,
+    "target_users": 1000,
+    "target_positives": 3621,
+    "target_dates": ["2022-04-22", "2022-05-08"],
+    "BL1_matrix_width": 13527,
+    "BL2_matrix_width": 13545,
+    "v011_prediction_identity_exact_for_2022_05_03_through_2022_05_08": true,
+    "v011_selected_family": "M2_intercept_only",
+    "v011_scientific_status": "pass"
+  },
+  "mutation_policy": {
+    "v010_or_v011_overwrite": "forbidden",
+    "v012_output_root_isolated": true,
+    "SGD_unfreeze": false,
+    "new_feature_family_or_split_after_selection": false
+  }
+}

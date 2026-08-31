@@ -1,0 +1,3 @@
+stage,stream,fit_rows,fit_users,fit_positives,intercept,slope,n_iter,convergence_warning_count
+sealed_test,ADAM_BL1,222256,836,70457,0.1283537327000935,1.1940681598902654,10,0
+sealed_test,ADAM_BL2,222256,836,70457,0.01533764412557344,1.0169043405706177,9,0

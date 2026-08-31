@@ -1,0 +1,14 @@
+{
+  "contract_id": "history_value_adam_sealed_v008",
+  "contract_sha256": "b7b54a98ec02f0926a59fc3055097b82bdc9f7c5e5b5e7f1546beb3cdf8ef1c7",
+  "execution_authorized": true,
+  "authorized_stages": [
+    "preflight",
+    "sealed_test"
+  ],
+  "automatic_ordered_transitions_authorized": false,
+  "approved_by": "project_owner",
+  "approval_source": "explicit_user_message_in_current_Codex_task",
+  "approved_at_local_date": "2026-08-23",
+  "random_audit_access_authorized": false
+}

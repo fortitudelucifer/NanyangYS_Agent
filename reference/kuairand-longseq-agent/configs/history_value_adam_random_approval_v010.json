@@ -1,0 +1,16 @@
+{
+  "contract_id": "history_value_adam_random_v010",
+  "contract_sha256": "a73b254c43de31be6d9490a7b33398f77cf7fd49e7b0624c931886beca8fea04",
+  "execution_authorized": true,
+  "authorized_stages": [
+    "preflight",
+    "frozen_model_verification",
+    "random_audit"
+  ],
+  "automatic_ordered_transitions_authorized": false,
+  "approved_by": "project_owner",
+  "approval_source": "explicit_user_message_in_current_Codex_task",
+  "approved_at_local_date": "2026-08-23",
+  "model_refit_or_recalibration_authorized": false,
+  "random_fit_recalibration_or_threshold_selection_authorized": false
+}

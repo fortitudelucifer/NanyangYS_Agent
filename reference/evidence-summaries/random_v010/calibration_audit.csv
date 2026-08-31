@@ -1,0 +1,3 @@
+stage,stream,fit_rows,fit_users,fit_positives,intercept,slope,n_iter,convergence_warning_count,source
+random_audit,ADAM_BL1,222256,836,70457,0.12835373801840494,1.194068183024429,10,0,sealed_reconstruction_diagnostic_v010
+random_audit,ADAM_BL2,222256,836,70457,0.015337562450026779,1.0169043468053687,9,0,sealed_reconstruction_diagnostic_v010

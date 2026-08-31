@@ -1,0 +1,40 @@
+{
+  "contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485",
+  "decision": {
+    "brier_gate": true,
+    "changes_v010_history_ranking_conclusion": false,
+    "ece_gate": true,
+    "evidence_level": "post_audit_held_out_to_calibrator_temporal_test",
+    "log_loss_gate": true,
+    "mean_probability_gate": true,
+    "probability_health_gate": true,
+    "ranking_invariance_gate": true,
+    "ranking_metric_differences": {
+      "average_precision": 0.0,
+      "roc_auc": 0.0,
+      "user_gauc_event_weighted": 0.0
+    },
+    "scientific_status": "pass",
+    "stable_order_exact": true,
+    "stage": "held_out_to_calibrator_test"
+  },
+  "environment": {
+    "device": "CPU",
+    "executable": "/home/forcifer-123/miniconda3/envs/Kuai/bin/python",
+    "versions": {
+      "numpy": "2.4.6",
+      "pyarrow": "25.0.1",
+      "python": "3.11.15",
+      "scikit_learn": "1.9.0",
+      "scipy": "1.17.1",
+      "torch": "2.11.0+cu128"
+    }
+  },
+  "positives": 2063,
+  "prediction_sha256": "6113666356ccb4bcbf9682bcc7ddc3c5f2b2b2e18534ceac5433ea4a198606b2",
+  "rows": 23752,
+  "selected_calibrator_sha256": "a2cc92617f0d2121020d97760cea2d4dcefde9ed38956882e7eee5a840d05be2",
+  "selected_family": "M2_intercept_only",
+  "status": "complete",
+  "users": 967
+}

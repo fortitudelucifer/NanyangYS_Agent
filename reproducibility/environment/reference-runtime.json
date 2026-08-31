@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "scope": "actual v010, v011, and v012 release runtime",
+  "operating_system_family": "Linux x86_64",
+  "python": "3.11.15",
+  "packages": {
+    "duckdb": "1.5.5",
+    "numpy": "2.4.6",
+    "pyarrow": "25.0.1",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.17.1",
+    "threadpoolctl": "3.6.0",
+    "torch": "2.11.0+cu128"
+  },
+  "gpu_release_stages": {
+    "device": "NVIDIA GeForce RTX 5070 Ti",
+    "memory_bytes": 16609247232,
+    "compute_capability": [12, 0],
+    "torch_compiled_cuda": "12.8",
+    "driver_version": null,
+    "driver_note": "The exact NVIDIA driver version was not recorded in the v010-v012 release manifests. Record nvidia-smi output before attempting a bitwise reproduction."
+  },
+  "cpu_only_stages": ["v011 target-domain calibration"],
+  "determinism_note": "Package pins and seeds are necessary but do not guarantee bitwise identity across a different OS, driver, GPU architecture, BLAS implementation, or thread schedule."
+}

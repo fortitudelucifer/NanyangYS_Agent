@@ -1,0 +1,12 @@
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "preflight", "status": "opened_without_split_labels", "timestamp": "2026-08-23T22:37:18.732044+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "preflight", "status": "complete_hashed", "timestamp": "2026-08-23T22:37:19.285131+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "target_adaptation_train", "status": "opened_after_preflight_hash", "timestamp": "2026-08-23T22:37:19.285189+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "target_adaptation_train", "status": "complete_hashed", "timestamp": "2026-08-23T22:37:20.338571+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "target_calibration", "status": "opened_after_all_candidate_training_hashes", "timestamp": "2026-08-23T22:37:20.338614+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "target_calibration", "status": "complete_hashed", "timestamp": "2026-08-23T22:37:20.351328+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "model_selection", "status": "opened_after_training_and_calibration_hashes", "timestamp": "2026-08-23T22:37:20.354318+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "model_selection", "status": "selected_and_hashed_before_final_replay", "timestamp": "2026-08-23T22:37:20.569404+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "freeze_selected_model", "status": "opened_before_final_replay", "timestamp": "2026-08-23T22:37:20.569439+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "freeze_selected_model", "status": "selected_state_frozen_and_hashed", "timestamp": "2026-08-23T22:37:20.582910+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "final_temporal_replay_test", "status": "opened_after_selected_state_hash", "timestamp": "2026-08-23T22:37:20.582940+08:00"}
+{"contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5", "stage": "final_temporal_replay_test", "status": "complete_hashed_no_retry", "timestamp": "2026-08-23T22:37:21.934965+08:00"}

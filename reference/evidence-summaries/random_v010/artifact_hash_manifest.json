@@ -1,0 +1,95 @@
+{
+  "artifacts": [
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/bootstrap_multiplicity.npy",
+      "sha256": "49f69db9ba929d3f909c15887b2d88b19e8b5bd9698a41acadf22428dfc378cd",
+      "size_bytes": 4000128
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/calibration_audit.csv",
+      "sha256": "b440fc25d7051c1ecf4e93e1f912a68c64c7adb67c6b68a42b99c9777fd085a7",
+      "size_bytes": 343
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/daily_metrics.csv",
+      "sha256": "2ad7d89b484b97fb0c03feee5291ab568b51e94f2b03f9edaea49d1cae51db4b",
+      "size_bytes": 24252
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/environment_and_hardware_manifest.json",
+      "sha256": "21501a18527df7aab17f62821376d918f9e9f0ad516033a35566d92786dac459",
+      "size_bytes": 495
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/feature_manifest.json",
+      "sha256": "cebc417c564b2d94650c95be201fb68b9819be3b782832c500153591c445836f",
+      "size_bytes": 2230
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/features.parquet",
+      "sha256": "89304ef3c5a830bb14ff8bc13501d61494b43d93752235423e34ff6d3e9a622f",
+      "size_bytes": 1760552
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/history_depth_slice_metrics.csv",
+      "sha256": "716844d4b4be949748a23b041b8182f254528d26852980f021722f7f33f6f8fb",
+      "size_bytes": 6832
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/model_contrasts.csv",
+      "sha256": "3ad244aca3c6c5e6810492c66e1f099d05208444d7042fcffcbf13c46cf7881f",
+      "size_bytes": 608
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/model_manifest.json",
+      "sha256": "e6b112ba34e66a0e7e211ac1c3ec9438d485b03e0ee2780e11c8c24e48c4a7ad",
+      "size_bytes": 354
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/optimization_adequacy.csv",
+      "sha256": "66bbb9a670d8805b4206c7b38a1686123468c2214015573ba1ff102aeec04a23",
+      "size_bytes": 1460
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/paired_user_cluster_bootstrap.csv",
+      "sha256": "0f2ff108f82bd41e529b6dcca6a62b66ff87d2e44e9d92c34cfd3cd4dadb66b7",
+      "size_bytes": 1634
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/pooled_metrics.csv",
+      "sha256": "2bf83ba6e460b8521951a5a744b8f9e970cce4fac072d8ccad5471063da1bdb0",
+      "size_bytes": 2227
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/predictions.parquet",
+      "sha256": "48ae0793e554b1eb82d3ba75684915f471cf52f005039a6ad674075b4afffc31",
+      "size_bytes": 1985188
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/probability_distribution_audit.csv",
+      "sha256": "089bdc95a0b07855fe4f9e748978c95ce663efe71b7d824ddb9f6be388455401",
+      "size_bytes": 578
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/run_manifest.json",
+      "sha256": "2430932cda13ed87071dfb1ed2a17f124846aaa06b224f3affdd96dbb17020ef",
+      "size_bytes": 3433
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/stage_decision.json",
+      "sha256": "9d99b6933b8e5592c12727c450e63f63d1be322f7c229957d204d9f05a884dd4",
+      "size_bytes": 482
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/target_row_manifest.csv",
+      "sha256": "20eb0c596482c93d91df71567332b3b5d06002f3cd04f3a914faa1fd128255b8",
+      "size_bytes": 548276
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/usage_ledger.csv",
+      "sha256": "66bbb9a670d8805b4206c7b38a1686123468c2214015573ba1ff102aeec04a23",
+      "size_bytes": 1460
+    }
+  ],
+  "hash_algorithm": "SHA-256"
+}

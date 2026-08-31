@@ -1,0 +1,18 @@
+{
+  "approval_id": "history-value-gpu-confirmation-v001-owner-approval-20260823",
+  "approved_at_local": "2026-08-23T14:13:00+08:00",
+  "approved_by": "project_owner",
+  "approval_source": "explicit_user_reply_批准_开始实验",
+  "automatic_ordered_transitions_authorized": true,
+  "contract_id": "history_value_gpu_confirmation_v001",
+  "contract_sha256": "71f024b86510643a58bababa97572489bbb50d2352fcab8e89a65e7b9b046d1d",
+  "engineering_or_governance_failure_must_stop": true,
+  "execution_authorized": true,
+  "scientific_failure_must_be_preserved_and_continue": true,
+  "stages": [
+    "optimizer_preflight",
+    "validation",
+    "sealed_test",
+    "random_audit"
+  ]
+}

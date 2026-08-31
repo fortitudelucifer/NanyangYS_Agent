@@ -1,0 +1,171 @@
+version: 8
+contract_id: history_value_adam_sealed_v008
+status: implementation_complete_tests_passed_pending_exact_hash_approval
+created_at_local: "2026-08-23"
+timezone: Asia/Shanghai
+
+base_contract:
+  path: configs/history_value_adam_validation_contract_v007.yaml
+  sha256: b6d908af14a29ad5b54454eb2ca30bb944e9891db4f4414308948638e6b6d897
+  inheritance_rule: deep_merge_sealed_only_successor_over_exact_v007
+
+successor_reason:
+  project_owner_direction: unlock_sealed_test_only_after_Validation_pass
+  Validation_result_changed_scientific_question_or_thresholds: false
+  SGD_status: frozen_deferred
+  random_audit_status: locked
+
+validation_prerequisite:
+  contract_id: history_value_adam_validation_v007
+  contract_sha256: b6d908af14a29ad5b54454eb2ca30bb944e9891db4f4414308948638e6b6d897
+  checkpoint_path: reports/generated/history_value_adam_validation_v007/validation_checkpoint.json
+  checkpoint_sha256: 4d42aa22eb5cd26c165317c035d9189434b5616d686aee3bc15c1542a0dcef1d
+  stage_decision_path: reports/generated/history_value_adam_validation_v007/validation/stage_decision.json
+  stage_decision_sha256: a9d18684d9834ef1390403db52dbd27945e0693bc7e40b9f6105ab0c1c8bbb91
+  stage_artifact_manifest_path: reports/generated/history_value_adam_validation_v007/validation/artifact_hash_manifest.json
+  stage_artifact_manifest_sha256: 999fd39f873ecb3587829412849b51c064a65e5c1921dba90a3d9f29a6f102b2
+  required_scientific_status: pass
+  sealed_test_accessed_in_v007: false
+  random_audit_accessed_in_v007: false
+
+sealed_target_count_repair:
+  prior_main_table_only_count: 4404167
+  official_formula_mismatch_addback_rows: 27132
+  canonical_union_expected_target_rows: 4431299
+  arithmetic: 4404167_plus_27132_equals_4431299
+  count_evidence_path: reports/analysis/sealed_target_count_precheck_2026-08-23.csv
+  count_evidence_sha256: 494298a0372e21b73d9d8f8d3921bd0a8765de523f75b0db0288b7c24b444b36
+  evidence_observed_before_any_sealed_model_fit_prediction_or_metric: true
+
+data_governance:
+  known_non_model_counts_for_preflight:
+    sealed_standard_target_tab1_rows_2022_04_22_to_2022_05_08: 4431299
+    sealed_target_silver_main_rows: 4404167
+    sealed_target_official_mismatch_addback_rows: 27132
+    count_source: authorized_sealed_non_model_count_precheck
+
+sequential_stage_protocol:
+  stage_2_sealed_test:
+    estimator_refit_dates_inclusive: ["2022-04-08", "2022-04-20"]
+    calibration_date: "2022-04-21"
+    target_dates_inclusive: ["2022-04-22", "2022-05-08"]
+    expected_target_rows: 4431299
+    expected_target_rows_scope: canonical_union_including_official_formula_mismatch_addback
+    scientific_failure_action: preserve_and_stop_for_project_owner_review
+    automatic_transition_to_random_audit: false
+  stage_3_random_audit:
+    status: locked_not_accessible_in_v008
+
+stage_gates:
+  sealed_test_gate:
+    status: active_after_exact_hash_approval
+    static_absolute_and_history_gates_pass_for_Adam: true
+    minimum_positive_AP_days: 12
+    total_days: 17
+    scientific_failure_action: preserve_and_stop_for_project_owner_review
+  random_transport_gate:
+    status: locked_not_accessible_in_v008
+
+authorization:
+  contract_creation_authorized: true
+  execution_authorized: false
+  exact_hash_approval_required_after_implementation: true
+  automatic_ordered_transitions_authorized: false
+  authorized_stage_scope_after_exact_hash_approval: [preflight, sealed_test]
+  validation_access_role: exact_hashed_prerequisite_verification_only
+  sealed_test_access_authorized: false
+  random_audit_access_authorized: false
+  approval_receipt_protocol:
+    path: configs/history_value_adam_sealed_approval_v008.json
+    exact_contract_SHA256_required: true
+    authorized_stages_must_equal: [preflight, sealed_test]
+    automatic_ordered_transitions_authorized_must_be_false: true
+    approved_by_must_equal: project_owner
+    current_receipt_status: absent_pending_project_owner_exact_hash_approval
+
+terminal_interpretation:
+  status: sealed_interim_only
+  strongest_permitted_claim: >-
+    Whether the Validation-supported history increment is sustained on the
+    later 17-day sealed standard-exposure window under frozen GPU Adam.
+  prohibited_claims:
+    - random_exposure_transport
+    - optimizer_robustness
+    - online_causal_lift
+
+artifact_protocol:
+  output_root: reports/generated/history_value_adam_sealed_v008
+  stage_directories:
+    preflight: reports/generated/history_value_adam_sealed_v008/preflight
+    sealed_test: reports/generated/history_value_adam_sealed_v008/sealed_test
+  forbidden_stage_directories:
+    - reports/generated/history_value_adam_sealed_v008/random_audit
+  required_global_outputs:
+    - selected_optimizer_configuration_manifest.json
+    - stage_access_ledger.jsonl
+    - sealed_checkpoint.json
+    - reports/analysis/history_value_adam_sealed_results_v008.md
+
+implementation_status:
+  contract_written: true
+  runner_exists: true
+  stage_access_controller_exists: true
+  exact_implementation_hashes_pinned: true
+  validate_only_passed: true
+  independent_review_complete: false
+  applicable_regression_test_result:
+    command: conda_run_n_Kuai_python_m_pytest_q_ignore_completed_v005_v006_v007_receipt_absence_lifecycle_tests
+    passed: 122
+    failed: 0
+    elapsed_seconds: 71.11
+    excluded_test_files:
+      - tests/test_history_value_adam_validation_v005.py
+      - tests/test_history_value_adam_validation_v006.py
+      - tests/test_history_value_adam_validation_v007.py
+    exclusion_reason: exact_approval_receipts_now_legitimately_exist_after_those_runs
+    completed_at_local: "2026-08-23"
+  successor_and_v004_targeted_test_result:
+    passed: 10
+    failed: 0
+  result_producing_files:
+    - path: src/kuairand_longseq/features/history_value_feature_sql.py
+      sha256: 06330a74ed5fc2384c7799ec33877ba7a0f73f51aaf23e1e42c284f5607bfeb2
+    - path: src/kuairand_longseq/models/history_value_gpu.py
+      sha256: f6e52fb68d03ae0447bc59c53bd77c3a6bd9dd79681daa68e59f7e933c5bcfec
+    - path: scripts/run_history_value_gpu_confirmation_v001.py
+      sha256: 7bd4d667da3f0d0f089a775db0f667449a62c02ce8fa0c481f837db205b45b72
+    - path: scripts/run_history_value_gpu_confirmation_v002.py
+      sha256: 9276222d4432a942544f39ea9fbd7137762b831544fc2c4457901c5037f832fc
+    - path: scripts/run_history_value_adam_confirmation_v004.py
+      sha256: 6d07fd322f8ee03de590990e24213d075f22a91b5ea62acc36b6dceaf9754e14
+    - path: scripts/run_history_value_adam_validation_v005.py
+      sha256: a25932ace0d8407ad598b93b71ea600e3bdf4de7d315e33dad39bded3a5831f5
+    - path: scripts/run_history_value_adam_validation_v006.py
+      sha256: 083e798e694392b0f99031c7f9ecc74021ad6e9d485409dfa01c38d2077336f3
+    - path: scripts/run_history_value_adam_validation_v007.py
+      sha256: 5ca4f9afe541e504ff599bd70999e3358981de2e4138958145ba9a03053385c6
+    - path: scripts/run_history_value_adam_sealed_v008.py
+      sha256: e7d634ca4e6ce66c6cf3ed0f5c60e777df49130349b3c1ee5f2ea0a776b84219
+    - path: tests/test_history_value_adam_sealed_v008.py
+      sha256: 7419bd33403e88526cc39dea0d3dccf306f1dc04c7df1f52a0a6fdc0be682719
+    - path: reports/analysis/sealed_target_count_precheck_2026-08-23.csv
+      sha256: 494298a0372e21b73d9d8f8d3921bd0a8765de523f75b0db0288b7c24b444b36
+
+operational_budget:
+  budget_status: proposed_not_active_pending_exact_hash_approval
+  maximum_elapsed_hours:
+    inherited_Adam_preflight: 1
+    sealed_test: 6
+  new_SGD_fits: 0
+  random_audit_GPU_fits: 0
+
+review_checklist_before_hash_approval:
+  - verify_exact_v007_Validation_pass_and_all_stage_artifact_hashes
+  - verify_sealed_canonical_target_count_4431299_before_model_fit
+  - verify_time_ms_loader_repair_is_inherited
+  - verify_Adam_lr_0_03_steps_100_and_BL0_BL1_BL2_are_unchanged
+  - verify_2000_paired_user_cluster_bootstrap_and_12_of_17_day_gate
+  - verify_random_audit_release_path_is_absent
+  - pin_implementation_hashes
+  - pass_applicable_regression_tests_and_validate_only
+  - obtain_new_exact_hash_approval

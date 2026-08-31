@@ -1,0 +1,68 @@
+version: 2
+status: approved_for_silver_build
+approved_on: "2026-08-14"
+policy: preserve_raw_flag_uncertain_quarantine_conflicts
+output_format: parquet
+
+rules:
+  exact_duplicate_rows:
+    action: keep_one_in_silver
+    audit_removed_copies: true
+
+  same_user_video_time_with_conflicting_payload:
+    action: quarantine_group
+    auto_resolve: false
+
+  same_user_time_multiple_videos:
+    action: preserve_as_timestamp_batch
+    treat_as_duplicate: false
+
+  invalid_binary_value:
+    action: quarantine_row
+    allowed_values: [0, 1]
+
+  invalid_time_or_tab_or_policy_flag:
+    action: quarantine_row
+    allowed_tab_range: [0, 14]
+
+  negative_play_time:
+    action: quarantine_row
+
+  missing_or_nonpositive_duration:
+    action: keep_with_flag
+    flag: duration_missing_or_nonpositive
+    exclude_from_duration_dependent_analysis: true
+
+  play_time_greater_than_duration:
+    action: preserve_raw_and_flag
+    derived_watch_ratio_cap: 1.0
+    overwrite_raw: false
+
+  missing_tag:
+    action: keep_with_unknown_category
+    replacement_category: UNKNOWN_TAG
+    add_missing_flag: true
+
+  missing_upload_date:
+    action: keep_with_flag
+
+  is_live_streamer_sentinel:
+    values: [-124]
+    action: map_to_unknown_category
+    drop_user: false
+
+  label_formula_inconsistency:
+    action: flag_and_quarantine_from_primary_training
+    overwrite_official_label: false
+    requires_human_review: true
+
+audit_requirements:
+  - source_file
+  - source_row_count
+  - output_row_count
+  - affected_rows_by_rule
+  - label_rate_before_and_after
+  - quarantine_reason_counts
+  - source_hash
+  - configuration_hash
+

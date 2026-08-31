@@ -1,0 +1,318 @@
+contract_id: neural_sequence_candidate_model_v013
+version: 13
+status: draft_fail_closed
+created_at: 2026-08-24
+
+authorization:
+  execution_authorized: false
+  approved_contract_sha256: null
+  gold_build_authorized: false
+  train_only_neural_fit_authorized: false
+  validation_label_access_authorized: false
+  restricted_test_access_authorized: false
+  random_audit_access_authorized: false
+  release_authorized: false
+  stop_before_any_data_build_or_fit_when_false: true
+
+inheritance:
+  formal_silver_run_id: silver-20260814-155536
+  raw_and_silver_immutable: true
+  current_engineering_incumbent: NEW_BL2_plus_v012_calibrator
+  incumbent_model_state_sha256: 5f4023f32749a44b555559d25a7793cd7b2dff856a594998f03c8bf138b63308
+  v010_history_conclusion: strict_H2_history_has_offline_ranking_value_under_frozen_GPU_Adam
+  v011_calibration_conclusion: target_domain_intercept_calibration_improves_probability_quality_without_changing_ranking
+  v012_retraining_conclusion: post_audit_target_adaptation_adds_value_pending_new_data_confirmation
+  does_not_rewrite_v010_v011_v012: true
+
+research_scope:
+  task: candidate_long_view_prediction
+  estimand: observed_candidate_exposure_long_view_probability_and_ranking
+  primary_label: official_long_view
+  primary_scene: tab_1
+  history_source_scenes: all_tabs_with_scene_retained
+  retrieval_claim: forbidden
+  online_causal_claim: forbidden
+  content_semantics_claim: forbidden
+  primary_question: >-
+    On identical point-in-time target rows, do nonlinear static/H2 models and
+    candidate-aware 10, 50, and 200 batch histories improve over their nested
+    predecessors and the frozen linear incumbent without degrading absolute
+    probability quality?
+
+data_contract_requirements:
+  gold_required: true
+  gold_status_at_draft: not_built
+  approved_gold_contract_required: true
+  canonical_gold_view: official_long_view_union_as_defined_by_successor_gold_contract
+  sensitivity_views_must_remain_separate: true
+  fixed_target_row_manifest_required: true
+  same_target_rows_for_all_windows: true
+  short_history_policy: pad_and_mask_without_dropping_target_rows
+  input_identity_and_sha256_required: true
+  video_features_statistic_1k_prediction_access: denied
+  future_partition_feature_or_threshold_selection: denied
+
+point_in_time_invariants:
+  target_batch_key: [user_id, time_ms]
+  required_history_relation: history_time_ms < target_time_ms
+  same_timestamp_feedback_visibility: forbidden
+  construct_entire_target_batch_before_history_update: true
+  current_event_feedback_features: forbidden
+  historical_feedback_allowed_only_after_strict_time_check: true
+  repeated_build_must_match_sample_ids_rows_and_hashes: true
+
+feature_families:
+  static_candidate_content:
+    - author_id_embedding
+    - music_id_embedding
+    - tag_embedding_pool
+    - upload_type_embedding
+    - video_duration_and_state
+    - upload_age_and_basic_geometry_when_point_in_time_allowed
+  user_and_context:
+    - user_static_features
+    - exposure_time_context
+    - scene_context
+  H2_statistical_history:
+    - lifetime_counts_positives_and_smoothed_rate
+    - recent_10_batch_counts_positives_and_smoothed_rate
+    - recent_50_batch_counts_positives_and_smoothed_rate
+    - recent_200_batch_counts_positives_and_smoothed_rate
+    - history_depth_recency_coverage_and_missingness_masks
+  historical_event_representation:
+    - content_attributes
+    - strictly_past_feedback
+    - time_gap
+    - historical_scene
+  video_id_policy:
+    role: auxiliary_only
+    content_attributes_are_primary: true
+    behavior_cold_video_slice_required: true
+  denylist_current_event:
+    - is_click
+    - is_like
+    - is_follow
+    - is_comment
+    - is_forward
+    - is_hate
+    - long_view
+    - play_time_ms
+    - profile_stay_time
+    - comment_stay_time
+    - is_profile_enter
+
+neural_architecture:
+  candidate_encoder: content_embedding_encoder
+  history_event_encoder: content_feedback_timegap_encoder
+  sequence_encoder: candidate_aware_attention
+  statistical_history_branch: H2_MLP
+  fusion_head: MLP
+  proposed_single_configuration_before_execution:
+    categorical_embedding_dim: 32
+    event_embedding_dim: 64
+    attention_hidden_dim: 64
+    fusion_hidden_dims: [256, 128, 64]
+    activation: GELU
+    dropout: 0.10
+  architecture_parameter_status: freeze_after_gold_pilot_before_scientific_train_backtest
+  HIER500_definition:
+    recent_fine_grained_window: 200
+    older_window: 201_to_500
+    older_history_representation: gated_author_tag_duration_and_daily_summary
+    full_length_transformer: forbidden_in_v013
+
+model_registry:
+  - model_id: BL0_CONSTANT
+    family: constant_probability
+    history_window_batches: 0
+    role: absolute_probability_reference
+  - model_id: LINEAR_STATIC_V013
+    family: logistic_regression
+    history_window_batches: 0
+    role: same_gold_static_linear_baseline
+  - model_id: LINEAR_H2_V013
+    family: logistic_regression
+    history_window_batches: [10, 50, 200]
+    role: same_gold_statistical_history_linear_baseline
+  - model_id: MLP_STATIC
+    family: multilayer_perceptron
+    history_window_batches: 0
+    role: nonlinear_static_candidate
+  - model_id: MLP_H2
+    family: multilayer_perceptron
+    history_window_batches: [10, 50, 200]
+    role: nonlinear_statistical_history_candidate
+  - model_id: DIN10
+    family: candidate_aware_attention
+    history_window_batches: 10
+    role: first_fine_grained_sequence_candidate
+  - model_id: DIN50
+    family: candidate_aware_attention
+    history_window_batches: 50
+    role: short_sequence_candidate
+  - model_id: DIN200
+    family: candidate_aware_attention
+    history_window_batches: 200
+    role: long_sequence_candidate
+  - model_id: HIER500
+    family: hierarchical_candidate_aware_sequence
+    history_window_batches: 500
+    role: gated_extended_history_candidate
+    execution_condition: history_500_plus_sample_gate_and_compute_gate_pass
+
+registered_contrasts:
+  primary_successor:
+    contrast: SELECTED_NEURAL_ENSEMBLE_minus_FROZEN_NEW_BL2_V012
+    status: freeze_selected_neural_before_new_confirmation_evaluation
+  nested_required:
+    - contrast: MLP_STATIC_minus_LINEAR_STATIC_V013
+      question: value_of_nonlinearity_without_history
+    - contrast: MLP_H2_minus_MLP_STATIC
+      question: value_of_statistical_history_under_same_neural_family
+    - contrast: DIN10_minus_MLP_H2
+      question: value_of_first_10_fine_grained_history_batches
+    - contrast: DIN50_minus_DIN10
+      question: incremental_value_of_10_to_50_batches
+    - contrast: DIN200_minus_DIN50
+      question: incremental_value_of_50_to_200_batches
+    - contrast: DIN200_minus_DIN10
+      question: total_value_of_10_to_200_batches
+    - contrast: HIER500_minus_DIN200
+      question: incremental_value_of_older_201_to_500_summary
+      claim_role: exploratory_unless_sample_and_power_gates_are_frozen_and_passed
+  supportive:
+    - LINEAR_H2_V013_minus_LINEAR_STATIC_V013
+    - MLP_H2_minus_LINEAR_H2_V013
+    - DIN50_minus_MLP_H2
+    - DIN200_minus_MLP_H2
+
+training_randomness:
+  neural_required_seed_count: 5
+  neural_seed_values: [20260824, 20260825, 20260826, 20260827, 20260828]
+  all_scientific_neural_candidates_use_all_seeds: true
+  changing_or_adding_seeds_requires_new_contract_version: true
+  primary_prediction_aggregation: arithmetic_mean_of_five_seed_logits_then_single_frozen_calibration
+  per_seed_reporting:
+    - pooled_metrics
+    - daily_metrics
+    - slice_metrics
+    - optimization_trace
+    - min_median_max_mean_std
+  per_seed_results_are_not_independent_user_samples: true
+  seed_variability_reported_separately_from_user_cluster_bootstrap: true
+
+training_protocol:
+  loss: unweighted_binary_cross_entropy_with_logits
+  optimizer_family_proposal: AdamW
+  optimizer_selection_does_not_inherit_linear_Adam_adequacy: true
+  learning_rate: pending_gold_pilot
+  weight_decay: pending_gold_pilot
+  batch_size: pending_gold_pilot
+  maximum_epochs: pending_gold_pilot
+  early_stopping_rule: pending_gold_pilot_and_train_rolling_origin_contract
+  class_weighting: forbidden_in_initial_v013_probability_model
+  calibration: separate_frozen_time_ordered_stage
+  no_test_time_retraining: true
+
+compute_and_search_budget:
+  execution_status: not_authorized
+  scientific_neural_fit_ceiling_after_configuration_freeze: 30
+  ceiling_derivation: 6_neural_candidates_times_5_fixed_seeds
+  HIER500_fits_may_be_skipped_only_by_preregistered_sample_or_compute_gate: true
+  engineering_smoke_and_gold_pilot_outputs_are_not_scientific_results: true
+  hyperparameter_grid_after_pilot: forbidden_without_new_contract_version
+  operational_gpu_hours: pending_gold_pilot
+  operational_wall_clock: pending_gold_pilot
+
+selection_and_evaluation:
+  model_design_stage: source_train_rolling_origin_only
+  validation_role: bounded_final_architecture_selection_and_calibration
+  restricted_test_role: one_controlled_evaluation_after_freeze
+  random_audit_role: post_conclusion_bias_transfer_and_calibration_audit_only
+  primary_metrics:
+    - average_precision_event_micro
+    - user_gauc_event_weighted
+    - log_loss
+    - brier
+  descriptive_metrics:
+    - roc_auc
+    - ece20_equal_width
+    - user_gauc_user_equal
+  required_slices:
+    - date
+    - history_depth_0_9_10_49_50_199_200_499_500_plus
+    - user_activity_quartile
+    - warm_cold_user
+    - warm_behavior_cold_video
+    - duration_state_and_bucket
+    - content_modality_proxy
+    - missingness_state
+  paired_user_cluster_bootstrap:
+    replicates: 2000
+    confidence_level: 0.95
+    seed: pending_freeze_before_validation
+    shared_user_multiplicities_across_all_compared_predictions: true
+  probability_health:
+    require_finite_probabilities: true
+    saturation_audit_required: true
+    log_loss_and_brier_must_not_be_worse_than_BL0: true
+  effect_thresholds:
+    AP_SESOI: pending_freeze_before_validation
+    user_gauc_noninferiority: pending_freeze_before_validation
+    user_gauc_superiority: pending_freeze_before_validation
+    MDE: estimate_from_paired_validation_differences_only
+
+stage_gates:
+  gate_0_design:
+    requires: [complete_model_registry, complete_contrast_registry, five_frozen_seeds, fail_closed_authorization]
+  gate_1_gold_pilot:
+    requires: [approved_gold_contract, deterministic_sample_ids, manual_timeline_recalculation, zero_point_in_time_violations]
+  gate_2_implementation:
+    requires: [focused_unit_tests, repository_regression_tests, deterministic_five_seed_CPU_or_CUDA_smoke, no_transparent_CPU_fallback]
+  gate_3_train_backtest:
+    requires: [frozen_single_training_configuration, frozen_operational_budget, identical_target_rows, all_five_seeds_complete]
+  gate_4_validation:
+    requires: [bounded_candidate_set, frozen_metrics_and_thresholds, no_future_data_model_changes]
+  gate_5_final_evaluation:
+    requires: [frozen_selected_model_and_calibrator, artifact_hash_manifest, exact_contract_hash_approval]
+
+stop_conditions:
+  - missing_or_changed_formal_silver_identity
+  - Gold_sample_or_feature_manifest_missing
+  - any_history_time_not_strictly_before_target_time
+  - same_timestamp_feedback_visible
+  - target_rows_differ_across_window_models
+  - any_scientific_neural_candidate_missing_one_of_five_seeds
+  - execution_budget_or_hyperparameter_not_frozen
+  - exact_contract_hash_not_approved
+  - probability_health_gate_fails
+  - requested_new_data_access_not_explicitly_granted
+
+required_future_outputs:
+  - preflight/integrity_and_data_audit.json
+  - gold/gold_run_manifest.json
+  - gold/feature_manifest.json
+  - gold/target_row_manifests.json
+  - training/per_seed_run_manifests.jsonl
+  - training/per_seed_optimization_traces.parquet
+  - frozen_model/five_seed_model_states
+  - frozen_model/ensemble_and_calibrator_spec.json
+  - evaluation/predictions.parquet
+  - evaluation/per_seed_metrics.csv
+  - evaluation/pooled_metrics.csv
+  - evaluation/daily_metrics.csv
+  - evaluation/slice_metrics.csv
+  - evaluation/paired_user_cluster_bootstrap.csv
+  - evaluation/bootstrap_replicates.parquet
+  - evaluation/probability_distribution_audit.csv
+  - evaluation/reliability_equal_width_20.csv
+  - artifact_hash_manifest.json
+  - run_manifest.json
+  - stage_access_ledger.jsonl
+  - final_decision.json
+
+completion_definition:
+  design_complete_when: model_ladder_contrasts_five_seeds_data_boundaries_and_stop_conditions_are_registered
+  design_is_not_experiment_completion: true
+  scientific_completion_requires_authorized_result_producing_run: true
+  strongest_current_status: design_registered_waiting_for_gold_contract_budget_implementation_tests_and_exact_hash_approval

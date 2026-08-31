@@ -1,0 +1,10 @@
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "preflight", "status": "opened_without_calibration_or_test_labels", "timestamp": "2026-08-23T21:56:11.633994+08:00"}
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "preflight", "status": "complete_hashed", "timestamp": "2026-08-23T21:56:11.634297+08:00"}
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "calibration_fit", "status": "opened_before_selection_or_test", "timestamp": "2026-08-23T21:56:11.634320+08:00"}
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "calibration_fit", "status": "complete_hashed", "timestamp": "2026-08-23T21:56:11.658360+08:00"}
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "calibration_selection", "status": "opened_after_fit_hash_before_test", "timestamp": "2026-08-23T21:56:11.658400+08:00"}
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "calibration_selection", "status": "family_selected_and_hashed_before_test", "timestamp": "2026-08-23T21:56:11.806948+08:00"}
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "final_refit", "status": "opened_before_test", "timestamp": "2026-08-23T21:56:11.806989+08:00"}
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "final_refit", "status": "selected_parameters_frozen_and_hashed_before_test", "timestamp": "2026-08-23T21:56:11.808451+08:00"}
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "held_out_to_calibrator_test", "status": "opened_after_final_refit_hash", "timestamp": "2026-08-23T21:56:11.808475+08:00"}
+{"contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485", "stage": "held_out_to_calibrator_test", "status": "complete_hashed", "timestamp": "2026-08-23T21:56:13.364659+08:00"}

@@ -12,3 +12,21 @@ __pycache__/
 *.tmp
 
 artifacts/agent_runs/*
+artifacts/reproduction/
+
+# KuaiRand must be downloaded by each user from the official distribution.
+reference/KuaiRand-1K/data/
+reference/KuaiRand-1K/*.tar.gz
+reference/KuaiRand-1K/*.tgz
+
+# Rebuilt governed data and experiment artifacts are local outputs, not Git data.
+reference/kuairand-longseq-agent/data/manifests/
+reference/kuairand-longseq-agent/data/silver/
+reference/kuairand-longseq-agent/data/gold/
+reference/kuairand-longseq-agent/data/quarantine/
+reference/kuairand-longseq-agent/artifacts/
+reference/kuairand-longseq-agent/reports/generated/
+reference/kuairand-longseq-agent/experiments/**/outputs/
+
+# Reproduction downloader cache.
+.cache/kuairand/

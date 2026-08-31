@@ -1,0 +1,294 @@
+version: 12
+contract_id: bl2_target_domain_retraining_v012
+status: implementation_complete_tests_passed_pending_exact_hash_approval
+created_at_local: "2026-08-23"
+timezone: Asia/Shanghai
+evidence_level: post_audit_target_adaptation_temporal_replay_not_pristine_confirmation
+
+objective:
+  primary: determine_whether_paired_target_domain_retraining_adds_value_over_frozen_BL2_plus_v011
+  history_control: NEW_BL2_must_be_compared_with_paired_NEW_BL1
+  default_engineering_incumbent: frozen_BL2_plus_v011_M2_intercept_calibration
+  prohibited_reinterpretation:
+    - v012_failure_does_not_refute_v010_history_value
+    - v012_does_not_modify_v011_calibration_result
+
+predecessor_integrity:
+  snapshot_path: experiments/bl2_target_domain_retraining_v012/predecessor_integrity_snapshot.json
+  snapshot_size_bytes: 3421
+  snapshot_sha256: 641ea2b5e6e1e246526e7a7d99592854514093623e1a93368fb6f917a173ea1a
+  required_v010_status: history_supported_on_standard_and_random_under_frozen_Adam
+  required_v011_status: pass
+  required_v011_family: M2_intercept_only
+  v010_random_manifest_artifact_count: 18
+  v011_root_manifest_artifact_count: 3
+
+frozen_inputs:
+  target_domain_features:
+    path: reports/generated/history_value_adam_random_v010/random_audit/features.parquet
+    size_bytes: 1760552
+    sha256: 89304ef3c5a830bb14ff8bc13501d61494b43d93752235423e34ff6d3e9a622f
+    rows: 43027
+    users: 1000
+    positives: 3621
+    dates: ["2022-04-22", "2022-05-08"]
+  sealed_frozen_models:
+    path: reports/generated/sealed_model_reconstruction_diagnostic_v010/reconstructed_frozen_models.pkl
+    size_bytes: 61165697
+    sha256: 7e4a073e673ea8e7dc6e9aafe1b96c9c6349790191e2113f459ce6325d151861
+  sealed_frozen_model_state:
+    path: reports/generated/sealed_model_reconstruction_diagnostic_v010/reconstructed_frozen_model_state.npz
+    size_bytes: 4927967
+    sha256: c36c6bec407569d81734d1809c13d4fe2b96e410da6493dee04af77b6dfaeb60
+  v011_old_predictions:
+    path: experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/predictions.parquet
+    size_bytes: 726079
+    sha256: 6113666356ccb4bcbf9682bcc7ddc3c5f2b2b2e18534ceac5433ea4a198606b2
+    rows: 23752
+    dates: ["2022-05-03", "2022-05-08"]
+  required_feature_columns:
+    - source_table
+    - source_row_number
+    - user_id
+    - event_date
+    - long_view
+    - cat_user
+    - cat_video
+    - prior_batch_n
+    - prior_event_n
+    - prior_positive_n
+    - warm_user
+
+scope:
+  feature_recomputation: forbidden
+  encoder_or_scaler_refit: forbidden
+  new_feature_family: forbidden
+  original_random_reopen: forbidden
+  v010_or_v011_mutation: forbidden
+  SGD_status: frozen_deferred
+  optimizer_scope: GPU_Adam_only
+  target_labels_may_update_standard_history_features: false
+
+frozen_design:
+  source: reconstructed_sealed_GroupedDesign
+  BL1_width: 13527
+  BL2_width: 13545
+  BL1_exact_prefix_of_BL2: true
+  smoothing_prevalence: 0.31966227594940017
+  one_hot_vocabulary_and_infrequent_mapping: frozen
+  static_scaler: frozen
+  H2_scaler: frozen
+
+temporal_splits:
+  target_adaptation_train:
+    start: "2022-04-22"
+    end: "2022-04-29"
+    rows: 11999
+    users: 760
+    positives: 947
+    prevalence: 0.07892324360363363
+  target_calibration:
+    start: "2022-04-30"
+    end: "2022-05-02"
+    rows: 7276
+    users: 778
+    positives: 611
+    prevalence: 0.08397471137987905
+  model_selection:
+    start: "2022-05-03"
+    end: "2022-05-05"
+    rows: 11353
+    users: 875
+    positives: 1024
+    prevalence: 0.09019642385272615
+  final_temporal_replay_test:
+    start: "2022-05-06"
+    end: "2022-05-08"
+    rows: 12399
+    users: 857
+    positives: 1039
+    prevalence: 0.08379708040971046
+
+adaptation_objective:
+  formula: mean_binary_cross_entropy_plus_half_tether_times_weight_displacement_squared
+  warm_start: exact_sealed_BL1_or_BL2_coefficient_and_intercept
+  tether_applies_to: coefficient_only
+  intercept_tether: none
+  sample_weighting: none_target_only
+  optimizer: torch_Adam_full_batch_CUDA
+  Adam_betas: [0.9, 0.999]
+  Adam_eps: 0.00000001
+  deterministic_algorithms: true
+  SGD_or_other_optimizer: forbidden
+
+adaptation_candidates:
+  - config_id: C1_conservative
+    learning_rate: 0.003
+    steps: 100
+    tether_strength: 0.01
+    seed: 20260814
+    trace_checkpoints: [1, 10, 25, 50, 100]
+  - config_id: C2_balanced
+    learning_rate: 0.01
+    steps: 100
+    tether_strength: 0.001
+    seed: 20260814
+    trace_checkpoints: [1, 10, 25, 50, 100]
+  - config_id: C3_aggressive
+    learning_rate: 0.03
+    steps: 100
+    tether_strength: 0.0001
+    seed: 20260814
+    trace_checkpoints: [1, 10, 25, 50, 100]
+
+calibration:
+  family: M2_intercept_only
+  fit_split: target_calibration
+  frozen_slopes:
+    NEW_BL1: 1.194068183024429
+    NEW_BL2: 1.0169043468053687
+  intercept_regularization: none
+  solver: scipy_brentq_score_equation
+  bracket: [-50.0, 50.0]
+  xtol: 0.000000000001
+  rtol: 0.00000000000001
+  max_iter: 1000
+  refit_after_selection: forbidden
+
+target_BL0:
+  source_splits: [target_adaptation_train, target_calibration]
+  rows: 19275
+  positives: 1558
+  probability: 0.08083009079118028
+  selection_or_test_labels_may_update_probability: false
+
+selection_rule:
+  assessed_split: model_selection
+  primary_metric: NEW_BL2_log_loss
+  direction: minimize
+  simplicity_tie_tolerance_log_loss: 0.0001
+  simplicity_order: [C1_conservative, C2_balanced, C3_aggressive]
+  eligibility_gates:
+    minimum_history_delta_AP: 0.005
+    old_AP_noninferiority_margin: 0.005
+    maximum_ECE20: 0.03
+    maximum_abs_mean_probability_gap: 0.015
+  if_no_candidate_eligible: select_same_metric_for_diagnostic_final_replay_but_keep_selection_gate_failed
+  selection_labels_may_refit_model_or_calibrator: false
+  final_test_can_change_selection: false
+
+statistics:
+  primary_population: all_final_temporal_replay_random_exposures
+  bootstrap_unit: user
+  bootstrap_replicates: 2000
+  bootstrap_seed: 20260824
+  confidence_interval: paired_percentile_95
+  metric_clip: 0.000000000000001
+  metrics: [average_precision, roc_auc, log_loss, brier, ECE20_equal_width, user_gauc_event_weighted]
+  required_contrasts:
+    - NEW_BL1_minus_TARGET_BL0
+    - NEW_BL2_minus_NEW_BL1
+    - NEW_BL2_minus_OLD_BL2_PLUS_V011
+
+final_gates:
+  minimum_history_delta_AP: 0.005
+  old_AP_noninferiority_margin: 0.005
+  maximum_ECE20: 0.02
+  maximum_abs_mean_probability_gap: 0.01
+  maximum_extreme_probability_share: 0.05
+  minimum_positive_history_AP_days: 2
+  maximum_daily_abs_mean_probability_gap: 0.02
+  probability_value_rule: at_least_one_of_logloss_or_brier_CI95_upper_below_zero_and_other_point_nonpositive
+  all_gates_required_for_retraining_adds_value: true
+  failure_engineering_action: retain_frozen_BL2_plus_v011_intercept_calibration
+
+final_temporal_replay_protocol:
+  open_only_after_selection_model_and_calibrators_are_hashed: true
+  maximum_metric_releases: 1
+  retry_after_metric_release: forbidden
+  threshold_candidate_or_split_change_after_release: forbidden
+  failure_changes_v010_or_v011_conclusion: false
+
+environment:
+  conda_environment: Kuai
+  required_device: CUDA
+  required_gpu: NVIDIA GeForce RTX 5070 Ti
+  required_versions:
+    python: 3.11.15
+    numpy: 2.4.6
+    scipy: 1.17.1
+    scikit_learn: 1.9.0
+    pyarrow: 25.0.1
+    torch: 2.11.0+cu128
+
+authorization:
+  execution_authorized: false
+  exact_hash_approval_required: true
+  authorized_stages_after_exact_hash_approval:
+    - preflight
+    - target_adaptation_train
+    - target_calibration
+    - model_selection
+    - freeze_selected_model
+    - final_temporal_replay_test
+  approval_path: experiments/bl2_target_domain_retraining_v012/approval_v012.json
+  SGD_unfreeze_authorized: false
+  test_refit_or_retry_authorized: false
+
+artifacts:
+  experiment_root: experiments/bl2_target_domain_retraining_v012
+  output_root: experiments/bl2_target_domain_retraining_v012/outputs
+  report_path: experiments/bl2_target_domain_retraining_v012/results_v012.md
+  overwrite: forbidden
+  required_outputs:
+    - outputs/preflight/integrity_and_data_audit.json
+    - outputs/target_adaptation_train/candidate_model_states.npz
+    - outputs/target_adaptation_train/training_audit.csv
+    - outputs/target_adaptation_train/objective_trace.csv
+    - outputs/target_calibration/calibrator_parameters.csv
+    - outputs/model_selection/candidate_metrics.csv
+    - outputs/model_selection/candidate_contrasts_and_eligibility.csv
+    - outputs/model_selection/selection_decision.json
+    - outputs/frozen_selected_model/selected_model_state.npz
+    - outputs/frozen_selected_model/selected_model.json
+    - outputs/final_temporal_replay_test/predictions.parquet
+    - outputs/final_temporal_replay_test/bootstrap_replicates.parquet
+    - outputs/final_temporal_replay_test/paired_user_cluster_bootstrap.csv
+    - outputs/final_temporal_replay_test/reliability_equal_width_20.csv
+    - outputs/final_temporal_replay_test/daily_metrics.csv
+    - outputs/final_temporal_replay_test/stage_decision.json
+    - outputs/final_decision.json
+    - results_v012.md
+
+implementation:
+  status: complete_tests_passed_pending_exact_hash_approval
+  validate_only_passed: true
+  result_producing_files:
+    - path: experiments/bl2_target_domain_retraining_v012/README.md
+      sha256: 95ed061987aec3c040efce3542c00218df368d5c73086a54eb77438c7dda5834
+    - path: reports/analysis/bl2_target_domain_retraining_experiment_design_v012.md
+      sha256: 0b61ad46a6c3df0807cf7b6220691676bab2bde2262cf7e1d7948b39ad3f02df
+    - path: experiments/bl2_target_domain_retraining_v012/predecessor_integrity_snapshot.json
+      sha256: 641ea2b5e6e1e246526e7a7d99592854514093623e1a93368fb6f917a173ea1a
+    - path: experiments/bl2_target_domain_retraining_v012/run_retraining_v012.py
+      sha256: c38371ea80112521c03635e42d76c5c6e20daedb8303f0b9fe93b59604d51800
+    - path: experiments/bl2_target_domain_retraining_v012/tests/test_retraining_v012.py
+      sha256: 844950cf02a34708ca0333409ef80682506980a0fb8d50796e5c0c36fa9f1c95
+  test_result:
+    applicable_repository_regression_command: conda_run_n_Kuai_pytest_ignore_completed_v005_through_v011_lifecycle_tests
+    applicable_repository_passed: 117
+    targeted_command: conda_run_n_Kuai_pytest_experiments_bl2_target_domain_retraining_v012_tests
+    targeted_passed: 7
+    failed: 0
+    applicable_elapsed_seconds: 71.18
+    targeted_elapsed_seconds: 1.26
+    synthetic_CUDA_smoke: pass
+    synthetic_CUDA_device: NVIDIA_GeForce_RTX_5070_Ti
+    excluded_completed_lifecycle_tests:
+      - tests/test_history_value_adam_validation_v005.py
+      - tests/test_history_value_adam_validation_v006.py
+      - tests/test_history_value_adam_validation_v007.py
+      - tests/test_history_value_adam_sealed_v008.py
+      - tests/test_history_value_adam_random_v009.py
+      - tests/test_history_value_adam_random_v010.py
+      - experiments/bl2_target_domain_calibration_v011/tests/test_calibration_v011.py

@@ -1,0 +1,17 @@
+{
+  "contract_id": "bl2_target_domain_calibration_v011",
+  "contract_sha256": "d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485",
+  "execution_authorized": true,
+  "authorized_stages": [
+    "preflight",
+    "calibration_fit",
+    "calibration_selection",
+    "final_refit",
+    "held_out_to_calibrator_test"
+  ],
+  "approved_by": "project_owner",
+  "approval_source": "user_exact_hash_approval_in_codex_thread",
+  "approved_at_local": "2026-08-23",
+  "BL1_or_BL2_retraining_authorized": false,
+  "held_out_test_refit_or_retry_authorized": false
+}

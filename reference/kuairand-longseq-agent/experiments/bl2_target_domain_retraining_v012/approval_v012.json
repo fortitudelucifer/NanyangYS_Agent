@@ -1,0 +1,18 @@
+{
+  "contract_id": "bl2_target_domain_retraining_v012",
+  "contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5",
+  "execution_authorized": true,
+  "authorized_stages": [
+    "preflight",
+    "target_adaptation_train",
+    "target_calibration",
+    "model_selection",
+    "freeze_selected_model",
+    "final_temporal_replay_test"
+  ],
+  "approved_by": "project_owner",
+  "approval_source": "user_exact_hash_approval_in_codex_thread",
+  "approved_at_local": "2026-08-23",
+  "SGD_unfreeze_authorized": false,
+  "test_refit_or_retry_authorized": false
+}

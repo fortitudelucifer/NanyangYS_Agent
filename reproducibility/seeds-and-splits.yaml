@@ -1,0 +1,46 @@
+schema_version: 1
+global_model_seed: 20260814
+
+baseline_v002:
+  bootstrap_seed: 20260814
+  bootstrap_replicates: 2000
+  cluster: user
+
+validation_v007:
+  contract_sha256: b6d908af14a29ad5b54454eb2ca30bb944e9891db4f4414308948638e6b6d897
+  reference_target_rows: 886452
+
+sealed_v008:
+  contract_sha256: b7b54a98ec02f0926a59fc3055097b82bdc9f7c5e5b5e7f1546beb3cdf8ef1c7
+  estimator_refit_dates_inclusive: [2022-04-08, 2022-04-20]
+  calibration_date: 2022-04-21
+  target_dates_inclusive: [2022-04-22, 2022-05-08]
+  reference_target_rows: 4431299
+
+random_v010:
+  contract_sha256: a73b254c43de31be6d9490a7b33398f77cf7fd49e7b0624c931886beca8fea04
+  target_dates_inclusive: [2022-04-22, 2022-05-08]
+  reference_target_rows: 43027
+  random_labels_update_history: false
+
+calibration_v011:
+  contract_sha256: d32a086e3deb96f326887b7cf600f769f81034c9160acc14173dfbd164fbe485
+  calibration_fit: {start: 2022-04-22, end: 2022-04-27, rows: 8731, positives: 686}
+  calibration_selection: {start: 2022-04-28, end: 2022-05-02, rows: 10544, positives: 872}
+  held_out_test: {start: 2022-05-03, end: 2022-05-08, rows: 23752, positives: 2063}
+  bootstrap_seed: 20260823
+  bootstrap_replicates: 2000
+  cluster: user
+
+retraining_v012:
+  contract_sha256: bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5
+  candidate_fit_seeds: [20260814]
+  bootstrap_seed: 20260824
+  bootstrap_replicates: 2000
+  cluster: user
+  final_temporal_replay_is_internal: true
+
+supplementary_learning_curve_v013:
+  fit_seed: 20260814
+  bootstrap_seed: 20260814
+  note: reused Validation rows; not independent confirmation and not a neural result

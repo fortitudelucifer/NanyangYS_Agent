@@ -1,0 +1,1018 @@
+version: 1
+contract_id: history_value_gpu_confirmation_v001
+created_at_local: "2026-08-23"
+timezone: Asia/Shanghai
+status: implementation_complete_tests_passed_pending_exact_hash_approval
+
+design_intent:
+  sole_scientific_question: >-
+    Does the frozen strict point-in-time user-history bundle H2 improve candidate
+    long_view prediction over the identical static feature baseline BL1 on
+    temporally subsequent standard exposure data, and is that conclusion robust
+    to GPU Adam versus GPU SGD optimization?
+  task: candidate_long_view_probability_prediction
+  primary_label: official_long_view
+  target_scene_for_standard_exposure: tab_equals_1
+  history_scene_scope: all_standard_tabs
+  feature_hypothesis:
+    baseline: S_ID_CONTENT_V1_with_PIT_GROUPED_SCALE_V2
+    candidate: H2_USER_STRICT_V1_with_PIT_GROUPED_SCALE_V2
+    sole_difference: strict_user_history_fields
+  deliberately_out_of_scope:
+    - history_window_selection_or_ablation
+    - H3_user_content_or_user_tag_interactions
+    - sequence_or_neural_models
+    - tree_models
+    - feature_discovery_or_feature_selection
+    - threshold_or_calibration_method_search
+    - candidate_generation_or_full_catalog_recommendation
+    - online_causal_or_business_lift_claims
+    - CPU_GPU_speed_or_throughput_comparison
+
+authorization:
+  contract_creation_authorized: true
+  creation_source: >-
+    project_owner_request_on_2026_08_23_to_write_a_detailed_GPU_contract_for_the
+    sole_history_value_question_using_validation_then_sealed_test_then_random_audit
+    with_Adam_and_SGD_controls
+  execution_authorized: false
+  data_access_authorized_by_this_draft: false
+  approval_receipt_protocol:
+    path: configs/history_value_gpu_confirmation_approval_v001.json
+    created_only_after_project_owner_approves_exact_final_contract_SHA256: true
+    receipt_creation_does_not_mutate_or_rehash_the_frozen_contract: true
+    runner_requires_contract_id_exact_SHA256_execution_true_and_automatic_transitions_true: true
+    current_receipt_status: absent_pending_project_owner_exact_hash_approval
+  exact_hash_approval_required_after_implementation: true
+  required_before_any_validation_model_fit_or_prediction:
+    - project_owner_explicit_approval_of_the_final_contract_SHA256
+    - implementation_runner_and_tests_complete
+    - implementation_file_SHA256_values_pinned_in_a_successor_revision
+    - synthetic_end_to_end_tests_pass_without_governed_split_access
+    - validate_only_checks_pass_without_scientific_metric_materialization
+    - governed_data_access_unlock_is_scoped_to_the_current_stage_only
+    - optimizer_adequacy_selection_protocol_is_implemented_exactly
+    - partial_unblinding_status_is_disclosed_in_the_report_template
+  required_before_sealed_test_access:
+    - validation_stage_is_complete_and_hashed
+    - validation_scientific_gate_result_is_frozen_even_if_pass_fail_or_optimizer_split
+    - validation_engineering_and_governance_checks_completed_without_invalidating_failure
+    - sealed_stage_code_config_and_report_template_were_frozen_before_validation_metric_read
+  required_before_random_audit_access:
+    - sealed_stage_is_complete_and_hashed_regardless_of_pass_or_fail
+    - random_stage_code_config_and_report_template_were_frozen_before_validation_metric_read
+  stage_transition_policy: >-
+    one_explicit_approval_of_the_final_contract_hash_authorizes_automatic_ordered
+    transitions_after_each_prior_stage_is_complete_hashed_and_engineering_valid;
+    scientific_gate_failure_does_not_pause_or_require_new_approval
+
+upstream_evidence:
+  source_train_GPU_experiment:
+    contract: configs/gate2b_gpu_experiment_contract_v001.yaml
+    contract_sha256: be7f12075d82dabd2c233df7e04451e0ea001200cfe98a2d9ac92fdf11f9b895
+    run_id: gate2b-gpu-v001-20260816-224409
+    run_manifest: reports/generated/gate2b_gpu_experiment_v001/run_manifest.json
+    result_report: reports/analysis/gate2b_gpu_experiment_results_v001.md
+    status: complete
+    evidence_role: posthoc_Train_only_GPU_exploratory_result
+    observed_primary_history_delta:
+      average_precision: 0.0412952256635631
+      average_precision_user_cluster_CI95: [0.0376608186714702, 0.0450540106544573]
+      user_gauc_event_weighted: 0.0487580724505283
+      log_loss: -0.0229525061997158
+      brier: -0.0089071883344278
+      positive_AP_days: 7
+      total_days: 7
+    use_in_this_contract: hypothesis_generation_and_Adam_starting_configuration_only
+    cannot_satisfy_any_validation_sealed_or_random_gate: true
+  CPU_reference_design:
+    contract: configs/gate2b_probability_repair_contract_v003.yaml
+    contract_sha256: 8df12e4280d1b09167637e95a5aafdd2342bae7844678f9bfa393a4b8b02c917
+    execution_status: not_executed_and_not_authorized
+    inherited_scientific_components:
+      - grouped_static_and_history_preprocessing
+      - strict_history_semantics
+      - previous_day_sigmoid_calibration
+      - probability_quality_gates
+      - paired_user_cluster_bootstrap
+      - objective_reference_solver_adequacy_formula
+    not_inherited:
+      - cpu_only_accelerator_rule
+      - sklearn_SGD_update_schedule
+      - Train_search_or_daily_backtest_as_a_new_scientific_stage
+  partial_unblinding:
+    log: reports/partial_unblinding_access_log.md
+    restricted_test_status: partially_unblinded_by_prior_QA_and_aggregate_label_checks
+    random_audit_status: partially_unblinded_by_prior_QA_and_label_watch_ratio_checks
+    candidate_predictions_or_model_contrasts_previously_read: false
+    required_language: >-
+      The restricted and random windows are not pristine sealed data because
+      aggregate label and quality summaries were observed previously; no candidate
+      prediction or BL2-versus-BL1 result has been observed on either window.
+    consequence: confirmatory_strength_is_limited_and_must_be_disclosed
+
+research_hypotheses:
+  estimand_definition:
+    within_optimizer_history_effect: metric_BL2_minus_metric_BL1_on_identical_rows
+    Adam_history_effect_symbol: H_Adam
+    SGD_history_effect_symbol: H_SGD
+    optimizer_history_interaction_symbol: H_Adam_minus_H_SGD
+    loss_metric_sign_convention: negative_is_improvement
+    ranking_metric_sign_convention: positive_is_improvement
+  primary_null: >-
+    At least one of GPU Adam or GPU SGD fails to show the preregistered practical
+    and user-cluster-supported BL2-over-BL1 history increment on the current
+    standard-exposure confirmation stage.
+  primary_alternative: >-
+    Both GPU Adam and GPU SGD show the preregistered practical and
+    user-cluster-supported BL2-over-BL1 history increment on the current
+    standard-exposure confirmation stage.
+  intersection_union_rule:
+    both_optimizer_specific_history_gates_must_pass: true
+    selecting_only_the_better_optimizer_after_metric_read: forbidden
+    multiplicity_adjustment_for_the_conjunction: not_required_for_the_intersection_union_claim
+    rationale: >-
+      The robust claim is accepted only when both optimizer-specific null
+      components are rejected at the declared level; success of either one alone
+      cannot satisfy the conjunction.
+  minimum_effect_size:
+    metric: average_precision
+    absolute_delta: 0.005
+    status: frozen_before_validation_metric_access
+    interpretation: minimum_practical_increment_not_a_p_value_threshold
+  optimizer_interaction:
+    role: secondary_prespecified_robustness_analysis
+    formula: H_Adam_minus_H_SGD
+    bootstrap_CI_required: true
+    direction_robustness_requires_both_optimizer_history_gates: true
+    magnitude_equivalence_margin: [-0.005, 0.005]
+    comparable_magnitude_claim_requires_CI_entirely_inside_margin: true
+    failure_of_equivalence_does_not_negate_both_positive_history_effects: true
+
+data_governance:
+  formal_silver_run_id: silver-20260814-155536
+  canonical_outcome_view: formal_silver_plus_exclusive_formula_mismatch_rows_with_official_long_view
+  identity_key: [source_table, source_row_number]
+  raw_CSV_access: forbidden
+  recursive_parquet_discovery: forbidden
+  rejected_or_temporary_run_access: forbidden
+  video_statistic_source_access: forbidden
+  user_snapshot_predictor_access: forbidden
+  archive_note: >-
+    The migrated formal Silver snapshot is governed data and is not an active
+    search root. A future stage unlock may expose only the exact allowlisted files
+    after size and SHA256 verification.
+  manifest:
+    archive_path: ../../../governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/manifests/silver_output_manifest.json
+    expected_size_bytes: 4848
+    expected_sha256: 9b5d9b5f60ee8e523db09afab8439fd8406a057ac84ded7ced7565fd43683872
+  allowlisted_inputs:
+    events_early_standard:
+      archive_path: ../../../governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/silver/events_early_standard.parquet
+      expected_size_bytes: 143161102
+      expected_sha256: b9f954eebae4c01e616dc1cca01d5428650e334a83cdaa174618cc77494ad0a0
+      permitted_stages: [optimizer_preflight, validation, sealed_refit, random_history]
+    events_late_standard:
+      archive_path: ../../../governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/silver/events_late_standard.parquet
+      expected_size_bytes: 188975589
+      expected_sha256: c4f1434f6e608d8d0f908a0f5f97d8e51a75e6ecff6054649e3bd2efe939f790
+      permitted_stages: [sealed_test, random_history]
+      access_before_validation_stage_completion_and_transition_approval: forbidden
+    events_random:
+      archive_path: ../../../governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/silver/events_random.parquet
+      expected_size_bytes: 2127439
+      expected_sha256: 9566bde1b674c5edc67e0e30114ff5528f8a5358519b706cac9992032458a34a
+      permitted_stages: [random_audit]
+      access_before_sealed_artifact_freeze: forbidden
+    videos_basic:
+      archive_path: ../../../governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/silver/videos_basic.parquet
+      expected_size_bytes: 77851324
+      expected_sha256: c0184fd2df1356deeca1faebfc23451bb7269f3d00d4213d8b8150d6134ace1f
+      permitted_stages: [optimizer_preflight, validation, sealed_refit, sealed_test, random_audit]
+    users:
+      archive_path: ../../../governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/silver/users.parquet
+      expected_size_bytes: 30450
+      expected_sha256: 044b473ec7158ef726484cf282cd08ec2f4b72e529d85b3dc3a1b128f88aa842
+      role: lineage_and_population_audit_only
+      query_for_predictors: forbidden
+    label_formula_mismatch_rows:
+      archive_path: ../../../governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/quarantine/label_formula_mismatch_rows.parquet
+      expected_size_bytes: 2776464
+      expected_sha256: 1779f544dd0be64ccbd0a4e4107746045750e25af5a189070465b385e5ce843b
+      permitted_stages: [optimizer_preflight, validation, sealed_refit, sealed_test, random_audit]
+      required_filter_by_stage: true
+      only_allowed_exclusion_reason: LONG_VIEW_FORMULA_MISMATCH
+      official_long_view_must_remain_unchanged: true
+  canonical_union_rules:
+    no_source_identity_overlap_between_silver_and_additive: true
+    no_duplicate_source_identity_after_union: true
+    conflict_or_invalid_domain_rows_reattached: false
+    formula_recomputed_label_use: forbidden
+    source_table_and_date_filter_required_before_any_additive_row_access: true
+  known_non_model_counts_for_preflight:
+    Train_target_tab1_rows_2022_04_08_to_2022_04_17: 2399844
+    Validation_target_tab1_rows_2022_04_18_to_2022_04_21: 881035
+    sealed_standard_target_tab1_rows_2022_04_22_to_2022_05_08: 4404167
+    random_all_exposure_rows_2022_04_22_to_2022_05_08: 43027
+    count_source: prior_data_design_and_cleaning_audits_not_candidate_model_evaluation
+    exact_count_mismatch_action: stop_before_model_fit_or_prediction_for_the_affected_stage
+
+population_and_history:
+  standard_target_definition:
+    source: canonical_standard_union
+    target_tab: 1
+    target_label: official_long_view
+    no_minimum_history_filter: true
+    materialized_evaluation_universe: all_matching_rows
+    primary_gate_population: warm_user_rows_only
+    cold_user_rows: required_descriptive_slice_not_in_primary_gate
+  random_target_definition:
+    source: canonical_random_union
+    target_rows: all_formal_random_exposures_regardless_of_tab
+    target_label: official_long_view
+    role: exposure_distribution_transport_audit
+    not_the_same_population_as_standard_tab1: true
+    materialized_evaluation_universe: all_matching_rows
+    primary_gate_population: warm_user_rows_only
+    all_user_and_cold_user_results: required_descriptive_slices
+  primary_user_population:
+    warm_user_definition: user_first_seen_strictly_before_2022_04_22
+    cold_user_definition: user_first_seen_on_or_after_2022_04_22
+    standard_primary: warm_user_rows
+    random_primary: warm_user_rows
+    cold_user_rows: report_as_descriptive_slice_only
+  strict_point_in_time_rule:
+    history_predicate: history_time_ms_strictly_less_than_target_time_ms
+    batch_key: [user_id, time_ms]
+    whole_batch_features_computed_before_any_batch_label_updates_state: true
+    same_timestamp_feedback_access: forbidden
+    current_target_outcome_access: forbidden
+    future_outcome_access: forbidden
+  rolling_history_state:
+    standard_validation_and_sealed_targets:
+      history_source: canonical_standard_events_all_tabs
+      may_include_completed_earlier_standard_events_inside_the_same_evaluation_window: true
+      model_weight_update_inside_evaluation_window: forbidden
+      calibrator_update_inside_evaluation_window: forbidden
+    random_targets:
+      history_source: canonical_standard_events_all_tabs_only
+      include_standard_events_strictly_before_each_random_target_time: true
+      random_events_never_update_history_state: true
+      random_labels_never_enter_any_feature: true
+      rationale: isolate_transport_to_random_candidate_exposure_without_self_contamination
+  frozen_history_sensitivity:
+    role: secondary_required_sensitivity
+    rule: freeze_history_state_at_2022_04_21_end_for_all_sealed_and_random_targets
+    model_weights_and_calibrator_same_as_primary_protocol: true
+    eligible_to_override_primary_result: false
+
+feature_bundles:
+  static_bundle:
+    bundle_id: S_ID_CONTENT_V1_with_PIT_GROUPED_SCALE_V2
+    categorical_tokens:
+      - user_id_controlled_category
+      - video_id_controlled_category
+      - author_id_controlled_category
+      - music_id_controlled_category
+      - video_type_category
+      - upload_type_category
+      - music_type_category
+      - tag_clean_combination_category
+      - video_duration_bucket_category
+    continuous_fields:
+      - log1p_video_duration_seconds
+      - log1p_nonnegative_upload_age_days
+      - log1p_server_width
+      - log1p_server_height
+      - clipped_aspect_ratio
+    binary_fields:
+      - video_duration_valid
+      - upload_age_valid
+      - upload_date_future_or_invalid
+      - geometry_valid
+      - tag_missing
+  history_bundle:
+    bundle_id: H2_USER_STRICT_V1_with_PIT_GROUPED_SCALE_V2
+    inherits_exact_static_bundle: true
+    completed_user_timestamp_windows: [10, 50, 200]
+    fields_per_window:
+      - event_count
+      - positive_count
+      - smoothed_long_view_rate
+      - full_window_mask
+    lifetime_fields:
+      - prior_batch_count
+      - prior_event_count
+      - prior_positive_count
+      - smoothed_long_view_rate
+      - has_history
+      - last_batch_gap_seconds
+    smoothing:
+      prior_probability: estimator_fit_target_prevalence
+      prior_strength: 20.0
+      assessment_or_future_fit: forbidden
+  preprocessing:
+    categorical:
+      implementation: sklearn_OneHotEncoder
+      fit_scope: estimator_fit_rows_only
+      handle_unknown: infrequent_if_exist
+      minimum_frequency: 20
+      maximum_categories_per_input_field: 4096
+      output_dtype: float32
+      raw_ID_numeric_or_ordinal_use: forbidden
+    continuous_and_rate:
+      implementation: sklearn_StandardScaler
+      fit_scope: estimator_fit_rows_only
+      with_mean: true
+      with_std: true
+      transformed_clip: [-10.0, 10.0]
+      transformed_dtype: float32
+    binary:
+      implementation: passthrough
+      allowed_values: [0.0, 1.0]
+      standardization: forbidden
+      output_dtype: float32
+    assembly:
+      format: scipy_CSR_then_torch_sparse_CSR_CUDA
+      dtype: float32
+      row_normalization: none
+    nested_invariants:
+      BL1_and_BL2_share_the_same_fitted_static_encoder_and_scaler: true
+      BL1_matrix_is_an_exact_column_prefix_of_BL2: true
+      row_order_and_identity_identical_across_all_five_prediction_streams: true
+      calibration_and_target_column_order_match_fit: true
+  hard_predictor_denylist:
+    - current_or_future_long_view
+    - is_click
+    - is_like
+    - is_follow
+    - is_comment
+    - is_forward
+    - is_hate
+    - play_time_ms
+    - profile_stay_time
+    - comment_stay_time
+    - is_profile_enter
+    - source_table
+    - source_row_number
+    - event_date
+    - time_ms
+    - tab
+    - exclusion_reason
+    - quality_or_audit_fields
+    - formula_recalculation_fields
+    - video_statistic_fields
+    - content_modality_proxy
+    - visible_status
+    - user_snapshot_fields
+  forbidden_feature_changes_after_contract_hash_approval:
+    - adding_or_removing_any_BL1_static_field
+    - adding_or_removing_any_BL2_history_field
+    - changing_window_lengths
+    - changing_smoothing_strength
+    - changing_unknown_or_missing_value_semantics
+    - using_random_or_sealed_metrics_for_feature_selection
+
+model_matrix:
+  required_prediction_streams:
+    - BL0
+    - ADAM_BL1
+    - ADAM_BL2
+    - SGD_BL1
+    - SGD_BL2
+  BL0:
+    role: no_learned_constant_probability_reference
+    optimizer: not_applicable
+    probability_by_stage:
+      validation: mean_official_long_view_over_standard_tab1_rows_2022_04_08_to_2022_04_17
+      sealed_test: mean_official_long_view_over_standard_tab1_rows_2022_04_08_to_2022_04_21
+      random_audit: identical_to_sealed_test_BL0_probability
+    target_stage_label_use: forbidden
+    calibration: none
+  ADAM_BL1:
+    bundle: static_bundle
+    optimizer: GPU_ADAM
+  ADAM_BL2:
+    bundle: history_bundle
+    optimizer: GPU_ADAM
+  SGD_BL1:
+    bundle: static_bundle
+    optimizer: GPU_SGD
+  SGD_BL2:
+    bundle: history_bundle
+    optimizer: GPU_SGD
+  mandatory_pairing:
+    ADAM_BL2_minus_ADAM_BL1_is_the_Adam_history_effect: true
+    SGD_BL2_minus_SGD_BL1_is_the_SGD_history_effect: true
+    ADAM_BL1_minus_SGD_BL1_is_static_optimizer_diagnostic: true
+    ADAM_BL2_minus_SGD_BL2_is_history_model_optimizer_diagnostic: true
+    Adam_history_effect_minus_SGD_history_effect_is_optimizer_interaction: true
+    cross_optimizer_BL2_comparison_cannot_replace_within_optimizer_history_effect: true
+
+common_objective:
+  model_family: sparse_linear_logistic_regression
+  formula: mean_binary_log_loss_from_raw_score_plus_alpha_times_one_half_coefficient_L2_squared
+  alpha: 0.0001
+  intercept_regularized: false
+  sample_weight: null
+  class_weight: null
+  fit_intercept: true
+  full_batch: true
+  coefficient_and_intercept_initialization: all_zero
+  seed: 20260814
+  deterministic_algorithms_required: true
+  inherited_optimizer_defaults: forbidden
+
+GPU_optimizers:
+  GPU_ADAM:
+    implementation: torch.optim.Adam
+    torch_version_required: 2.11.0+cu128
+    learning_rate: 0.03
+    beta1: 0.9
+    beta2: 0.999
+    epsilon: 0.00000001
+    weight_decay: 0.0
+    amsgrad: false
+    maximize: false
+    capturable: false
+    differentiable: false
+    fused: false
+    foreach: false
+    candidate_step_checkpoints: [30, 100, 300, 1000]
+    selection_rule: smallest_checkpoint_passing_adequacy_for_BL1_and_BL2_on_all_train_probe_origins
+    starting_configuration_source: gate2b_gpu_experiment_v001
+    failure_if_no_checkpoint_passes: optimizer_preflight_failure_requires_successor_contract
+  GPU_SGD:
+    implementation: torch.optim.SGD
+    torch_version_required: 2.11.0+cu128
+    learning_rate_candidates: [0.1, 0.03, 0.01, 0.003, 0.001]
+    momentum: 0.0
+    dampening: 0.0
+    weight_decay: 0.0
+    nesterov: false
+    maximize: false
+    differentiable: false
+    foreach: false
+    fused: false
+    candidate_step_checkpoints: [100, 300, 1000, 3000]
+    one_trajectory_per_learning_rate_with_checkpoint_reuse: true
+    selection_rule:
+      eligibility: pass_adequacy_for_BL1_and_BL2_on_all_train_probe_origins
+      primary: smallest_step_checkpoint
+      tie_break_order: [smallest_maximum_objective_regret, smaller_learning_rate]
+      scientific_assessment_metric_use: forbidden
+    failure_if_no_configuration_passes: optimizer_preflight_failure_requires_successor_contract
+  shared_configuration_rules:
+    BL1_and_BL2_must_share_the_same_optimizer_configuration_within_optimizer: true
+    Adam_and_SGD_may_have_different_learning_rates_and_steps: true
+    equal_compute_or_equal_step_count_required: false
+    fairness_definition: same_objective_and_both_pass_the_same_optimization_adequacy_gate
+    selected_configuration_frozen_before_validation_prediction: true
+    optimizer_configuration_change_after_validation_metric_read: forbidden
+
+optimizer_adequacy:
+  role: mandatory_solver_health_gate_not_a_scientific_metric
+  train_probe_origins: ["2022-04-11", "2022-04-14", "2022-04-17"]
+  probe_fit_rule: standard_tab1_target_rows_strictly_before_origin_minus_one_calendar_day
+  calibration_or_assessment_labels_used_for_selection: forbidden
+  evaluated_on: estimator_fit_rows_only
+  evaluation_dtype: float64
+  reference_solver:
+    implementation: sklearn_LogisticRegression_lbfgs
+    input_matrix_and_column_order_identical_to_GPU_model: true
+    input_dtype: float64
+    C_formula: one_divided_by_fit_rows_times_alpha
+    max_iter: 500
+    tolerance: 0.00000001
+    class_weight: null
+    sample_weight: null
+    convergence_required: true
+    eligible_for_prediction_or_model_claim: false
+  objective_regret:
+    formula: GPU_objective_minus_reference_objective
+    reference_must_not_exceed_GPU_objective_beyond_numerical_tolerance: true
+    reference_above_GPU_numerical_tolerance: 0.0000000001
+    maximum_allowed:
+      absolute_floor: 0.0001
+      relative_fraction: 0.005
+      formula: max_absolute_floor_or_relative_fraction_times_absolute_reference_objective
+  required_for_every_GPU_fit_used_for_validation_sealed_or_random:
+    finite_coefficients_and_intercept: true
+    finite_raw_scores_and_probabilities: true
+    objective_regret_gate_pass: true
+    terminal_gradient_norm_reported: true
+    objective_trace_at_every_declared_checkpoint: true
+  stage_rules:
+    optimizer_preflight:
+      all_declared_trajectories_are_completed_before_selection: true
+      predictive_metric_materialization_or_read: forbidden
+      selected_Adam_and_SGD_configuration_manifest_required: true
+    validation_fit:
+      selected_configuration_must_pass_on_BL1_and_BL2: true
+      failure_action: stop_before_validation_metric_materialization
+    sealed_refit:
+      selected_configuration_must_pass_on_BL1_and_BL2: true
+      failure_action: stop_before_sealed_prediction_or_metric_materialization
+    metric_informed_tolerance_or_grid_change: forbidden
+
+calibration:
+  method_id: PREVIOUS_DAY_SIGMOID_V1
+  implementation: sklearn_LogisticRegression_on_one_raw_decision_score
+  method_search: forbidden
+  input: GPU_base_estimator_raw_decision_score
+  fit_intercept: true
+  l1_ratio: 0.0
+  C: 1.0
+  solver: lbfgs
+  max_iter: 1000
+  tolerance: 0.0000000001
+  class_weight: null
+  sample_weight: null
+  required_checks:
+    both_classes_present: true
+    raw_score_variance_strictly_positive: true
+    convergence_warning_count: 0
+    n_iter_strictly_less_than_max_iter: true
+    finite_intercept_and_slope: true
+    slope_strictly_positive: true
+  probability_storage_clip: none
+  metric_only_numerical_clip: [0.000000000000001, 0.999999999999999]
+  assessment_or_future_calibration_fit: forbidden
+  recalibration_inside_validation_sealed_or_random: forbidden
+
+sequential_stage_protocol:
+  stage_0_optimizer_preflight:
+    data_scope: Train_only_2022_04_08_to_2022_04_17
+    allowed_observations:
+      - training_objective_trace
+      - objective_regret_vs_reference
+      - convergence_and_nonfinite_status
+      - elapsed_time_memory_and_GPU_utilization
+    forbidden_observations:
+      - Validation_labels_predictions_or_metrics
+      - sealed_labels_predictions_or_metrics
+      - random_labels_predictions_or_metrics
+      - predictive_metrics_used_for_optimizer_selection
+    required_output: selected_optimizer_configuration_manifest.json
+    completion_effect: >-
+      automatically_unlock_validation_under_the_single_preapproved_final_contract_hash
+      after_preflight_is_complete_hashed_and_adequate
+  stage_1_validation:
+    estimator_fit_dates_inclusive: ["2022-04-08", "2022-04-16"]
+    calibration_date: "2022-04-17"
+    target_dates_inclusive: ["2022-04-18", "2022-04-21"]
+    target_source: canonical_early_standard_union
+    target_filter: tab_equals_1
+    expected_target_rows: 881035
+    expected_target_rows_scope: all_matching_rows_before_warm_user_primary_gate_filter
+    fit_encoder_scaler_and_smoothing_prior_on_estimator_rows_only: true
+    frozen_model_weights_across_all_four_target_days: true
+    frozen_calibrator_across_all_four_target_days: true
+    online_standard_history_update: true
+    target_day_model_or_calibrator_update: forbidden
+    required_daily_results: 4
+    metric_read_count: one_batched_release_after_all_predictions_are_hashed
+    pass_effect: freeze_result_and_become_eligible_to_request_sealed_stage_unlock
+    scientific_fail_or_optimizer_split_effect: >-
+      freeze_the_falsifying_or_mixed_result_then_automatically_unlock_the_prespecified_sealed_stage;
+      later_stages_may_characterize_temporal_heterogeneity_but_cannot_erase_this_result
+    invalid_execution_effect: stop_and_require_repair_without_sealed_access
+  stage_2_sealed_test:
+    operational_name: sealed_test
+    disclosure_name: partially_unblinded_restricted_confirmatory_test
+    estimator_refit_dates_inclusive: ["2022-04-08", "2022-04-20"]
+    calibration_date: "2022-04-21"
+    target_dates_inclusive: ["2022-04-22", "2022-05-08"]
+    target_source: canonical_late_standard_union
+    target_filter: tab_equals_1
+    expected_target_rows: 4404167
+    expected_target_rows_scope: all_matching_rows_before_warm_user_primary_gate_filter
+    refit_rule_was_frozen_before_validation_metric_read: true
+    selected_optimizer_configurations_unchanged_from_validation: true
+    feature_bundles_and_preprocessing_unchanged_from_validation: true
+    frozen_model_weights_across_all_seventeen_target_days: true
+    frozen_calibrator_across_all_seventeen_target_days: true
+    online_standard_history_update: true
+    target_day_model_or_calibrator_update: forbidden
+    required_daily_results: 17
+    one_prediction_and_metric_release_only: true
+    rerun_after_metric_read: forbidden
+    completion_effect_regardless_of_pass_or_fail: eligible_to_request_random_audit_unlock
+  stage_3_random_audit:
+    model_source: exact_frozen_stage_2_models_and_calibrators
+    refit_or_recalibration: forbidden
+    target_dates_inclusive: ["2022-04-22", "2022-05-08"]
+    target_source: canonical_random_union
+    target_filter: all_formal_random_exposures
+    expected_target_rows: 43027
+    expected_target_rows_scope: all_matching_rows_before_warm_user_primary_gate_filter
+    history_source: standard_events_only
+    random_event_history_update: forbidden
+    target_label_use_for_prevalence_fit_calibration_or_threshold: forbidden
+    one_prediction_and_metric_release_only: true
+    role: exposure_distribution_transport_audit
+    cannot_rescue_a_failed_standard_sealed_result: true
+  stage_access_state_machine:
+    initial_state: preflight_only
+    transitions:
+      - from: preflight_only
+        to: validation_unlocked
+        condition: >-
+          preflight_complete_hashed_and_adequate_under_the_already_approved_final_contract_hash
+      - from: validation_unlocked
+        to: sealed_unlocked
+        condition: >-
+          validation_stage_complete_hashed_and_scientifically_interpretable_even_if
+          its_history_gate_failed_or_only_one_optimizer_passed
+      - from: sealed_unlocked
+        to: random_unlocked
+        condition: sealed_stage_complete_hashed_and_engineering_valid_regardless_of_scientific_gate_result
+    out_of_order_access: terminal_governance_failure
+
+evaluation:
+  primary_metric:
+    name: average_precision
+    implementation: sklearn_average_precision_score
+    aggregation: event_micro
+    trapezoidal_PR_area: forbidden
+    direction: higher_is_better
+  secondary_metrics:
+    user_gauc_event_weighted:
+      eligibility: user_has_at_least_one_positive_and_one_negative
+      ties: midrank
+      weighting: eligible_event_count
+      direction: higher_is_better
+    user_gauc_user_equal:
+      eligibility: identical_to_event_weighted
+      weighting: equal_user
+      direction: higher_is_better
+    log_loss:
+      direction: lower_is_better
+    brier:
+      direction: lower_is_better
+    ece20_equal_width:
+      bins: 20
+      role: descriptive_only
+    roc_auc:
+      role: descriptive_only
+  required_context_for_every_metric_table:
+    - rows
+    - users
+    - positives
+    - prevalence
+    - eligible_user_and_row_coverage_for_user_gauc
+  scopes:
+    validation: [primary_warm_user_pooled_four_days, all_user_pooled_descriptive, each_day]
+    sealed_test: [primary_warm_user_pooled_seventeen_days, all_user_pooled_descriptive, each_day]
+    random_audit: [primary_warm_user_pooled, all_user_pooled_descriptive, each_day_descriptive_if_both_classes_present]
+  required_slices:
+    - all_target_rows
+    - history_0_49
+    - history_50_199
+    - history_200_plus
+    - history_500_plus_exploratory
+    - warm_user
+    - cold_user_if_present
+    - warm_video
+    - behavior_cold_video
+    - tag_known
+    - tag_unknown
+    - video_duration_valid
+    - video_duration_invalid
+  slice_role: descriptive_only_unless_a_successor_contract_registers_a_slice_hypothesis
+  cross_slice_raw_AP_comparison_without_prevalence_context: forbidden
+
+bootstrap:
+  cluster: user_id
+  replicates: 2000
+  seed: 20260814
+  bit_generator: numpy_PCG64
+  interval: percentile_2.5_97.5
+  user_universe_by_stage: ascending_distinct_user_id_over_that_stage_target_manifest
+  multiplicity_matrix_by_stage:
+    generated_and_hashed_before_any_stage_metric: true
+    dtype: little_endian_uint16
+    exact_user_count_and_SHA256_recorded_in_stage_manifest: true
+  shared_multiplicities_across_all_prediction_streams_and_contrasts: true
+  each_selected_user_carries_all_of_their_dates_rows_labels_and_five_predictions: true
+  recompute_nonlinear_metric_inside_each_replicate: true
+  row_IID_bootstrap_or_standard_error: forbidden
+  required_contrasts:
+    - ADAM_BL1_minus_BL0
+    - SGD_BL1_minus_BL0
+    - ADAM_BL2_minus_ADAM_BL1
+    - SGD_BL2_minus_SGD_BL1
+    - ADAM_BL1_minus_SGD_BL1
+    - ADAM_BL2_minus_SGD_BL2
+    - Adam_history_effect_minus_SGD_history_effect
+  metrics_for_model_contrasts:
+    - average_precision
+    - user_gauc_event_weighted
+    - user_gauc_user_equal
+    - log_loss
+    - brier
+  minimum_effective_replicates: 1950
+  invalid_replicate_reason_counts_required: true
+
+stage_gates:
+  primary_gate_population_by_stage:
+    validation: warm_user_rows
+    sealed_test: warm_user_rows
+    random_audit: warm_user_rows
+    all_user_and_cold_user_results: descriptive_only
+  common_static_baseline_gate_per_optimizer:
+    comparison: optimizer_BL1_minus_BL0
+    pooled_average_precision_CI_lower_must_be_positive: true
+    pooled_user_gauc_event_weighted_delta_must_be_nonnegative: true
+    pooled_log_loss_delta_must_be_nonpositive: true
+    pooled_brier_delta_must_be_nonpositive: true
+    purpose: ensure_BL1_is_an_effective_and_probability_sane_static_baseline
+  common_absolute_probability_gate:
+    applies_to_each_of: [ADAM_BL1, ADAM_BL2, SGD_BL1, SGD_BL2]
+    pooled_log_loss_minus_BL0_must_be_nonpositive: true
+    pooled_brier_minus_BL0_must_be_nonpositive: true
+    numerical_tolerance: 0.0000000001
+  common_history_gate_per_optimizer:
+    comparison: optimizer_BL2_minus_same_optimizer_BL1
+    pooled_average_precision_delta_minimum: 0.005
+    pooled_average_precision_CI95_lower_must_be_positive: true
+    pooled_user_gauc_event_weighted_delta_must_be_nonnegative: true
+    pooled_log_loss_delta_must_be_nonpositive: true
+    pooled_brier_delta_must_be_nonpositive: true
+  validation_gate:
+    static_and_absolute_gates_pass_for_both_optimizers: true
+    history_gate_passes_for_both_optimizers: true
+    minimum_positive_AP_days_per_optimizer: 3
+    total_days: 4
+    scientific_failure_action:
+      - record_validation_failure_as_nonerasable_evidence
+      - preserve_all_predictions_metrics_bootstrap_and_audits
+      - automatically_continue_to_sealed_after_stage_freeze
+      - prohibit_later_success_from_relabeling_validation_as_passed
+    engineering_or_governance_failure_action: stop_before_sealed_access
+  sealed_test_gate:
+    static_and_absolute_gates_pass_for_both_optimizers: true
+    history_gate_passes_for_both_optimizers: true
+    minimum_positive_AP_days_per_optimizer: 12
+    total_days: 17
+    failure_does_not_prevent_prespecified_random_diagnostic_after_stage_completion: true
+    failure_means_longer_horizon_standard_history_claim_is_falsified: true
+  random_transport_gate:
+    role: claim_scope_gate_not_a_rescue_gate
+    history_gate_passes_for_both_optimizers: true
+    daily_positive_count_not_a_gate_due_to_small_sparse_random_sample: true
+    absolute_probability_vs_standard_BL0: descriptive_only_due_to_prevalence_shift
+    failure_or_inconclusive_action: narrow_claim_to_standard_recommendation_exposure
+
+probability_health:
+  required_for_every_learned_stream_and_stage:
+    finite_probability_share: 1.0
+    probability_range_inclusive: [0.0, 1.0]
+    share_at_or_below_1e_minus_6_reported: true
+    share_at_or_above_1_minus_1e_minus_6_reported: true
+    quantiles_required: [minimum, p001, p01, p10, median, p90, p99, p999, maximum]
+    calibration_intercept_and_slope_reported: true
+  hard_saturation_stop:
+    lower_extreme_share_maximum: 0.05
+    upper_extreme_share_maximum: 0.05
+    threshold_epsilon: 0.000001
+    rationale: prevent_recurrence_of_v002_clip_saturation
+
+terminal_interpretation:
+  validation_both_optimizers_pass:
+    claim: short_horizon_out_of_time_validation_supports_history_increment_robust_to_optimizer_direction
+    next_action: freeze_result_then_eligible_to_request_sealed_test_unlock
+  validation_one_optimizer_only_passes:
+    claim: history_increment_is_optimizer_dependent_or_inconclusive
+    next_action: >-
+      freeze_result_then_automatically_continue_to_sealed_for_prespecified
+      temporal_heterogeneity_evidence_without_erasing_the_optimizer_split
+  validation_both_fail:
+    claim: broad_stable_history_increment_is_falsified_at_validation
+    next_action: >-
+      freeze_result_then_automatically_continue_to_sealed_for_prespecified
+      temporal_heterogeneity_evidence_without_rescuing_the_broad_claim
+  optimizer_adequacy_failure:
+    scientific_claim: none
+    interpretation: optimizer_implementation_did_not_form_a_valid_control
+    next_action: successor_contract_required_without_validation_access
+  sealed_both_optimizers_pass:
+    claim: longer_horizon_standard_exposure_supports_history_increment_robust_to_optimizer_direction
+    next_action: complete_random_transport_audit
+  sealed_one_or_both_fail:
+    claim: longer_horizon_standard_history_increment_is_falsified_or_optimizer_dependent
+    next_action: random_audit_may_only_localize_transport_behavior_and_cannot_rescue_claim
+  random_both_optimizers_pass:
+    claim: history_increment_transports_to_the_frozen_random_exposure_audit_under_both_optimizers
+  random_inconclusive_or_fail:
+    claim: history_evidence_is_limited_to_standard_recommendation_exposure_or_random_power_is_insufficient_as_reported
+  mixed_stage_results:
+    validation_fail_later_pass:
+      claim: history_increment_is_time_dependent_and_failed_the_short_horizon_validation_stage
+      forbidden_reinterpretation: later_success_confirms_the_original_cross_stage_stability_claim
+    validation_pass_sealed_fail:
+      claim: history_increment_did_not_persist_to_the_longer_horizon_standard_test
+    standard_pass_random_fail:
+      claim: history_increment_is_supported_for_standard_exposure_but_not_shown_to_transport_to_random_exposure
+  strongest_permitted_final_claim:
+    requires: [validation_both_pass, sealed_both_pass, random_both_pass]
+    wording: >-
+      Under the frozen offline candidate-response protocol, strict point-in-time
+      user history improves over the identical static baseline on temporally later
+      standard exposures and the frozen random-exposure audit under both GPU Adam
+      and GPU SGD.
+  always_forbidden:
+    - prove_history_is_causally_useful
+    - claim_online_business_lift
+    - claim_full_catalog_recommendation_quality
+    - call_partially_unblinded_test_pristine
+    - use_random_success_to_override_standard_test_failure
+    - use_sealed_or_random_success_to_erase_a_validation_failure
+    - select_only_the_better_optimizer_after_stage_metric_read
+
+artifact_protocol:
+  output_root: reports/generated/history_value_gpu_confirmation_v001
+  stage_directories:
+    preflight: reports/generated/history_value_gpu_confirmation_v001/preflight
+    validation: reports/generated/history_value_gpu_confirmation_v001/validation
+    sealed_test: reports/generated/history_value_gpu_confirmation_v001/sealed_test
+    random_audit: reports/generated/history_value_gpu_confirmation_v001/random_audit
+  prediction_schema_required_columns:
+    - source_table
+    - source_row_number
+    - user_id
+    - video_id
+    - event_date
+    - time_ms
+    - long_view
+    - prior_batch_count
+    - p_BL0
+    - p_ADAM_BL1
+    - p_ADAM_BL2
+    - p_SGD_BL1
+    - p_SGD_BL2
+    - raw_ADAM_BL1
+    - raw_ADAM_BL2
+    - raw_SGD_BL1
+    - raw_SGD_BL2
+  required_common_stage_outputs:
+    - target_row_manifest.csv
+    - feature_manifest.json
+    - model_manifest.json
+    - environment_and_hardware_manifest.json
+    - optimization_adequacy.csv
+    - calibration_audit.csv
+    - predictions.parquet
+    - pooled_metrics.csv
+    - daily_metrics.csv
+    - model_contrasts.csv
+    - paired_user_cluster_bootstrap.csv
+    - history_depth_slice_metrics.csv
+    - probability_distribution_audit.csv
+    - stage_decision.json
+    - usage_ledger.csv
+    - run_manifest.json
+    - artifact_hash_manifest.json
+  required_global_outputs:
+    - selected_optimizer_configuration_manifest.json
+    - stage_access_ledger.jsonl
+    - final_claim_decision.json
+    - reports/analysis/history_value_gpu_confirmation_results_v001.md
+  freeze_order:
+    - write_predictions
+    - verify_row_identity_labels_probability_ranges_and_nulls
+    - hash_predictions_and_target_manifest
+    - generate_and_hash_bootstrap_multiplicity_matrix
+    - compute_all_metrics_in_one_batch
+    - write_stage_decision
+    - hash_every_stage_artifact
+    - append_partial_unblinding_access_log
+  no_metric_before_prediction_freeze: true
+  overwrite_completed_stage_artifacts: forbidden
+  failure_artifacts_must_be_separate_from_complete_release_paths: true
+
+execution_environment:
+  conda_environment: Kuai
+  python_executable: /home/forcifer-123/miniconda3/envs/Kuai/bin/python
+  required_device_type: cuda
+  expected_device_name: NVIDIA GeForce RTX 5070 Ti
+  minimum_device_memory_bytes: 16000000000
+  required_versions:
+    python: 3.11.15
+    torch: 2.11.0+cu128
+    numpy: 2.4.6
+    scipy: 1.17.1
+    scikit_learn: 1.9.0
+    pyarrow: 25.0.1
+    duckdb: 1.5.5
+    threadpoolctl: 3.6.0
+  exact_version_match_required: true
+  silent_CUDA_to_CPU_fallback: forbidden
+  CUDA_device_name_and_compute_capability_recorded: true
+  deterministic_seed_manifest_required: true
+  code_config_input_output_SHA256_required: true
+
+operational_budget:
+  budget_status: proposed_not_active
+  GPU_devices_per_run: 1
+  maximum_total_GPU_device_hours: 12
+  maximum_CPU_threads: 8
+  maximum_peak_RAM_GB: 24
+  maximum_peak_GPU_memory_GB: 15.5
+  maximum_artifact_storage_GB: 30
+  maximum_elapsed_hours_per_stage:
+    optimizer_preflight: 4
+    validation: 4
+    sealed_test: 6
+    random_audit: 2
+  all_failed_or_nonconverged_fits_count_toward_budget: true
+  optimizer_trajectory_checkpoint_reuse_required: true
+  on_projected_or_actual_breach:
+    - stop_before_next_fit_or_prediction_batch
+    - write_usage_ledger_and_partial_hash_inventory
+    - do_not_expand_budget_after_any_validation_sealed_or_random_metric_read
+    - require_successor_contract_and_explicit_approval
+
+implementation_status:
+  contract_written: true
+  runner_exists: true
+  stage_access_controller_exists: true
+  GPU_Adam_and_SGD_shared_objective_tests_exist: true
+  strict_history_extension_tests_exist: true
+  validation_synthetic_end_to_end_test_exists: true
+  sealed_and_random_access_order_test_exists: true
+  artifact_schema_and_hash_tests_exist: true
+  full_regression_test_result:
+    command: conda_run_n_Kuai_python_m_pytest_q
+    passed: 106
+    failed: 0
+    elapsed_seconds: 71.21
+    completed_at_local: "2026-08-23"
+  CUDA_smoke_test:
+    passed: true
+    device: NVIDIA_GeForce_RTX_5070_Ti
+    optimizers_exercised: [GPU_ADAM, GPU_SGD]
+    CPU_fallback_used: false
+    governed_split_data_accessed: false
+  optimizer_preflight_feature_artifact:
+    path: reports/generated/gate2b_baselines_v002/gate2b_feature_matrix.parquet
+    role: frozen_Train_only_point_in_time_feature_matrix_for_objective_only_preflight
+    size_bytes: 79193207
+    sha256: 4981ee32c4c367bf42f27fdff81171e2bedbe5eb7fabf66d6b3e2796b9e428cd
+    validation_sealed_or_random_rows_present: false
+  result_producing_files:
+    - path: src/kuairand_longseq/features/history_value_feature_sql.py
+      sha256: 06330a74ed5fc2384c7799ec33877ba7a0f73f51aaf23e1e42c284f5607bfeb2
+    - path: src/kuairand_longseq/models/history_value_gpu.py
+      sha256: f6e52fb68d03ae0447bc59c53bd77c3a6bd9dd79681daa68e59f7e933c5bcfec
+    - path: scripts/run_history_value_gpu_confirmation_v001.py
+      sha256: 7bd4d667da3f0d0f089a775db0f667449a62c02ce8fa0c481f837db205b45b72
+    - path: tests/test_history_value_gpu_confirmation.py
+      sha256: 97db2e36e416a73ece770659d3944559cde6615063bc68bc4481f32ca8c58aa2
+  validate_only_passed: true
+  independent_review_complete: false
+  exact_implementation_hashes_pinned: true
+  any_validation_candidate_prediction_or_metric_read_under_this_contract: false
+  any_sealed_candidate_prediction_or_metric_read_under_this_contract: false
+  any_random_candidate_prediction_or_metric_read_under_this_contract: false
+
+release_stop_conditions:
+  - final_contract_or_implementation_SHA256_mismatch
+  - allowlisted_input_size_or_SHA256_mismatch
+  - stage_access_attempted_out_of_order
+  - canonical_union_identity_or_row_count_mismatch
+  - current_same_timestamp_or_future_label_leakage
+  - random_label_enters_any_history_feature
+  - BL1_static_matrix_not_exact_prefix_of_BL2
+  - row_identity_or_label_mismatch_across_prediction_streams
+  - optimizer_configuration_differs_between_BL1_and_BL2_within_optimizer
+  - optimizer_adequacy_or_reference_convergence_failure
+  - calibrator_failure_or_nonpositive_slope
+  - nonfinite_or_out_of_range_probability
+  - hard_probability_saturation_stop_triggered
+  - bootstrap_user_universe_or_multiplicity_hash_mismatch
+  - insufficient_effective_bootstrap_replicates
+  - missing_required_artifact_or_artifact_hash
+  - budget_breach
+  - metric_materialized_before_prediction_and_bootstrap_freeze
+  - completed_stage_artifact_overwrite_attempt
+
+review_checklist_before_hash_approval:
+  - confirm_single_question_scope_and_no_window_H3_or_sequence_expansion
+  - confirm_five_prediction_streams_and_all_required_contrasts
+  - confirm_Adam_and_SGD_share_the_same_scientific_objective_and_alpha
+  - confirm_optimizer_selection_uses_training_objective_only
+  - confirm_validation_then_sealed_then_random_access_order
+  - confirm_validation_scientific_failure_is_frozen_and_does_not_block_prespecified_sealed_execution
+  - confirm_validation_engineering_or_governance_invalidity_still_blocks_sealed_execution
+  - confirm_later_stage_success_cannot_erase_an_earlier_stage_failure
+  - confirm_sealed_completion_not_success_is_the_random_unlock_precondition
+  - confirm_one_final_hash_approval_covers_automatic_ordered_stage_transitions
+  - confirm_random_targets_use_standard_history_only_and_never_update_state
+  - confirm_BL0_prior_never_uses_target_stage_labels
+  - confirm_partial_unblinding_disclosure
+  - confirm_minimum_AP_effect_0_005_and_user_cluster_CI_gate
+  - confirm_static_baseline_absolute_probability_and_history_gates
+  - confirm_all_artifact_schemas_and_hashes_are_implemented
+  - replace_implementation_status_false_fields_only_after_evidence_exists
+  - compute_final_contract_SHA256_and_obtain_explicit_execution_approval

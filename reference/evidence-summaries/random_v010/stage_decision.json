@@ -1,0 +1,22 @@
+{
+  "SGD_status": "frozen_deferred",
+  "absolute_probability_gate": {
+    "ADAM_BL1": false,
+    "ADAM_BL2": false
+  },
+  "history_gate": {
+    "ADAM": true
+  },
+  "optimizer_robustness_established": false,
+  "positive_AP_days": {
+    "ADAM": 14
+  },
+  "probability_saturation_gate": true,
+  "required_positive_AP_days": 0,
+  "scientific_failure_blocks_next_stage": false,
+  "scientific_status": "pass",
+  "stage": "random_audit",
+  "static_baseline_gate": {
+    "ADAM": false
+  }
+}

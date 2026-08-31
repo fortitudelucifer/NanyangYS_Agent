@@ -1,0 +1,60 @@
+{
+  "artifacts": [
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/bootstrap_multiplicity.npy",
+      "sha256": "7583f29bb8c53695348744c98d80371b8e236cf891c154cace907ff80241106a",
+      "size_bytes": 3428128
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/bootstrap_replicates.parquet",
+      "sha256": "4748ff0f6d94fd78f900e89fda0ec7afe58da11669f1e591b65055f5d8bc2fa6",
+      "size_bytes": 234289
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/daily_metrics.csv",
+      "sha256": "047a6baf6e2a5b85d144cf1e50553425c4549d4acfcb327301fd9ce88bd42ca1",
+      "size_bytes": 3560
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/paired_user_cluster_bootstrap.csv",
+      "sha256": "bc753b270f17ba95e1f1ac524a67ffcceb43b9cc9e5aac00382298615bb0fb61",
+      "size_bytes": 2838
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/pooled_metrics.csv",
+      "sha256": "2b12bd6466285810993e9fc167e1210eae7fbc5dc7b199821658ffd135b70599",
+      "size_bytes": 1358
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/predictions.parquet",
+      "sha256": "e9d3fb67ee7a2722f5b2470f32a85632fd79748001091777218f62d1e9103b1a",
+      "size_bytes": 561276
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/probability_distribution_audit.csv",
+      "sha256": "ef731dcbd3fa3d132e42eaf4bc30bcd1d8a73f344e5a377745ecbed61cc3432a",
+      "size_bytes": 978
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/reliability_equal_width_20.csv",
+      "sha256": "dad0a03dddaada67d20ec8079397b82128722aa20ebb32b9dd8af58d1911f3a7",
+      "size_bytes": 4490
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/run_manifest.json",
+      "sha256": "4ced6311742e3a06770594fc02c1b4e84d65690af6d71ad3669e1a0586761147",
+      "size_bytes": 1570
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/split_audit.json",
+      "sha256": "a438957da494371c77cb40703d78ad1edb2ca5c3c1b00dd4154ce57fbc5dc13c",
+      "size_bytes": 212
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_temporal_replay_test/stage_decision.json",
+      "sha256": "00818dab7dc609215f68f735f7ce2a74590fd6e02433020c6436902f40cb14c9",
+      "size_bytes": 634
+    }
+  ],
+  "hash_algorithm": "SHA-256"
+}

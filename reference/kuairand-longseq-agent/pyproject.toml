@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kuairand-longseq-agent"
+version = "0.1.0"
+description = "Point-in-time-safe long-sequence candidate preference research and validation agents for KuaiRand-1K"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "duckdb>=1.5,<2",
+  "matplotlib>=3.8,<4",
+  "pyarrow>=25,<26",
+  "PyYAML>=6,<7",
+  "scikit-learn>=1.9,<2",
+  "threadpoolctl>=3.6,<4",
+]
+
+[project.optional-dependencies]
+# Test-only tooling. Deliberately kept out of `dependencies` and out of the
+# contract's `execution_environment.release_versions`: pytest takes no part in
+# any released computation, so it must not enter the reproducibility pin set.
+test = [
+  "pytest>=9,<10",
+]
+# CUDA wheel selection is pinned separately in
+# experiments/neural_sequence_candidate_model_v013/requirements-cu130-v013.txt.
+gpu-v013 = [
+  "torch==2.12.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+# pytest is the single declared runner. `unittest discover` collects only
+# TestCase subclasses and therefore silently drops module-level test functions,
+# which is incompatible with the fail-closed posture of the Gate 2B contracts.
+addopts = "-ra"
+# The Gate 2B contracts require convergence_warning_count == 0 and
+# future_or_deprecation_warning_count == 0 for every fit. Promoting warnings to
+# errors enforces that at suite level instead of relying on each test to
+# remember an explicit `warnings.catch_warnings` block.
+filterwarnings = ["error"]
+
+# The public reproducibility environment is pinned separately in
+# ../../reproducibility/environment/requirements-release-v010-v012.txt.

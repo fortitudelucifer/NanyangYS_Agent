@@ -1,0 +1,204 @@
+version: 4
+contract_id: history_value_adam_confirmation_v004
+status: implementation_complete_tests_passed_pending_exact_hash_approval
+created_at_local: "2026-08-23"
+timezone: Asia/Shanghai
+
+base_contract:
+  path: configs/history_value_gpu_confirmation_contract_v002.yaml
+  sha256: a11e75f43b2fe013e9ea0ee813953b46c224f8a5786e64a1c3bd25a43b37d09b
+  inheritance_rule: deep_merge_this_Adam_only_successor_over_exact_v002_and_v001
+
+successor_reason:
+  project_owner_decision: freeze_SGD_until_after_main_experiment
+  SGD_frozen_evidence: reports/analysis/sgd_optimizer_freeze_2026-08-23.md
+  v002_failure_artifact: reports/generated/history_value_gpu_confirmation_v002/preflight/preflight_failure.json
+  validation_accessed_in_v001_or_v002: false
+  sealed_or_random_accessed_in_v001_or_v002: false
+  main_scientific_question_changed: false
+  optimizer_robustness_claim_removed: true
+
+authorization:
+  contract_creation_authorized: true
+  creation_source: explicit_project_owner_direction_to_freeze_SGD_and_execute_remaining_route
+  execution_authorized: false
+  data_access_authorized_by_this_draft: false
+  exact_hash_approval_required_after_implementation: true
+  approval_receipt_protocol:
+    path: configs/history_value_adam_confirmation_approval_v004.json
+    created_only_after_project_owner_approves_exact_final_contract_SHA256: true
+    receipt_creation_does_not_mutate_or_rehash_the_frozen_contract: true
+    runner_requires_contract_id_exact_SHA256_execution_true_and_automatic_transitions_true: true
+    current_receipt_status: absent_pending_project_owner_exact_hash_approval
+
+design_intent:
+  sole_scientific_question: >-
+    Under the frozen GPU Adam solver, does strict point-in-time H2 user history
+    improve candidate long_view prediction over the identical static BL1 baseline?
+  optimizer_robustness_question: deferred_out_of_scope
+  SGD_status: frozen_engineering_appendix_not_a_prediction_stream_or_gate
+
+research_hypotheses:
+  estimand_definition:
+    primary_history_effect: metric_ADAM_BL2_minus_metric_ADAM_BL1_on_identical_rows
+    loss_metric_sign_convention: negative_is_improvement
+    ranking_metric_sign_convention: positive_is_improvement
+  primary_null: Adam_BL2_fails_the_preregistered_history_increment_gate
+  primary_alternative: Adam_BL2_passes_the_preregistered_history_increment_gate
+  intersection_union_rule:
+    status: removed_with_SGD_freeze
+  optimizer_interaction:
+    status: deferred_not_computed
+
+model_matrix:
+  required_prediction_streams: [BL0, ADAM_BL1, ADAM_BL2]
+  mandatory_pairing:
+    ADAM_BL2_minus_ADAM_BL1_is_the_primary_history_effect: true
+    ADAM_BL1_minus_BL0_is_the_static_baseline_check: true
+    SGD_prediction_or_contrast_materialization: forbidden
+
+GPU_optimizers:
+  GPU_ADAM:
+    learning_rate: 0.03
+    candidate_step_checkpoints: [100]
+    selected_steps: 100
+    selection_evidence:
+      source: reports/generated/history_value_gpu_confirmation_v002/preflight/optimization_adequacy.csv
+      expected_size_bytes: 23470
+      expected_sha256: 79867555a31a96f5ffe1be38930de69ad491d70fea5aed56008d7997d8cbcf16
+      passed_combinations: 6
+      required_combinations: 6
+      maximum_objective_regret: 0.000540
+      minimum_allowed_regret: 0.002606
+  GPU_SGD:
+    status: frozen_not_executed
+
+optimizer_adequacy:
+  stage_rules:
+    inherited_preflight:
+      exact_v002_Adam_evidence_hash_verified: true
+      new_optimizer_search: forbidden
+    validation_fit:
+      Adam_100_steps_must_pass_on_BL1_and_BL2: true
+      failure_action: stop_before_validation_metric_materialization
+    sealed_refit:
+      Adam_100_steps_must_pass_on_BL1_and_BL2: true
+      failure_action: stop_before_sealed_prediction_or_metric_materialization
+
+bootstrap:
+  required_contrasts:
+    - ADAM_BL1_minus_BL0
+    - ADAM_BL2_minus_ADAM_BL1
+
+stage_gates:
+  common_static_baseline_gate:
+    comparison: ADAM_BL1_minus_BL0
+    pooled_average_precision_CI_lower_must_be_positive: true
+    pooled_user_gauc_event_weighted_delta_must_be_nonnegative: true
+    pooled_log_loss_delta_must_be_nonpositive: true
+    pooled_brier_delta_must_be_nonpositive: true
+  common_history_gate:
+    comparison: ADAM_BL2_minus_ADAM_BL1
+    pooled_average_precision_delta_minimum: 0.005
+    pooled_average_precision_CI95_lower_must_be_positive: true
+    pooled_user_gauc_event_weighted_delta_must_be_nonnegative: true
+    pooled_log_loss_delta_must_be_nonpositive: true
+    pooled_brier_delta_must_be_nonpositive: true
+  validation_gate:
+    static_absolute_and_history_gates_pass_for_Adam: true
+    minimum_positive_AP_days: 3
+    total_days: 4
+    scientific_failure_still_continues_to_sealed: true
+  sealed_test_gate:
+    static_absolute_and_history_gates_pass_for_Adam: true
+    minimum_positive_AP_days: 12
+    total_days: 17
+    scientific_failure_still_continues_to_random: true
+  random_transport_gate:
+    history_gate_passes_for_Adam: true
+    cannot_rescue_standard_failure: true
+
+terminal_interpretation:
+  strongest_permitted_final_claim: >-
+    Under the frozen offline GPU Adam candidate-response protocol, strict
+    point-in-time user history improves over the identical static baseline on
+    temporally later standard exposures and the random-exposure audit.
+  required_limitation: optimizer_robustness_not_established_because_SGD_was_frozen
+
+artifact_protocol:
+  output_root: reports/generated/history_value_adam_confirmation_v004
+  stage_directories:
+    preflight: reports/generated/history_value_adam_confirmation_v004/preflight
+    validation: reports/generated/history_value_adam_confirmation_v004/validation
+    sealed_test: reports/generated/history_value_adam_confirmation_v004/sealed_test
+    random_audit: reports/generated/history_value_adam_confirmation_v004/random_audit
+  prediction_schema_required_columns:
+    - source_table
+    - source_row_number
+    - user_id
+    - video_id
+    - event_date
+    - time_ms
+    - long_view
+    - prior_batch_count
+    - p_BL0
+    - p_ADAM_BL1
+    - p_ADAM_BL2
+    - raw_ADAM_BL1
+    - raw_ADAM_BL2
+  required_global_outputs:
+    - selected_optimizer_configuration_manifest.json
+    - stage_access_ledger.jsonl
+    - final_claim_decision.json
+    - reports/analysis/history_value_adam_confirmation_results_v004.md
+
+implementation_status:
+  contract_written: true
+  runner_exists: true
+  stage_access_controller_exists: true
+  exact_implementation_hashes_pinned: true
+  validate_only_passed: true
+  independent_review_complete: false
+  v001_v002_full_regression_tests_remain_applicable: true
+  full_regression_test_result:
+    command: conda_run_n_Kuai_python_m_pytest_q
+    passed: 117
+    failed: 0
+    elapsed_seconds: 70.93
+    completed_at_local: "2026-08-23"
+  successor_targeted_test_result:
+    passed: 5
+    failed: 0
+  result_producing_files:
+    - path: src/kuairand_longseq/features/history_value_feature_sql.py
+      sha256: 06330a74ed5fc2384c7799ec33877ba7a0f73f51aaf23e1e42c284f5607bfeb2
+    - path: src/kuairand_longseq/models/history_value_gpu.py
+      sha256: f6e52fb68d03ae0447bc59c53bd77c3a6bd9dd79681daa68e59f7e933c5bcfec
+    - path: scripts/run_history_value_gpu_confirmation_v001.py
+      sha256: 7bd4d667da3f0d0f089a775db0f667449a62c02ce8fa0c481f837db205b45b72
+    - path: scripts/run_history_value_gpu_confirmation_v002.py
+      sha256: 9276222d4432a942544f39ea9fbd7137762b831544fc2c4457901c5037f832fc
+    - path: scripts/run_history_value_adam_confirmation_v004.py
+      sha256: 6d07fd322f8ee03de590990e24213d075f22a91b5ea62acc36b6dceaf9754e14
+    - path: tests/test_history_value_adam_confirmation_v004.py
+      sha256: 7c8ecfd6cacde316ce3c9b19059168861c58ff107a6932e250f9cf3b7e1f048e
+
+operational_budget:
+  budget_status: proposed_not_active_pending_exact_hash_approval
+  maximum_elapsed_hours_per_stage:
+    inherited_Adam_preflight: 1
+    validation: 4
+    sealed_test: 6
+    random_audit: 2
+  new_SGD_fits: 0
+
+review_checklist_before_hash_approval:
+  - verify_v002_Adam_100_step_evidence_SHA256_and_6_of_6_pass
+  - verify_SGD_outputs_are_frozen_and_no_SGD_target_prediction_is_created
+  - verify_only_BL0_ADAM_BL1_ADAM_BL2_prediction_streams
+  - verify_all_history_features_metrics_thresholds_and_stage_order_are_unchanged
+  - verify_scientific_failure_continues_and_engineering_invalidity_stops
+  - verify_final_claim_explicitly_excludes_optimizer_robustness
+  - pin_runner_and_test_hashes
+  - pass_full_tests_and_validate_only_without_governed_stage_access
+  - compute_final_SHA256_and_obtain_explicit_project_owner_approval

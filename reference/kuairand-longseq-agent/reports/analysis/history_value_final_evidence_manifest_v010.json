@@ -1,0 +1,52 @@
+{
+  "status": "complete",
+  "scientific_status": "history_supported_on_standard_and_random_under_frozen_Adam",
+  "hash_algorithm": "SHA-256",
+  "artifacts": [
+    {
+      "path": "configs/history_value_adam_random_contract_v010.yaml",
+      "size_bytes": 9281,
+      "sha256": "a73b254c43de31be6d9490a7b33398f77cf7fd49e7b0624c931886beca8fea04"
+    },
+    {
+      "path": "configs/history_value_adam_random_approval_v010.json",
+      "size_bytes": 594,
+      "sha256": "f79ad5b9333a836825ca308ab89ae60f611f9c8aaaf1287551e68feead6f4b7f"
+    },
+    {
+      "path": "reports/analysis/history_value_adam_random_results_v010.md",
+      "size_bytes": 2078,
+      "sha256": "fb13185577a18776ac0d5a02c4776c7681702aa254877762820b8b64c3db34e1"
+    },
+    {
+      "path": "reports/analysis/history_value_final_evidence_summary_v010.md",
+      "size_bytes": 13231,
+      "sha256": "85db02bcd9c11960e52f53d64c3696396d3aea33518f2d20f02ac9e216f800c5"
+    },
+    {
+      "path": "reports/analysis/history_value_cross_stage_plot_data_v010.csv",
+      "size_bytes": 1917,
+      "sha256": "7491eaa4c55a1cc542111873f1df27e789f2679ad229780195a81feb01f5d606"
+    },
+    {
+      "path": "reports/analysis/history_value_random_daily_delta_ap_v010.csv",
+      "size_bytes": 1375,
+      "sha256": "fbff37ec5d3e41d44dace65a3a902a2ef23155a7a9706f45dcc5df4c64ef5123"
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/artifact_hash_manifest.json",
+      "size_bytes": 4108,
+      "sha256": "ceffc7d48361008c276792b6fc6ebb137b3c5e67ac068fffb79ecb1c27b9331a"
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/predictions.parquet",
+      "size_bytes": 1985188,
+      "sha256": "48ae0793e554b1eb82d3ba75684915f471cf52f005039a6ad674075b4afffc31"
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/final_claim_decision.json",
+      "size_bytes": 1027,
+      "sha256": "18860a6f6a738d54a11f6b56a47f6af6b039750cdb291f615e64ec631177ca80"
+    }
+  ]
+}

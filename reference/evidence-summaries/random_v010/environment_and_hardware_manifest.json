@@ -1,0 +1,23 @@
+{
+  "cuda": {
+    "compiled_cuda": "12.8",
+    "compute_capability": [
+      12,
+      0
+    ],
+    "device": "cuda:0",
+    "memory_bytes": 16609247232,
+    "name": "NVIDIA GeForce RTX 5070 Ti"
+  },
+  "executable": "/home/forcifer-123/miniconda3/envs/Kuai/bin/python",
+  "versions": {
+    "duckdb": "1.5.5",
+    "numpy": "2.4.6",
+    "pyarrow": "25.0.1",
+    "python": "3.11.15",
+    "scikit_learn": "1.9.0",
+    "scipy": "1.17.1",
+    "threadpoolctl": "3.6.0",
+    "torch": "2.11.0+cu128"
+  }
+}

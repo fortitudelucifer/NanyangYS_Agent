@@ -1,0 +1,167 @@
+version: 13
+contract_id: supplementary_learning_curve_v013
+status: implementation_pending_exact_hash_approval
+created_at_local: "2026-08-30"
+timezone: Asia/Shanghai
+evidence_level: supplementary_generalization_diagnostic_on_previously_consumed_validation
+
+objective:
+  primary: assess_whether_BL2_minus_BL1_validation_uplift_is_stable_as_labeled_training_data_changes
+  secondary: diagnose_whether_BL2_shows_an_additional_generalization_gap_relative_to_BL1
+  prohibited_claims:
+    - not_a_new_pristine_confirmation
+    - does_not_change_v010_v011_or_v012_conclusions
+    - training_window_length_is_not_H2_history_lookback_length
+    - small_train_validation_gap_does_not_prove_absence_of_overfitting
+
+frozen_input:
+  feature_path: reports/generated/history_value_adam_validation_v006/validation/features.parquet
+  feature_size_bytes: 108835047
+  feature_sha256: 8f900c5432feecc60d04f2ffa9cd1a6942678d8de60db8832b5046f1b152eade
+  feature_rows: 3286296
+  feature_manifest_path: reports/generated/history_value_adam_validation_v006/validation/feature_manifest.json
+  feature_manifest_sha256: da1c06d8d9d238659440ad612eb903ddb2db0415c505fa23e62cbd6ae6b7f482
+  strict_point_in_time_status: complete_strict_point_in_time
+  expected_validation_rows: 886452
+
+scope:
+  Silver_rebuild: forbidden
+  feature_rebuild: forbidden
+  new_feature_family: forbidden
+  hyperparameter_selection: forbidden
+  H2_bundle_selection: forbidden
+  SGD_status: frozen_deferred
+  optimizer_scope: GPU_Adam_only
+  validation_target_rows_must_remain_identical: true
+  output_overwrite: forbidden
+
+temporal_protocol:
+  calibration_date: "2022-04-17"
+  validation_start: "2022-04-18"
+  validation_end: "2022-04-21"
+  preprocessing_fit_scope: each_training_subset_only
+  calibrator_fit_scope: full_frozen_calibration_day_for_every_point
+  validation_preprocessing_or_calibrator_fit: forbidden
+
+designs:
+  B_user_cluster_subsample:
+    role: primary
+    training_start: "2022-04-08"
+    training_end: "2022-04-16"
+    fractions: [0.10, 0.25, 0.50, 0.75, 1.00]
+    sampling_unit: user_cluster_keep_all_selected_user_training_events
+    nested_sampling_rule: one_user_permutation_per_seed_prefix_ceil_fraction_times_user_count
+    seeds: [20260814, 20260815, 20260816]
+    validation_population: unchanged_full_window
+  A_training_window:
+    role: supporting
+    training_end: "2022-04-16"
+    training_starts: ["2022-04-15", "2022-04-13", "2022-04-11", "2022-04-09", "2022-04-08"]
+    seed: 20260814
+    interpretation: amount_and_recency_of_labeled_estimator_fit_data_not_H2_lookback
+
+models:
+  BL1: categorical_plus_static_continuous_plus_static_binary
+  BL2: exact_BL1_column_prefix_plus_14_H2_continuous_plus_4_H2_binary
+  preprocessing_implementation: run_gate2b_probability_repair_v003.build_origin_matrices
+  one_hot_encoder_refit_per_training_subset: true
+  static_scaler_refit_per_training_subset: true
+  H2_scaler_refit_per_training_subset: true
+  transformed_continuous_clip: [-10.0, 10.0]
+
+optimizer:
+  implementation: kuairand_longseq.models.history_value_gpu.fit_trajectory
+  name: ADAM
+  learning_rate: 0.03
+  steps: 100
+  alpha: 0.0001
+  initialization: all_zero
+  deterministic_algorithms: true
+  fit_seed: 20260814
+  device: cuda:0
+  CPU_fallback: forbidden
+
+calibration:
+  family: PREVIOUS_DAY_SIGMOID_V1
+  implementation: kuairand_longseq.models.gate2b_repair_v003.fit_previous_day_sigmoid
+  fit_BL1_and_BL2_independently: true
+  apply_same_fitted_model_to_training_and_validation_scores: true
+  training_probability_interpretation: descriptive_postfit_calibrated_probability
+  ranking_metric_is_invariant_to_positive_monotone_calibration: true
+
+evaluation:
+  point_metrics:
+    - average_precision
+    - log_loss
+    - brier
+    - ece20_equal_width
+    - user_gauc_event_weighted
+    - user_gauc_user_equal
+  primary_contrast: BL2_minus_BL1_on_fixed_validation_rows
+  descriptive_diagnostics:
+    - train_minus_validation_AP_per_model
+    - BL2_specific_excess_AP_gap_equals_train_delta_minus_validation_delta
+    - validation_unknown_category_event_share
+  categorical_coverage_fields: [cat_user, cat_video, cat_author]
+
+statistics:
+  cluster_unit: user_id
+  paired_bootstrap: true
+  bootstrap_replicates: 2000
+  bootstrap_seed: 20260814
+  multiplicity_bank_reused_for_every_curve_point: true
+  confidence_interval: percentile_95
+  same_user_multiplicities_for_BL1_and_BL2: true
+  training_metrics_bootstrap: false_descriptive_only
+  sample_seeds_are_not_treated_as_independent_hypothesis_tests: true
+
+failure_policy:
+  preprocessing_fit_calibration_or_scoring_failure: record_point_failure_and_continue
+  incomplete_points_make_final_status_partial: true
+  nonfinite_probability_or_metric: record_point_failure_and_continue
+  input_hash_contract_approval_or_CUDA_failure: fail_closed_before_model_fit
+
+required_outputs:
+  - preflight.json
+  - sample_manifests.csv
+  - split_audit.csv
+  - fit_audit.csv
+  - calibration_audit.csv
+  - categorical_coverage_audit.csv
+  - point_metrics.csv
+  - history_uplift.csv
+  - bootstrap_summary.csv
+  - bootstrap_replicates.parquet
+  - bootstrap_multiplicity.npy
+  - validation_predictions.parquet
+  - learning_curve_B_main.png
+  - learning_curve_A_support.png
+  - final_decision.json
+  - results_v013.md
+  - run_manifest.json
+  - artifact_hash_manifest.json
+
+authorization:
+  execution_authorized: false_until_exact_hash_approval_receipt
+  authorized_stages_after_approval: [preflight, validation_reuse_learning_curve]
+  sealed_test_access: forbidden
+  random_audit_access: forbidden
+
+execution_environment:
+  conda_environment: Kuai
+  required_device_type: cuda
+  expected_device_name: NVIDIA GeForce RTX 5070 Ti
+  minimum_device_memory_bytes: 16000000000
+  required_versions:
+    python: 3.11.15
+    torch: 2.11.0+cu128
+    numpy: 2.4.6
+    scipy: 1.17.1
+    scikit_learn: 1.9.0
+    pyarrow: 25.0.1
+    duckdb: 1.5.5
+    threadpoolctl: 3.6.0
+  maximum_GPU_fits: 40
+  maximum_bootstrap_replicates_per_point: 2000
+  maximum_output_storage_GB: 5
+

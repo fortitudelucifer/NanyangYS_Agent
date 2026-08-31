@@ -1,0 +1,77 @@
+{
+  "bootstrap_multiplicity_sha256": "67d58d620f4e72e137d7e54900fa759e4a894566a30606be92af9a8fc684e276",
+  "contract_sha256": "b7b54a98ec02f0926a59fc3055097b82bdc9f7c5e5b5e7f1546beb3cdf8ef1c7",
+  "decision": {
+    "SGD_status": "frozen_deferred",
+    "absolute_probability_gate": {
+      "ADAM_BL1": true,
+      "ADAM_BL2": true
+    },
+    "history_gate": {
+      "ADAM": true
+    },
+    "optimizer_robustness_established": false,
+    "positive_AP_days": {
+      "ADAM": 17
+    },
+    "probability_saturation_gate": true,
+    "required_positive_AP_days": 12,
+    "scientific_failure_blocks_next_stage": false,
+    "scientific_status": "pass",
+    "stage": "sealed_test",
+    "static_baseline_gate": {
+      "ADAM": true
+    }
+  },
+  "feature_manifest": {
+    "path": "reports/generated/history_value_adam_sealed_v008/sealed_test/features.parquet",
+    "sha256": "c9e90050da5b7e0797303e392247b032462b564d99d902928d3d78de37a1bf5e",
+    "size_bytes": 259327256,
+    "status": "complete_strict_point_in_time",
+    "validation": {
+      "feature_rows": 7717595,
+      "feature_sql_sha256": "ff881a3c7dd6cb37caa123503f310aa2931ff4be1f04f27ec5c4de5b6912c826",
+      "missing_video_joins": 0,
+      "pit_violations": 0,
+      "positive_count_violations": 0,
+      "random_labels_can_update_history": false,
+      "target_rows": 4431299,
+      "unique_identities": 7717595,
+      "window_monotonicity_violations": 0
+    },
+    "verified_inputs": [
+      {
+        "input": "events_early_standard",
+        "path": "/data/master course/Kuai/governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/silver/events_early_standard.parquet",
+        "sha256": "b9f954eebae4c01e616dc1cca01d5428650e334a83cdaa174618cc77494ad0a0",
+        "size_bytes": 143161102
+      },
+      {
+        "input": "events_late_standard",
+        "path": "/data/master course/Kuai/governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/silver/events_late_standard.parquet",
+        "sha256": "c4f1434f6e608d8d0f908a0f5f97d8e51a75e6ecff6054649e3bd2efe939f790",
+        "size_bytes": 188975589
+      },
+      {
+        "input": "videos_basic",
+        "path": "/data/master course/Kuai/governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/silver/videos_basic.parquet",
+        "sha256": "c0184fd2df1356deeca1faebfc23451bb7269f3d00d4213d8b8150d6134ace1f",
+        "size_bytes": 77851324
+      },
+      {
+        "input": "label_formula_mismatch_rows",
+        "path": "/data/master course/Kuai/governed_data/formal_silver_snapshot/kuairand-longseq-agent/data/quarantine/label_formula_mismatch_rows.parquet",
+        "sha256": "1779f544dd0be64ccbd0a4e4107746045750e25af5a189070465b385e5ce843b",
+        "size_bytes": 2776464
+      }
+    ]
+  },
+  "generated_at": "2026-08-23T18:31:43.510107+08:00",
+  "positives": 1394388,
+  "prediction_sha256": "41b7f4f36612c01e2024b75e224270b1d76e22c88a1b61b68a5c88055d4a0567",
+  "rows": 4431299,
+  "stage": "sealed_test",
+  "status": "complete",
+  "target_manifest_sha256": "0e127c8cc5b457dd3d950a10d89c0c9ddc04dd20b0c7036335801ba9badad2fc",
+  "users": 991
+}

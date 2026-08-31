@@ -1,0 +1,190 @@
+version: 11
+contract_id: bl2_target_domain_calibration_v011
+status: implementation_complete_tests_passed_pending_exact_hash_approval
+created_at_local: "2026-08-23"
+timezone: Asia/Shanghai
+evidence_level: post_audit_held_out_to_calibrator_temporal_test_not_pristine_confirmation
+
+objective:
+  primary: repair_random_domain_probability_scale_without_changing_frozen_BL2_ranking
+  secondary: determine_whether_prior_shift_intercept_only_or_two_parameter_Platt_is_sufficient
+  prohibited_reinterpretation: v011_does_not_retest_or_modify_the_v010_history_value_conclusion
+
+predecessor_integrity:
+  snapshot_path: experiments/bl2_target_domain_calibration_v011/predecessor_integrity_snapshot.json
+  snapshot_size_bytes: 3245
+  snapshot_sha256: 1a2fd7f32226916bd0160aae7dc5622255e8ae4fd3df9eae46c81863feb4c94f
+  required_nested_artifact_counts:
+    reports/generated/history_value_adam_validation_v007/validation/artifact_hash_manifest.json: 17
+    reports/generated/history_value_adam_sealed_v008/sealed_test/artifact_hash_manifest.json: 18
+    reports/generated/sealed_model_reconstruction_diagnostic_v010/artifact_hash_manifest.json: 7
+    reports/generated/history_value_adam_random_v010/random_audit/artifact_hash_manifest.json: 18
+    reports/generated/history_value_adam_random_v010/artifact_hash_manifest.json: 3
+  final_evidence_artifact_count: 9
+  required_v010_terminal_status: history_supported_on_standard_and_random_under_frozen_Adam
+
+frozen_input:
+  path: reports/generated/history_value_adam_random_v010/random_audit/predictions.parquet
+  size_bytes: 1985188
+  sha256: 48ae0793e554b1eb82d3ba75684915f471cf52f005039a6ad674075b4afffc31
+  rows: 43027
+  required_columns: [source_table, source_row_number, user_id, event_date, long_view, raw_ADAM_BL2, p_ADAM_BL2]
+  unique_identities: 43027
+  users: 1000
+  positives: 3621
+  target_dates_inclusive: ["2022-04-22", "2022-05-08"]
+
+scope:
+  BL1_or_BL2_retraining: forbidden
+  feature_recomputation: forbidden
+  history_update: forbidden
+  original_random_reopen: forbidden
+  input_predictions_mutation: forbidden
+  only_new_fits: one_or_two_parameter_posthoc_calibrators
+
+temporal_splits:
+  calibration_fit: {start: "2022-04-22", end: "2022-04-27", rows: 8731, positives: 686}
+  calibration_selection: {start: "2022-04-28", end: "2022-05-02", rows: 10544, positives: 872}
+  held_out_test: {start: "2022-05-03", end: "2022-05-08", rows: 23752, positives: 2063}
+
+calibration_candidates:
+  ordered_families: [M1_prior_shift, M2_intercept_only, M3_platt]
+  maximum_candidates: 3
+  M1_prior_shift:
+    input: logit_p_ADAM_BL2
+    source_positives: 70457
+    source_rows: 222256
+    source_prevalence: 0.31700831473616009
+    selection_fit_target_prevalence: 0.078570610468445767
+    selection_fit_expected_shift: -1.6943737490338504
+    final_refit_target_prevalence: 0.080830090791180281
+    final_refit_expected_shift: -1.6635670005029957
+  M2_intercept_only:
+    input: raw_ADAM_BL2
+    frozen_slope: 1.0169043468053687
+    intercept_regularization: none
+    solver: scipy_brentq_score_equation
+    bracket: [-50.0, 50.0]
+    xtol: 0.000000000001
+    rtol: 0.00000000000001
+    max_iter: 1000
+  M3_platt:
+    input: raw_ADAM_BL2
+    implementation: sklearn_LogisticRegression
+    solver: lbfgs
+    penalty: L2
+    C: 1.0
+    tol: 0.0000000001
+    max_iter: 1000
+    required_positive_slope: true
+    convergence_warnings_allowed: 0
+
+selection_rule:
+  primary_metric: log_loss
+  direction: minimize
+  ineligible_if: [nonfinite_probability, nonpositive_slope, nonconvergence, stable_order_changed]
+  simplicity_tie_tolerance_log_loss: 0.0001
+  simplicity_order: [M1_prior_shift, M2_intercept_only, M3_platt]
+  selected_family_refit_on_combined_fit_and_selection: true
+  test_result_may_change_family: false
+
+final_refit:
+  rows: 19275
+  positives: 1558
+  target_prevalence: 0.080830090791180281
+  refit_only_selected_family: true
+  must_freeze_parameters_and_hash_before_test: true
+
+statistics:
+  primary_population: all_random_exposures_in_held_out_dates
+  sensitivity_population: warm_users
+  bootstrap_unit: user
+  bootstrap_replicates: 2000
+  bootstrap_seed: 20260823
+  confidence_interval: paired_percentile_95
+  metric_clip: 0.000000000000001
+  metrics: [log_loss, brier, ECE20_equal_width, average_precision, roc_auc, user_gauc_event_weighted]
+
+gates:
+  log_loss_delta_selected_minus_original_point_must_be_negative: true
+  log_loss_delta_CI95_upper_must_be_negative: true
+  brier_delta_selected_minus_original_point_must_be_negative: true
+  brier_delta_CI95_upper_must_be_negative: true
+  maximum_ECE20: 0.02
+  maximum_absolute_mean_probability_gap: 0.01
+  maximum_extreme_probability_share: 0.05
+  strict_monotone_increasing_mapping_required: true
+  stable_ranking_order_required: true
+  ranking_metric_absolute_tolerance: 0.0000000001
+
+held_out_test_protocol:
+  open_only_after_selected_family_and_final_parameters_are_hashed: true
+  maximum_metric_releases: 1
+  retry_after_metric_release: forbidden
+  threshold_or_family_change_after_metric_release: forbidden
+  failure_changes_v010_history_conclusion: false
+
+environment:
+  conda_environment: Kuai
+  required_device: CPU
+  required_versions:
+    python: 3.11.15
+    numpy: 2.4.6
+    scipy: 1.17.1
+    scikit_learn: 1.9.0
+    pyarrow: 25.0.1
+    torch: 2.11.0+cu128
+
+authorization:
+  execution_authorized: false
+  exact_hash_approval_required: true
+  authorized_stages_after_exact_hash_approval: [preflight, calibration_fit, calibration_selection, final_refit, held_out_to_calibrator_test]
+  approval_path: experiments/bl2_target_domain_calibration_v011/approval_v011.json
+  BL1_or_BL2_retraining_authorized: false
+  held_out_test_refit_or_retry_authorized: false
+
+artifacts:
+  experiment_root: experiments/bl2_target_domain_calibration_v011
+  output_root: experiments/bl2_target_domain_calibration_v011/outputs
+  report_path: experiments/bl2_target_domain_calibration_v011/results_v011.md
+  overwrite: forbidden
+  required_outputs:
+    - outputs/preflight/artifact_hash_manifest.json
+    - outputs/calibration_fit/candidate_parameters.json
+    - outputs/calibration_selection/candidate_metrics.csv
+    - outputs/calibration_selection/family_selection.json
+    - outputs/final_refit/selected_calibrator.json
+    - outputs/held_out_to_calibrator_test/predictions.parquet
+    - outputs/held_out_to_calibrator_test/paired_user_cluster_bootstrap.csv
+    - outputs/held_out_to_calibrator_test/reliability_equal_width_20.csv
+    - outputs/held_out_to_calibrator_test/stage_decision.json
+    - outputs/final_decision.json
+    - results_v011.md
+
+implementation:
+  status: complete_tests_passed_pending_exact_hash_approval
+  validate_only_passed: true
+  result_producing_files:
+    - path: experiments/bl2_target_domain_calibration_v011/README.md
+      sha256: 8bd154bd95349b267c081dda9c92696b89653bbcc0e59e2fd594abfd35b9ad6c
+    - path: experiments/bl2_target_domain_calibration_v011/predecessor_integrity_snapshot.json
+      sha256: 1a2fd7f32226916bd0160aae7dc5622255e8ae4fd3df9eae46c81863feb4c94f
+    - path: experiments/bl2_target_domain_calibration_v011/run_calibration_v011.py
+      sha256: be9c23a466cc99038f2d2fb2b43a516b7a6e3f27d6f7c8b7405d599c9204cd3b
+    - path: experiments/bl2_target_domain_calibration_v011/tests/test_calibration_v011.py
+      sha256: 735e561568b8bba5c2d867ae0eaab329e44fd475b4ccf9f2de4254c8718f9a0d
+  test_result:
+    applicable_repository_regression_command: conda_run_n_Kuai_pytest_ignore_completed_v005_v006_v007_v008_v009_v010_receipt_absence_tests
+    applicable_repository_passed: 117
+    targeted_command: conda_run_n_Kuai_pytest_experiments_bl2_target_domain_calibration_v011_tests
+    targeted_passed: 6
+    failed: 0
+    applicable_elapsed_seconds: 71.14
+    targeted_elapsed_seconds: 1.54
+    excluded_completed_lifecycle_tests:
+      - tests/test_history_value_adam_validation_v005.py
+      - tests/test_history_value_adam_validation_v006.py
+      - tests/test_history_value_adam_validation_v007.py
+      - tests/test_history_value_adam_sealed_v008.py
+      - tests/test_history_value_adam_random_v009.py
+      - tests/test_history_value_adam_random_v010.py

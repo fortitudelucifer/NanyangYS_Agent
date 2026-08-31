@@ -1,0 +1,85 @@
+{
+  "contract_sha256": "0e67c6d5388fba55157fd5f2af7d0681a55e280b96ebed492a9d3c77ac522c24",
+  "environment": {
+    "cuda": {
+      "compiled_cuda": "12.8",
+      "compute_capability": [
+        12,
+        0
+      ],
+      "device": "cuda:0",
+      "memory_bytes": 16609247232,
+      "name": "NVIDIA GeForce RTX 5070 Ti"
+    },
+    "python_executable": "/home/forcifer-123/miniconda3/envs/Kuai/bin/python",
+    "versions": {
+      "duckdb": "1.5.5",
+      "numpy": "2.4.6",
+      "pyarrow": "25.0.1",
+      "python": "3.11.15",
+      "scikit_learn": "1.9.0",
+      "scipy": "1.17.1",
+      "threadpoolctl": "3.6.0",
+      "torch": "2.11.0+cu128"
+    }
+  },
+  "feature_rows": 3286296,
+  "feature_validation": {
+    "feature_rows": 3286296,
+    "feature_sql_sha256": "ceaad9b3c658d2ebb2e148fcd554c2ad2dfa0fed14b50b555828d20578f8388c",
+    "missing_video_joins": 0,
+    "pit_violations": 0,
+    "positive_count_violations": 0,
+    "random_labels_can_update_history": false,
+    "target_rows": 886452,
+    "unique_identities": 3286296,
+    "window_monotonicity_violations": 0
+  },
+  "implementation": [
+    {
+      "path": "experiments/supplementary_learning_curve_v013/run_learning_curve_v013.py",
+      "sha256": "bb98585d673de001f8eddd2550c79dbf362c37eb852f5115bc2f06bb652382fa",
+      "size_bytes": 41384
+    },
+    {
+      "path": "experiments/supplementary_learning_curve_v013/contract_v013.yaml",
+      "sha256": "0e67c6d5388fba55157fd5f2af7d0681a55e280b96ebed492a9d3c77ac522c24",
+      "size_bytes": 5971
+    },
+    {
+      "path": "scripts/run_gate2b_probability_repair_v003.py",
+      "sha256": "4256a3dfaf3bb94bc6ee39b94edc4f1903db19bb5eb1570f917c148a055cb929",
+      "size_bytes": 217937
+    },
+    {
+      "path": "src/kuairand_longseq/models/gate2b_repair_v003.py",
+      "sha256": "7492a1dd319be999bf6f8ff71dbefeabb24ea53cb88ffe9d2ca3fcf31f4647ad",
+      "size_bytes": 31274
+    },
+    {
+      "path": "src/kuairand_longseq/models/history_value_gpu.py",
+      "sha256": "f6e52fb68d03ae0447bc59c53bd77c3a6bd9dd79681daa68e59f7e933c5bcfec",
+      "size_bytes": 8122
+    },
+    {
+      "path": "src/kuairand_longseq/evaluation/gate2b_metrics.py",
+      "sha256": "b952d2dc48b44daa77073b6a7dde187181c4bfd6f5b69b15d14aa65ccb47835e",
+      "size_bytes": 15203
+    }
+  ],
+  "inputs": [
+    {
+      "name": "features",
+      "path": "reports/generated/history_value_adam_validation_v006/validation/features.parquet",
+      "sha256": "8f900c5432feecc60d04f2ffa9cd1a6942678d8de60db8832b5046f1b152eade",
+      "size_bytes": 108835047
+    },
+    {
+      "name": "feature_manifest",
+      "path": "reports/generated/history_value_adam_validation_v006/validation/feature_manifest.json",
+      "sha256": "da1c06d8d9d238659440ad612eb903ddb2db0415c505fa23e62cbd6ae6b7f482",
+      "size_bytes": 1588
+    }
+  ],
+  "status": "pass"
+}

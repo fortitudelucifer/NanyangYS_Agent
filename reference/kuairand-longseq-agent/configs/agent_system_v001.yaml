@@ -1,0 +1,185 @@
+schema_version: "1.0"
+system_id: causal_feature_ops_v001
+mode: design_only
+objective: >-
+  Build an auditable multi-agent recommendation research workflow now, then
+  ingest real KuaiRand model evidence without changing the control plane.
+
+competition_alignment:
+  minimum_distinct_agents: 3
+  implemented_role_identities: 6
+  implemented_agentteams_workers: 0
+  typed_skills_required: true
+  implemented_skills: 10
+  implemented_schema_validation_level: shallow_top_level_v001
+  agentteams_design_baseline:
+    current_backend: local_structured_v1
+    adapter_status: pending_real_agentteams_integration
+    invariant: transport_may_not_bypass_harness_policy_or_evidence_gates
+  required_demo_evidence:
+    - task_graph
+    - structured_agent_handoffs
+    - skill_results
+    - append_only_event_log
+    - artifact_hash_manifest
+    - policy_rejection_path
+    - approval_and_rollback_contracts
+
+research_boundary:
+  task: candidate_long_view_probability_prediction
+  target_scene: tab_1
+  strict_history_rule: history_time_lt_target_time
+  same_timestamp_feedback_visible: false
+  current_phase: agent_infrastructure_before_gpu_research
+  current_scientific_boundary: >-
+    Silver is retained; real sequence/GPU conclusions are not yet available.
+    No model-performance claim may be inferred from this infrastructure demo.
+
+research_status:
+  silver_recleaning_authorized: false
+  gold_build_authorized: false
+  sequence_training_completed: false
+  gpu_experiment_completed: false
+  validation_evidence_available: false
+  sealed_test_access_authorized: false
+
+data_policy:
+  reclean_silver: false
+  read_raw_data: false
+  read_sealed_splits: false
+  recursive_data_discovery: false
+  registered_manifest_reads_only: true
+
+feature_policy:
+  strict_history_rule: history_time_lt_target_time
+  demo_feature_fields:
+    - author_id_category
+    - video_duration_state
+    - prior_event_count
+    - prior_long_view_count
+    - recent_10_rate
+  hard_deny_fields:
+    - long_view
+    - click
+    - play_time_ms
+    - current_play_time_ms
+    - current_feedback
+    - future_long_view_rate
+    - future_event_count
+    - restricted_test_label
+
+evidence_request:
+  evidence_kind: paired_model_comparison
+  allowed_provider_ids:
+    - research_evidence_manifest
+  task: candidate_long_view_probability_prediction
+  split: validation
+  expected_dataset: KuaiRand-1K
+  max_manifest_reads: 1
+  max_artifacts: 64
+  max_total_artifact_bytes: 21474836480
+  # Version these digests only after an independent GPU-run approval. Null
+  # means no external scientific manifest can be accepted by this contract.
+  expected_provenance:
+    contract_sha256: null
+    code_sha256: null
+    input_manifest_sha256: null
+    model_config_sha256: null
+    authorization_sha256: null
+    target_manifest_sha256: null
+  required_models:
+    - static_baseline
+    - strict_statistical_history
+    - short_sequence
+    - long_sequence
+
+required_release_gates:
+  - ranking_superiority
+  - user_gauc_noninferiority
+  - logloss_noninferiority
+  - brier_noninferiority
+  - temporal_leakage_audit
+
+claim_policy:
+  online_causal_claims: forbidden
+  full_catalog_retrieval_claims: forbidden
+  train_only_claims: exploratory_only
+  synthetic_metrics: never_claim_eligible
+  missing_metrics: render_as_unavailable_without_number
+
+release_policy:
+  minimum_evidence_tier: validation
+  human_approval_required: true
+  overwrite_existing_release: false
+  rollback_history_must_be_preserved: true
+
+permissions:
+  sealed_access_enabled: false
+  approval_adapter_enabled: false
+  background_approval_default: deny
+  publish_requires_contract_bound_token: true
+
+budgets:
+  max_steps: 16
+  max_skill_calls: 16
+  max_write_calls: 16
+  max_retries: 0
+  max_sealed_reads: 0
+  max_publish_calls: 1
+  max_llm_calls: 0
+  max_gpu_seconds: 0
+
+loops:
+  enforcement_status: >-
+    Fixed v0.1 DAG satisfies these one-pass bounds by construction; a generic
+    loop scheduler and dynamic loop counters are not implemented yet.
+  contract_loop:
+    max_rounds: 1
+    success_gate: task_graph_registered
+  audit_loop:
+    max_rounds: 1
+    success_gate: no_policy_violation
+  feature_loop:
+    max_candidate_families: 4
+    max_rounds: 1
+    stop_when: evidence_required
+  evidence_loop:
+    max_manifest_reads: 1
+    stop_when: verified_or_unavailable
+  release_loop:
+    max_publish_attempts: 1
+    stop_when: approval_missing_or_release_committed
+
+task_graph:
+  - task_id: T01
+    agent: manager
+    skill: register_research_contract
+    depends_on: []
+  - task_id: T02
+    agent: data_auditor
+    skill: audit_project_boundary
+    depends_on: [T01]
+  - task_id: T03
+    agent: feature_miner
+    skill: propose_feature_specs
+    depends_on: [T02]
+  - task_id: T04
+    agent: data_auditor
+    skill: detect_temporal_leakage
+    depends_on: [T03]
+  - task_id: T05
+    agent: causal_evaluator
+    skill: request_research_evidence
+    depends_on: [T04]
+  - task_id: T06
+    agent: causal_evaluator
+    skill: evaluate_research_evidence
+    depends_on: [T05]
+  - task_id: T07
+    agent: safety_reviewer
+    skill: review_claim_boundaries
+    depends_on: [T06]
+  - task_id: T08
+    agent: feature_publisher
+    skill: assess_release_readiness
+    depends_on: [T07]
