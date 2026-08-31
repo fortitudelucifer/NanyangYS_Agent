@@ -9,17 +9,17 @@
 > arrays, checkpoints, or model states. Download KuaiRand-1K from its official
 > source and use the versioned reproducibility workflow below.
 
-## Branch guide
+## Branch policy
 
-| Branch | Status | Guidance |
-|---|---|---|
-| [`main`](https://github.com/fortitudelucifer/NanyangYS_Agent/tree/main) | Authoritative and supported | Clone or branch from here. It contains the Agent, compact evidence summaries, research code, reports, figures, and the zero-LFS reproducibility kit. |
-| [`jkrec-reproducibility-kit`](https://github.com/fortitudelucifer/NanyangYS_Agent/tree/jkrec-reproducibility-kit) | Merged through [PR #1](https://github.com/fortitudelucifer/NanyangYS_Agent/pull/1) | Historical source branch for the reproducibility-kit import. Do not treat it as newer than `main`. |
-| [`jkrec-v013-runtime-metadata`](https://github.com/fortitudelucifer/NanyangYS_Agent/tree/jkrec-v013-runtime-metadata) | Merged through [PR #2](https://github.com/fortitudelucifer/NanyangYS_Agent/pull/2) | Historical source branch for the supplementary v013 runtime metadata. Do not treat it as an independent release line. |
-| `jkrec-full-data-local-backup` | Local-only; never pushed | A private recovery branch used during import preparation. It contains large-data references and is not part of the GitHub repository. Never push or merge it. |
+[`main`](https://github.com/fortitudelucifer/NanyangYS_Agent/tree/main) is the
+only persistent remote branch and the sole supported starting point. Completed
+feature branches are deleted after merge so the branch list stays compact;
+their review history remains available through the repository's merged pull
+requests and merge commits.
 
-The two remote feature branches are retained only for auditability. All of
-their accepted content is already in `main`.
+Local recovery branches, when needed, are never pushed or treated as release
+lines. All accepted code, documentation, figures, and reproducibility material
+are already present in `main`.
 
 ## Overview
 
