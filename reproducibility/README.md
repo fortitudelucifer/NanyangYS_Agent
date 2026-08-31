@@ -42,6 +42,13 @@ For CPU-only Silver construction and v011 calibration, PyTorch is not required.
 Before a GPU run, save `python --version`, `pip freeze`, `nvidia-smi`, OS/kernel,
 CPU count, RAM, GPU model, and driver version with the new run artifacts.
 
+The owner-supplied supplementary learning-curve v013 preflight is recorded
+separately in
+`environment/supplementary-learning-curve-v013-runtime.json`. It includes the
+exact Ubuntu/kernel, driver, CUDA, environment, optimizer, deterministic-mode,
+training parameters, seeds, and contract digest. It must not be used to
+retroactively fill missing fields in an older run manifest.
+
 ## 2. Download KuaiRand-1K
 
 The default URL is the KuaiRand project's official 1K archive URL documented in

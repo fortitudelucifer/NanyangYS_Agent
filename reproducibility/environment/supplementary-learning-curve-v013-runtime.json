@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "scope": "supplementary learning curve v013 owner-supplied preflight",
+  "provenance": {
+    "kind": "owner_supplied_preflight_metadata",
+    "original_machine_path_published": false
+  },
+  "contract_sha256": "0e67c6d5388fba55157fd5f2af7d0681a55e280b96ebed492a9d3c77ac522c24",
+  "operating_system": {
+    "distribution": "Ubuntu 24.04.4 LTS",
+    "kernel": "Linux 7.0.0-30-generic",
+    "architecture": "x86_64"
+  },
+  "python_environment": {
+    "manager": "conda",
+    "name": "Kuai",
+    "python": "3.11.15",
+    "python_executable": "/home/forcifer-123/miniconda3/envs/Kuai/bin/python"
+  },
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 5070 Ti",
+    "device": "cuda:0",
+    "compute_capability": [12, 0],
+    "torch_reported_memory_bytes": 16609247232,
+    "nvidia_driver": "580.173.02",
+    "driver_supported_cuda": "13.0",
+    "torch_compiled_cuda": "12.8",
+    "cpu_fallback_allowed": false
+  },
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.0",
+    "pyarrow": "25.0.1",
+    "duckdb": "1.5.5",
+    "threadpoolctl": "3.6.0"
+  },
+  "training": {
+    "optimizer": "GPU Adam",
+    "learning_rate": 0.03,
+    "steps": 100,
+    "l2_alpha": 0.0001,
+    "parameter_initialization": "all_zeros",
+    "pytorch_deterministic_algorithms": true,
+    "bl1_bl2_share_training_configuration": true
+  },
+  "randomness": {
+    "adam_fit_seed": 20260814,
+    "a_training_window_seed": 20260814,
+    "b_user_cluster_sampling_seeds": [20260814, 20260815, 20260816],
+    "user_cluster_bootstrap_seed": 20260814,
+    "bootstrap_replicates": 2000,
+    "bootstrap_generator": "numpy.PCG64",
+    "paired_models_share_users_and_bootstrap_weights_per_curve_point": true
+  },
+  "claim_boundary": "Reuses Validation rows; not independent confirmation and not a neural result."
+}

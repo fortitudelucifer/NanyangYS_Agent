@@ -8,7 +8,9 @@ outputs without additional controls.
 
 1. The exact NVIDIA driver version for the v010-v012 RTX 5070 Ti release runs
    was not recorded. The manifests record Torch 2.11.0+cu128, compiled CUDA
-   12.8, compute capability 12.0, and GPU memory, but not the driver.
+   12.8, compute capability 12.0, and GPU memory, but not the driver. The
+   owner-supplied supplementary v013 preflight records driver 580.173.02; this
+   is retained separately and is not silently backfilled into older runs.
 2. The reference package records SHA-256 values for the extracted CSV files,
    not a trusted SHA-256 for the downloaded `KuaiRand-1K.tar.gz` transport.
 3. GPU kernels, BLAS/thread scheduling, operating system, filesystem ordering,
@@ -33,3 +35,12 @@ outputs without additional controls.
 
 Any mismatch must be reported as a separate reproduction attempt. Do not edit
 the frozen expected manifests to make a new run appear identical.
+
+## Owner-supplied supplementary v013 preflight
+
+The supplementary learning-curve preflight now has a complete sanitized public
+record: Ubuntu 24.04.4 LTS, Linux 7.0.0-30-generic x86_64, driver 580.173.02,
+driver-supported CUDA 13.0, Torch 2.11.0+cu128, compiled CUDA 12.8, RTX 5070 Ti,
+deterministic GPU Adam, exact training parameters, three user-cluster sampling
+seeds, and the frozen contract SHA-256. See
+`environment/supplementary-learning-curve-v013-runtime.json`.

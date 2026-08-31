@@ -6,9 +6,9 @@ Validation date: 2026-08-31
 |---|---:|
 | Raw files verified against public manifest | 6 / 6 |
 | Silver/quarantine outputs verified against public manifest | 10 / 10 |
-| Python files parsed with Python 3.11 AST | 88 / 88 |
-| JSON files parsed | 46 / 46 |
-| YAML files parsed | 28 / 28 |
+| Python files parsed with Python 3.11 AST | 106 / 106 |
+| JSON files parsed | 48 / 48 |
+| YAML files parsed | 30 / 30 |
 | Files above 10 MiB | 0 |
 | Largest file | 1,300,512 bytes |
 | Git LFS required | no |
@@ -19,3 +19,6 @@ Validation date: 2026-08-31
 The public manifests were checked against the existing formal files. This QA
 did not rerun Silver cleaning, training, calibration, bootstrap, or any released
 experiment.
+
+The supplementary v013 runtime record is transcribed from the owner-supplied
+preflight metadata and kept separate from the v010-v012 release-runtime record.
