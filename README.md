@@ -1,38 +1,85 @@
 # NanyangYS Agent
 
-NanyangYS Agent 是一个面向**真实开源大厂视频播放数据**的轻量级、可审计的视频推荐 Agent 系统闭环。目标不是堆叠大模型，而是用更小巧、更精确的方式挖掘用户长时序视频偏好，并让系统在收到新的用户反馈后能够持续优化迭代。
+[English](README.md) | [中文](README_CN.md)
 
-### 数据基础与扩展路线
+> [!IMPORTANT]
+> **Start from `main`.** It is the authoritative, lightweight, zero-LFS branch.
+> The repository intentionally does **not** distribute KuaiRand Raw data,
+> governed Silver tables, row-level predictions, feature matrices, bootstrap
+> arrays, checkpoints, or model states. Download KuaiRand-1K from its official
+> source and use the versioned reproducibility workflow below.
 
-当前以快手 **KuaiRand-1K** 公开数据集为起点开展研究，后续计划逐步接入更多真实开源视频播放数据，包括腾讯、字节跳动、YouTube 等平台，以验证偏好建模与推荐策略在多源数据上的可迁移性与稳健性。
+## Branch guide
 
-### 系统设计理念
+| Branch | Status | Guidance |
+|---|---|---|
+| [`main`](https://github.com/fortitudelucifer/NanyangYS_Agent/tree/main) | Authoritative and supported | Clone or branch from here. It contains the Agent, compact evidence summaries, research code, reports, figures, and the zero-LFS reproducibility kit. |
+| [`jkrec-reproducibility-kit`](https://github.com/fortitudelucifer/NanyangYS_Agent/tree/jkrec-reproducibility-kit) | Merged through [PR #1](https://github.com/fortitudelucifer/NanyangYS_Agent/pull/1) | Historical source branch for the reproducibility-kit import. Do not treat it as newer than `main`. |
+| [`jkrec-v013-runtime-metadata`](https://github.com/fortitudelucifer/NanyangYS_Agent/tree/jkrec-v013-runtime-metadata) | Merged through [PR #2](https://github.com/fortitudelucifer/NanyangYS_Agent/pull/2) | Historical source branch for the supplementary v013 runtime metadata. Do not treat it as an independent release line. |
+| `jkrec-full-data-local-backup` | Local-only; never pushed | A private recovery branch used during import preparation. It contains large-data references and is not part of the GitHub repository. Never push or merge it. |
 
-系统参考 **Harness** 与 **Loop Engineering** 思想构建：把研究任务约束为有角色权限、预算、证据门禁、停止条件和哈希审计的可迭代闭环流程。用户更新信息（新的观看、反馈、长时序行为）可作为新一轮 loop 的输入，驱动 Agent 重新审计边界、生成特征规格、请求与评价证据、审查主张边界，并在证据与审批同时满足时发布可回滚的特征包。它不重新清洗 Silver，也不在本机训练模型，而是把"研究能否被信任"这件事本身工程化。
+The two remote feature branches are retained only for auditability. All of
+their accepted content is already in `main`.
 
-### 研究进展
+## Overview
 
-早期演示快照曾在 **RTX 4090** 上完成 Train-only 的 BL0 / BL1 / BL2 数值核验。后续 v010-v012 研究运行记录的是 Python 3.11.15、PyTorch 2.11.0+cu128 与 RTX 5070 Ti；公开仓库保留合同和复现元数据，不直接分发对应的大型运行产物。
+NanyangYS Agent is a lightweight, auditable video-recommendation Agent loop for
+research on real, openly available interaction data. Its purpose is not to add
+large models for their own sake. It uses compact, explicit components to study
+long-horizon user preferences and to make each research claim traceable to a
+contract, evidence boundary, approval, and reproducible artifact.
 
-仓库同时提供一个不分发数据的 KuaiRand-1K 复现包：研究者从官方渠道下载数据，先核验原始文件 SHA-256，再使用冻结的数据合同、清洗规则、代码和种子重建 Silver 与后续实验。入口见 [reproducibility/README.md](reproducibility/README.md)。
+The current research starts from the public **KuaiRand-1K** dataset. Future
+work may add other openly available video-interaction datasets from platforms
+such as Tencent, ByteDance, and YouTube to study transferability and robustness
+across data sources.
 
-## 当前真实状态
+## Design philosophy
 
-| 模块 | 当前状态 |
+The system applies **Harness** and **Loop Engineering** ideas to research. Each
+iteration is constrained by role permissions, budgets, evidence gates, stop
+conditions, and hash-based audit records. New user feedback can initiate a new
+loop that re-audits the boundary, proposes point-in-time feature specifications,
+requests and evaluates evidence, reviews claim scope, and publishes a rollback-
+capable feature package only when evidence and approval are both present.
+
+The Agent does not silently reclean Silver or train a model on the host. It
+engineers the question “can this research result be trusted?” as an explicit,
+fail-closed workflow.
+
+## Research and reproducibility status
+
+An early demonstration snapshot recorded Train-only BL0/BL1/BL2 checks on an
+RTX 4090. Later v010-v012 research records used Python 3.11.15, PyTorch
+2.11.0+cu128, and an RTX 5070 Ti. The repository stores the contracts,
+reproduction metadata, compact evidence summaries, reports, and expected
+digests, but not the large run artifacts.
+
+The supplementary learning-curve v013 preflight additionally records Ubuntu
+24.04.4 LTS, Linux 7.0.0-30-generic x86_64, NVIDIA driver 580.173.02,
+driver-supported CUDA 13.0, PyTorch-compiled CUDA 12.8, deterministic GPU Adam,
+and the frozen training/sampling seeds. That metadata remains scoped to the
+supplementary experiment; it is not silently backfilled into older manifests.
+
+| Component | Current status |
 |---|---|
-| Agent Harness | 已可离线运行和校验；无合格证据时确定性停在 `waiting_for_evidence` |
-| GPU 演示快照 | 历史 Train-only 的 BL0 / BL1 / BL2 结果已做数值核验 |
-| 研究 producer 证据 | v010-v012 合同、代码、种子、环境与预期哈希可复现；大型输出不入库 |
-| 科学证据准入 | 未完成；provenance 冻结与 Agent Evidence manifest 尚未闭环 |
-| Agent 消费端 Validation / sealed / random | 尚未准入；producer 证据不能直接替代 Agent Evidence 合同 |
-| 发布 | 未授权；系统保持 fail-closed |
-| 公开复现包 | 提供代码、合同、环境锁、种子和预期哈希；不包含 Raw、Silver、逐行预测或模型文件 |
+| Agent Harness | Runs and verifies offline; deterministically stops at `waiting_for_evidence` when eligible evidence is absent. |
+| GPU demo snapshot | Historical Train-only BL0/BL1/BL2 numerical checks are available. |
+| Research-producer evidence | v010-v012 contracts, code, seeds, environments, compact summaries, and expected hashes are versioned; large outputs are excluded. |
+| Scientific evidence admission | Incomplete; producer provenance and the Agent consumer Evidence manifest remain separate contracts. |
+| Agent-side Validation / sealed / random admission | Not admitted. Producer artifacts cannot directly replace the Agent Evidence contract. |
+| Publication | Not authorized; the system remains fail-closed. |
+| Public reproducibility kit | Available without Raw, Silver, row-level predictions, feature matrices, bootstrap arrays, or model files. |
 
-GPU 快照中，BL2 相对 BL1 的初步结果为：AP `+0.041295`、event-weighted user-GAUC `+0.048758`、Log Loss `-0.022953`、Brier `-0.008907`，AP 的用户聚类 bootstrap 95% CI 为 `[0.037661, 0.045054]`。这些数字只支持 **Train-only 初步结论**，不等于 Validation、Gold 或发布结论。
+In the historical GPU demo snapshot, preliminary BL2-minus-BL1 results were AP
+`+0.041295`, event-weighted user-GAUC `+0.048758`, Log Loss `-0.022953`, and
+Brier `-0.008907`; the paired user-cluster bootstrap 95% CI for AP was
+`[0.037661, 0.045054]`. These values support only a **Train-only preliminary
+statement**. They are not Validation, Gold, sealed-test, or release claims.
 
-## 直接运行 Demo
+## Run the Agent demo
 
-clone 仓库后，在仓库根目录下执行：
+From the repository root on PowerShell:
 
 ```powershell
 python scripts/run_agent_system_demo_v001.py `
@@ -41,25 +88,31 @@ python scripts/run_agent_system_demo_v001.py `
   --verify
 ```
 
-预期关键输出：
+Expected key output:
 
 ```text
 terminal_state = waiting_for_evidence
 verification.verified = true
 ```
 
-`waiting_for_evidence` 是正确的安全终局：默认 Provider 不提供科研证据，Agent 不能自行把 GPU 快照升级为可发布结论。
+`waiting_for_evidence` is the correct safe terminal state. The default provider
+does not supply scientific evidence, so the Agent cannot promote the GPU demo
+snapshot into a release claim.
 
-运行测试：
+Install and run the Agent regression tests:
 
 ```powershell
 python -m pip install -e ".[test]"
 python -m pytest tests/agent_system -q
 ```
 
-## 从官方数据开始复现
+The three-minute demo sequence is documented in
+[`demo/DEMO_GUIDE.md`](demo/DEMO_GUIDE.md).
 
-仓库不使用 Git LFS，也不镜像 KuaiRand 数据。最短路径为：
+## Reproduce from the official KuaiRand data
+
+This repository uses no Git LFS and does not mirror the KuaiRand dataset. The
+shortest supported path is:
 
 ```powershell
 python reproducibility/scripts/download_kuairand_1k.py
@@ -69,41 +122,65 @@ python reproducibility/scripts/run_reproduction.py --build-silver
 python reproducibility/scripts/verify_reproduction.py --silver
 ```
 
-下载器只接受官方默认地址或用户显式传入的镜像地址；解压后以冻结的逐文件 SHA-256 作为真正的数据身份检查。正式实验的时间切分、种子、bootstrap 次数和合同哈希见 [reproducibility/seeds-and-splits.yaml](reproducibility/seeds-and-splits.yaml)。
+The downloader accepts the official default URL or a mirror explicitly chosen
+by the user. The archive transport is not treated as data identity: after safe
+extraction, every expected CSV must match the frozen file size and SHA-256 in
+[`reproducibility/manifests/raw-files.json`](reproducibility/manifests/raw-files.json).
 
-完整的 3 分钟展示顺序见 [demo/DEMO_GUIDE.md](demo/DEMO_GUIDE.md)。
+Key reproducibility records:
 
-## Agent 体系
+- [complete workflow](reproducibility/README.md);
+- [release environment pins](reproducibility/environment/reference-runtime.json);
+- [supplementary v013 runtime](reproducibility/environment/supplementary-learning-curve-v013-runtime.json);
+- [seeds, temporal splits, bootstrap protocol, and contract hashes](reproducibility/seeds-and-splits.yaml);
+- [expected Silver identities](reproducibility/manifests/silver-expected.json);
+- [known reproducibility gaps](reproducibility/REPRODUCIBILITY_GAPS.md);
+- [QA report](reproducibility/QA_REPORT.md).
 
-六个角色按最小权限协作：
+The formal Silver builder intentionally excludes
+`video_features_statistic_1k.csv` because it contains post-hoc aggregates and
+was not joined into the released Silver layer.
 
-| 角色 | 职责 |
+## Agent system
+
+Six roles collaborate under least-privilege rules:
+
+| Role | Responsibility |
 |---|---|
-| Manager | 冻结研究合同与任务边界 |
-| Data Auditor | 审计数据范围和时间泄漏，不重洗数据 |
-| Feature Miner | 生成 point-in-time 特征规格 |
-| Causal Evaluator | 请求、核验和评价研究证据 |
-| Safety Reviewer | 限制结论范围，阻止越界表述 |
-| Feature Publisher | 只在证据和审批同时满足时发布，并支持回滚 |
+| Manager | Freeze the research contract and task boundary. |
+| Data Auditor | Audit data scope and temporal leakage without recleaning data. |
+| Feature Miner | Produce point-in-time feature specifications. |
+| Causal Evaluator | Request, verify, and evaluate research evidence. |
+| Safety Reviewer | Constrain claim scope and stop unsupported statements. |
+| Feature Publisher | Publish only when evidence and approval are both satisfied; support rollback. |
 
-十个类型化 Skill：
+Ten typed skills are available:
 
-`register_research_contract` · `audit_project_boundary` · `propose_feature_specs` · `detect_temporal_leakage` · `request_research_evidence` · `evaluate_research_evidence` · `review_claim_boundaries` · `assess_release_readiness` · `publish_feature_package` · `rollback_feature_package`
+`register_research_contract` · `audit_project_boundary` ·
+`propose_feature_specs` · `detect_temporal_leakage` ·
+`request_research_evidence` · `evaluate_research_evidence` ·
+`review_claim_boundaries` · `assess_release_readiness` ·
+`publish_feature_package` · `rollback_feature_package`
 
-默认工作流：
+Default workflow:
 
 ```text
-研究合同 → 边界审计 → 特征规格 → 泄漏审计
-        → 证据请求 → Gate 评价 → 主张审查 → 发布就绪度
+research contract -> boundary audit -> feature specification -> leakage audit
+                  -> evidence request -> gate evaluation -> claim review
+                  -> release-readiness assessment
 ```
 
-每次 Skill 调用依次检查角色权限、预算、幂等键和输出 schema；事件写入哈希链。证据缺失或不匹配时流程停止，不会回填占位结果，也不会自动发布。
+Every skill call checks role permission, budget, idempotency key, and output
+schema. Events are appended to a hash chain. Missing or mismatched evidence
+stops the workflow; the Agent neither fabricates placeholder results nor
+publishes automatically.
 
-## 最小提交结构
+## Repository layout
 
 ```text
 NanyangYS_Agent/
-├─ README.md
+├─ README.md                         # English entry point and branch guide
+├─ README_CN.md                      # Chinese documentation
 ├─ pyproject.toml
 ├─ configs/
 │  └─ agent_system_v001.yaml
@@ -116,49 +193,68 @@ NanyangYS_Agent/
 ├─ tests/agent_system/test_agent_system_v001.py
 ├─ demo/
 │  ├─ DEMO_GUIDE.md
-│  └─ gpu_train_only_snapshot/
-│     ├─ STATUS.md
-│     ├─ evidence_bundle_manifest.yaml
-│     ├─ run_manifest.json
-│     ├─ pooled_metrics.csv
-│     ├─ daily_metrics.csv
-│     └─ paired_user_cluster_bootstrap.csv
-└─ artifacts/agent_runs/                 # 运行时生成，可重建
+│  └─ gpu_train_only_snapshot/       # compact historical summaries only
+├─ reproducibility/                  # download, verification, environment, QA
+├─ reference/
+│  ├─ evidence-summaries/            # compact v007-v012 direct summaries
+│  ├─ figures/
+│  ├─ reports/
+│  └─ kuairand-longseq-agent/        # source, contracts, configs, tests
+└─ artifacts/agent_runs/             # generated locally and rebuildable
 ```
 
-`demo/gpu_train_only_snapshot` 只保留演示所需的小型摘要，没有复制 54 MB 的逐行预测 Parquet、原始数据或训练环境。
+`demo/gpu_train_only_snapshot` contains only the small summaries required by
+the demo. It does not include the original data, training environment, or the
+54 MB row-level prediction parquet.
 
-## 明确禁止的主张
+## Unsupported claims
 
-- 不能称 GPU 快照为 Validation、Gold、sealed-test 或正式发布结果。
-- 不能称 BL2 为已经验证的长序列模型；当前只是 Train-only 的 BL0 / BL1 / BL2 比较。
-- 不能把 producer 的 `run_manifest.json` 或 `evidence_bundle_manifest.yaml` 直接传给 `--evidence-manifest`；它们不是 Agent 消费合同所需的 Evidence manifest。
-- 不能宣称线上因果收益、全库召回质量或任意策略的离线评估能力。
-- 不能宣称 Agent 已训练模型、调用 LLM/GPU，或已取得发布审批。
+- Do not describe the GPU demo snapshot as Validation, Gold, sealed-test, or a
+  formal release result.
+- Do not describe BL2 as a validated neural or long-sequence model; the demo
+  snapshot is a Train-only BL0/BL1/BL2 comparison.
+- Do not pass a producer `run_manifest.json` or
+  `evidence_bundle_manifest.yaml` directly to `--evidence-manifest`; those are
+  not the consumer Evidence manifest required by the Agent contract.
+- Do not claim online causal lift, full-catalog retrieval quality, or arbitrary
+  policy evaluation.
+- Do not claim that the Agent trained a model, invoked an LLM/GPU, or received
+  release approval.
+- Do not describe v012 temporal replay as external independent validation.
+- Do not describe the supplementary learning curve as independent
+  confirmation or as a neural-network result; it reuses Validation rows.
 
-运行时合同以 `configs/agent_system_v001.yaml`、`src/kuairand_longseq/` 与安全回归测试为准。
+The runtime contract is defined by `configs/agent_system_v001.yaml`,
+`src/kuairand_longseq/`, and the safety regression tests.
 
-## 许可证
+## License and dataset attribution
 
-### 代码许可证
+### Code
 
-本项目代码以 **Apache License 2.0** 授权，详见 [LICENSE](LICENSE)。
+Project code is licensed under the **Apache License 2.0**. See
+[`LICENSE`](LICENSE).
 
-### 数据集声明
+### Dataset
 
-本项目使用以下真实开源视频推荐数据集进行研究：
-
-| 数据集 | 来源 | 数据集许可证 | 引用 |
+| Dataset | Source | Dataset license | Citation |
 |---|---|---|---|
-| **KuaiRand-1K** | 快手 (Kuaishou) | [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/) | Gao et al., CIKM 2022 |
-| 腾讯视频数据 | 腾讯 (Tencent) | 待接入 | 待补充 |
-| 字节跳动数据 | 字节跳动 (ByteDance) | 待接入 | 待补充 |
-| YouTube 数据 | YouTube | 待接入 | 待补充 |
+| **KuaiRand-1K** | Kuaishou | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | Gao et al., CIKM 2022 |
+| Tencent video data | Tencent | Planned; not included | To be determined |
+| ByteDance video data | ByteDance | Planned; not included | To be determined |
+| YouTube data | YouTube | Planned; not included | To be determined |
 
-**KuaiRand 数据集使用声明：**
+KuaiRand was released by Chongming Gao, Shijun Li, Yuan Zhang, Jiawei Chen,
+Biao Li, Wenqiang Lei, Peng Jiang, Xiangnan He, and collaborators:
 
-- KuaiRand 数据集由 Chongming Gao, Shijun Li, Yuan Zhang, Jiawei Chen, Biao Li, Wenqiang Lei, Peng Jiang, Xiangnan He 等人发布，原始论文为：
-  > Gao, C., Li, S., Zhang, Y., Chen, J., Li, B., Lei, W., Jiang, P., & He, X. (2022). KuaiRand: An Unbiased Sequential Recommendation Dataset with Randomly Exposed Videos. *CIKM '22*, Atlanta, GA, USA. [DOI: 10.1145/3511808.3557624](https://doi.org/10.1145/3511808.3557624)
-- 数据集主页：<https://kuairand.com> · GitHub 仓库：<https://github.com/chongminggao/KuaiRand>
-- 该数据集以 **CC-BY-SA-4.0** 许可发布，使用时需署名，且基于该数据集的衍生作品须以相同许可证共享。
-- 本项目**不分发数据集本身**，仅提供基于该数据集的研究代码与实验结果。使用者需自行从官方渠道获取数据集并遵守其许可证条款。
+> Gao, C., Li, S., Zhang, Y., Chen, J., Li, B., Lei, W., Jiang, P., & He, X.
+> (2022). *KuaiRand: An Unbiased Sequential Recommendation Dataset with
+> Randomly Exposed Videos*. CIKM '22, Atlanta, GA, USA.
+> [DOI: 10.1145/3511808.3557624](https://doi.org/10.1145/3511808.3557624)
+
+- Dataset website: <https://kuairand.com>
+- Official repository: <https://github.com/chongminggao/KuaiRand>
+- Dataset license: **CC BY-SA 4.0**; attribution and share-alike obligations
+  apply to dataset-derived distributions.
+
+This repository does **not** distribute the KuaiRand dataset. Each user must
+obtain it from an official source and comply with its license.
