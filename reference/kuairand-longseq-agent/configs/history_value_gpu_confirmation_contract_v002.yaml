@@ -1,0 +1,113 @@
+version: 2
+contract_id: history_value_gpu_confirmation_v002
+status: successor_implementation_complete_pending_exact_hash_approval
+created_at_local: "2026-08-23"
+timezone: Asia/Shanghai
+
+base_contract:
+  path: configs/history_value_gpu_confirmation_contract_v001.yaml
+  sha256: 71f024b86510643a58bababa97572489bbb50d2352fcab8e89a65e7b9b046d1d
+  inheritance_rule: deep_merge_this_successor_over_the_exact_hashed_v001_contract
+
+successor_reason:
+  prior_run_contract_sha256: 71f024b86510643a58bababa97572489bbb50d2352fcab8e89a65e7b9b046d1d
+  prior_terminal_state: optimizer_preflight_reference_convergence_failure
+  prior_failure_artifact: reports/generated/history_value_gpu_confirmation_v001/preflight/preflight_failure.json
+  validation_accessed_in_prior_run: false
+  sealed_test_accessed_in_prior_run: false
+  random_audit_accessed_in_prior_run: false
+  scientific_result_in_prior_run: none
+  sole_protocol_change: reference_solver_max_iter_500_to_2000
+  scientific_features_models_estimands_thresholds_and_stage_order_changed: false
+  diagnostic_basis:
+    train_only_probe_reference_iterations:
+      - {origin: "2022-04-11", model_id: BL1, n_iter: 658, converged: true}
+      - {origin: "2022-04-11", model_id: BL2, n_iter: 922, converged: true}
+      - {origin: "2022-04-14", model_id: BL1, n_iter: 649, converged: true}
+      - {origin: "2022-04-14", model_id: BL2, n_iter: 952, converged: true}
+      - {origin: "2022-04-17", model_id: BL1, n_iter: 644, converged: true}
+      - {origin: "2022-04-17", model_id: BL2, n_iter: 931, converged: true}
+    all_convergence_warning_counts: 0
+    protected_or_scientific_metrics_used: false
+
+authorization:
+  contract_creation_authorized: true
+  creation_source: engineering_successor_required_by_v001_preflight_stop
+  execution_authorized: false
+  data_access_authorized_by_this_draft: false
+  exact_hash_approval_required_after_implementation: true
+  approval_receipt_protocol:
+    path: configs/history_value_gpu_confirmation_approval_v002.json
+    created_only_after_project_owner_approves_exact_final_contract_SHA256: true
+    receipt_creation_does_not_mutate_or_rehash_the_frozen_contract: true
+    runner_requires_contract_id_exact_SHA256_execution_true_and_automatic_transitions_true: true
+    current_receipt_status: absent_pending_project_owner_exact_hash_approval
+
+optimizer_adequacy:
+  reference_solver:
+    max_iter: 2000
+    all_other_reference_solver_fields_inherited_unchanged: true
+
+artifact_protocol:
+  output_root: reports/generated/history_value_gpu_confirmation_v002
+  stage_directories:
+    preflight: reports/generated/history_value_gpu_confirmation_v002/preflight
+    validation: reports/generated/history_value_gpu_confirmation_v002/validation
+    sealed_test: reports/generated/history_value_gpu_confirmation_v002/sealed_test
+    random_audit: reports/generated/history_value_gpu_confirmation_v002/random_audit
+  required_global_outputs:
+    - selected_optimizer_configuration_manifest.json
+    - stage_access_ledger.jsonl
+    - final_claim_decision.json
+    - reports/analysis/history_value_gpu_confirmation_results_v002.md
+
+implementation_status:
+  contract_written: true
+  runner_exists: true
+  stage_access_controller_exists: true
+  exact_implementation_hashes_pinned: true
+  validate_only_passed: true
+  independent_review_complete: false
+  v001_full_regression_tests_remain_applicable: true
+  successor_targeted_tests_pending: false
+  full_regression_test_result:
+    command: conda_run_n_Kuai_python_m_pytest_q
+    passed: 109
+    failed: 0
+    elapsed_seconds: 70.94
+    completed_at_local: "2026-08-23"
+  successor_targeted_test_result:
+    passed: 3
+    failed: 0
+  result_producing_files:
+    - path: src/kuairand_longseq/features/history_value_feature_sql.py
+      sha256: 06330a74ed5fc2384c7799ec33877ba7a0f73f51aaf23e1e42c284f5607bfeb2
+    - path: src/kuairand_longseq/models/history_value_gpu.py
+      sha256: f6e52fb68d03ae0447bc59c53bd77c3a6bd9dd79681daa68e59f7e933c5bcfec
+    - path: scripts/run_history_value_gpu_confirmation_v001.py
+      sha256: 7bd4d667da3f0d0f089a775db0f667449a62c02ce8fa0c481f837db205b45b72
+    - path: scripts/run_history_value_gpu_confirmation_v002.py
+      sha256: 9276222d4432a942544f39ea9fbd7137762b831544fc2c4457901c5037f832fc
+    - path: tests/test_history_value_gpu_confirmation_v002.py
+      sha256: c2d0e2cb4d73484c61cfbca90360bd3137d6d75832350fc743de1b77a18b49ad
+
+operational_budget:
+  budget_status: proposed_not_active_pending_exact_hash_approval
+  maximum_elapsed_hours_per_stage:
+    optimizer_preflight: 4
+    validation: 4
+    sealed_test: 6
+    random_audit: 2
+  reference_solver_iteration_cap_increase_does_not_change_GPU_fit_budget: true
+
+review_checklist_before_hash_approval:
+  - verify_base_v001_contract_SHA256
+  - verify_prior_run_stopped_before_validation_access
+  - verify_only_reference_solver_max_iter_changed_from_500_to_2000
+  - verify_all_six_Train_only_reference_diagnostics_converged_inside_2000
+  - verify_no_scientific_metric_or_gate_was_used_for_the_change
+  - verify_five_prediction_streams_and_all_scientific_thresholds_are_inherited_unchanged
+  - verify_validation_scientific_failure_still_continues_to_sealed
+  - pin_successor_runner_and_test_hashes
+  - pass_successor_validate_only_without_governed_stage_access
+  - compute_final_successor_SHA256_and_obtain_explicit_project_owner_approval

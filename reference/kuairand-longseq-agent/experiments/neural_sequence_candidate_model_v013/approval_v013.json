@@ -1,0 +1,19 @@
+{
+  "contract_id": "neural_sequence_candidate_model_v013",
+  "recorded_at": "2026-08-24T00:00:00+08:00",
+  "record_type": "scope_boundary_not_execution_approval",
+  "authorized_scope": [
+    "write_and_review_v013_design",
+    "register_v013_report_and_script_streams",
+    "write_fail_closed_contract_and_predecessor_requirements",
+    "run_read_only_structure_and_schema_validation"
+  ],
+  "gold_build_authorized": false,
+  "neural_training_authorized": false,
+  "validation_label_access_authorized": false,
+  "restricted_test_access_authorized": false,
+  "random_audit_access_authorized": false,
+  "release_authorized": false,
+  "approved_contract_sha256": null,
+  "required_next_authorization": "approve_exact_contract_hash_after_gold_pilot_feature_contract_compute_budget_implementation_and_tests_are_frozen"
+}

@@ -1,0 +1,48 @@
+{
+  "contract_id": "neural_sequence_candidate_model_v013",
+  "captured_at": "2026-08-24T00:00:00+08:00",
+  "status": "design_time_requirements_not_execution_preflight",
+  "artifacts": [
+    {
+      "path": "data/manifests/silver_run_manifest.json",
+      "sha256": "2f15f5c7c1551fe2575ea7d19e6ec30836ca8175e24f40b134877921440ba962",
+      "role": "formal_silver_identity"
+    },
+    {
+      "path": "reports/analysis/history_value_final_evidence_manifest_v010.json",
+      "sha256": "b53425915cb71904f07950743e8e0756e78ab3b7fc1c34369f4cfd4911a2c1b6",
+      "role": "frozen_h2_history_value_evidence"
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/final_decision.json",
+      "sha256": "08ea5f09be4f075647657a428805d68bcf6366a6fdbf7e1d69cd3405a6a78fe7",
+      "role": "target_domain_calibration_boundary"
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/contract_v012.yaml",
+      "sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5",
+      "role": "incumbent_contract"
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/final_decision.json",
+      "sha256": "e767fd7511a0382a4a7dbe9473cc90c8397c8350080020e4f1b6c025236f00a7",
+      "role": "incumbent_decision"
+    },
+    {
+      "path": "experiments/bl2_target_domain_retraining_v012/outputs/frozen_selected_model/selected_model_state.npz",
+      "sha256": "5f4023f32749a44b555559d25a7793cd7b2dff856a594998f03c8bf138b63308",
+      "role": "incumbent_frozen_model_state"
+    }
+  ],
+  "missing_execution_prerequisites": [
+    "approved_gold_contract",
+    "nonempty_versioned_gold_snapshot",
+    "gold_run_and_feature_manifests",
+    "fixed_target_row_manifests",
+    "approved_feature_allowlist_and_denylist",
+    "frozen_operational_compute_budget",
+    "result_producing_implementation_and_test_hashes",
+    "approved_exact_v013_contract_sha256"
+  ],
+  "gold_directory_observation": "data/gold contains only .gitkeep at design time"
+}

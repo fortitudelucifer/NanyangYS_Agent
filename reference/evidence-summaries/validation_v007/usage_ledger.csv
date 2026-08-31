@@ -1,0 +1,3 @@
+stage,stream,model_id,optimizer,learning_rate,steps,terminal_gradient_norm,elapsed_seconds,peak_cuda_memory_bytes,GPU_regularized_training_objective,reference_regularized_training_objective,objective_regret,maximum_allowed_regret,reference_converged,reference_above_GPU,adequacy_passed
+validation,ADAM_BL1,BL1,ADAM,0.03,100,0.0008552212966606021,3.3063020709996636,2834324992,0.55152428150177,0.5510827979994087,0.000441483502361284,0.002755413989997044,True,False,True
+validation,ADAM_BL2,BL2,ADAM,0.03,100,0.0011259098537266254,6.806992919002369,5711399936,0.5270838141441345,0.5265770026217306,0.0005068115224039493,0.002632885013108653,True,False,True

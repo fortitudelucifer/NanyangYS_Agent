@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "dataset": "KuaiRand-1K",
+  "identity_rule": "path, size_bytes, and sha256 must all match",
+  "files": [
+    {
+      "path": "log_standard_4_08_to_4_21_1k.csv",
+      "role": "early_standard",
+      "size_bytes": 373670312,
+      "sha256": "355355897a84baa4df26b78b0271bb9a27b127a39cd7aa4a898cf86db0bc1810",
+      "used_in_silver": true
+    },
+    {
+      "path": "log_standard_4_22_to_5_08_1k.csv",
+      "role": "late_standard",
+      "size_bytes": 492303531,
+      "sha256": "548daf771e54e2b73086cc8e7c6f56787d44421f5026c2100421810e47ae9dd4",
+      "used_in_silver": true
+    },
+    {
+      "path": "log_random_4_22_to_5_08_1k.csv",
+      "role": "random",
+      "size_bytes": 3086015,
+      "sha256": "e98841eabb3b078c812c4646bf0c5e3f0c947a4183dd950cb091e32377b9a849",
+      "used_in_silver": true
+    },
+    {
+      "path": "user_features_1k.csv",
+      "role": "users",
+      "size_bytes": 127533,
+      "sha256": "07813068ac9ca1071dd456c6d84bd20d0dd81a8ff6596a22e1bbe2b12dc5ea6d",
+      "used_in_silver": true
+    },
+    {
+      "path": "video_features_basic_1k.csv",
+      "role": "videos_basic",
+      "size_bytes": 376887905,
+      "sha256": "18cb8b9133635a5e53d4e33b1644137b8673b615cc1aaa500b6d3d09695efae3",
+      "used_in_silver": true
+    },
+    {
+      "path": "video_features_statistic_1k.csv",
+      "role": "videos_statistic",
+      "size_bytes": 3370628629,
+      "sha256": "5951175389697705dec4a4f992f891f0df3d32584b024f63e96191dc9f0939c5",
+      "used_in_silver": false,
+      "note": "Excluded from the formal Silver build because it is post-hoc aggregate information."
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+version: 10
+contract_id: history_value_adam_random_v010
+status: implementation_complete_tests_passed_pending_exact_hash_approval
+created_at_local: "2026-08-23"
+timezone: Asia/Shanghai
+
+base_contract:
+  path: configs/history_value_adam_random_contract_v009.yaml
+  sha256: b5af66d0087b16a5b7e248397cc745b4dc31cf7d0207b2842c589e8359e52c58
+  inheritance_rule: deep_merge_random_only_numerical_successor_over_exact_v009
+
+successor_reason:
+  project_owner_direction: complete_random_audit
+  v009_scientific_status: no_random_result_because_pre_random_numerical_gate_stopped
+  failure_class: overly_strict_cross_process_probability_identity_tolerance
+  sealed_diagnostic_status: numerically_equivalent_and_complete_without_random_access
+  Validation_and_sealed_scientific_status: pass
+  SGD_status: frozen_deferred
+  sole_remaining_question: random_exposure_transport_under_frozen_Adam
+
+v009_stop_evidence:
+  path: reports/generated/history_value_adam_random_v009/reconstruction_failure.json
+  size_bytes: 1104
+  sha256: d0def467cefd155413c1f676b48db15a0a80807fcd18138597c4de51443d3c11
+  required_status: stopped_before_any_random_data_access
+  random_input_opened: false
+  random_features_materialized: false
+  random_scores_or_metrics_computed: false
+
+sealed_reconstruction_diagnostic:
+  output_root: reports/generated/sealed_model_reconstruction_diagnostic_v010
+  audit_path: reports/generated/sealed_model_reconstruction_diagnostic_v010/diagnostic_audit.json
+  audit_sha256: 8d7371d92d67d3a19ee266330235ec523f09cf4c074e404a775f2c0c2e84f6dc
+  artifact_manifest_path: reports/generated/sealed_model_reconstruction_diagnostic_v010/artifact_hash_manifest.json
+  artifact_manifest_sha256: 366647d447b467b36824e3f505b2344f4c32656d14557fe9c4f57a323b047c24
+  artifact_count: 7
+  source_v009_contract_sha256: b5af66d0087b16a5b7e248397cc745b4dc31cf7d0207b2842c589e8359e52c58
+  sealed_rows_compared: 4431299
+  sealed_target_identity_exact: true
+  random_input_opened: false
+  observed_maximum_absolute_differences:
+    BL0_probability: 0.0
+    ADAM_BL1_probability: 0.0000001592932344363085
+    ADAM_BL2_probability: 0.000000513683198199999
+    ADAM_BL1_raw: 0.00000095367431640625
+    ADAM_BL2_raw: 0.0000036954879760742188
+  observed_maximum_metric_absolute_difference: 0.00000007593255446636249
+  acceptance_limits_derived_before_random_access:
+    BL0_probability_max_abs_difference: 0.0
+    calibrated_probability_max_abs_difference: 0.000001
+    raw_score_max_abs_difference: 0.000005
+    metric_max_abs_difference: 0.000001
+    minimum_pearson_correlation: 0.999999999999
+  interpretation: cross_process_CUDA_sparse_reduction_float_drift_with_no_material_metric_effect
+
+frozen_model_artifact:
+  source: sealed_reconstruction_diagnostic_v010
+  pickle_path: reports/generated/sealed_model_reconstruction_diagnostic_v010/reconstructed_frozen_models.pkl
+  pickle_size_bytes: 61165697
+  pickle_sha256: 7e4a073e673ea8e7dc6e9aafe1b96c9c6349790191e2113f459ce6325d151861
+  state_path: reports/generated/sealed_model_reconstruction_diagnostic_v010/reconstructed_frozen_model_state.npz
+  state_size_bytes: 4927967
+  state_sha256: c36c6bec407569d81734d1809c13d4fe2b96e410da6493dee04af77b6dfaeb60
+  model_streams: [BL0, ADAM_BL1, ADAM_BL2]
+  Adam_learning_rate: 0.03
+  Adam_steps: 100
+  model_refit_after_hash_approval: forbidden
+  recalibration_after_hash_approval: forbidden
+  exact_hash_verification_before_deserialization: required
+  state_cross_check_after_deserialization: required
+
+sequential_stage_protocol:
+  stage_3_random_audit:
+    status: active_only_after_new_exact_hash_approval_and_frozen_model_verification
+    model_source: exact_hash_pinned_sealed_diagnostic_pickle
+    target_dates_inclusive: ["2022-04-22", "2022-05-08"]
+    expected_target_rows: 43027
+    target_filter: all_formal_random_exposures
+    history_source: standard_events_only
+    random_label_history_update: forbidden
+    random_fit_recalibration_or_threshold_selection: forbidden
+    one_prediction_and_metric_release_only: true
+
+stage_gates:
+  random_transport_gate:
+    status: active_after_exact_hash_approval_and_frozen_model_verification
+    history_gate_passes_for_Adam: true
+    probability_health_gate_passes: true
+    static_and_absolute_gates_are_descriptive_under_prevalence_shift: true
+    cannot_rescue_or_erase_standard_stage_results: true
+
+authorization:
+  contract_creation_authorized: true
+  execution_authorized: false
+  exact_hash_approval_required_after_implementation: true
+  automatic_ordered_transitions_authorized: false
+  authorized_stage_scope_after_exact_hash_approval: [preflight, frozen_model_verification, random_audit]
+  Validation_and_sealed_access_role: exact_hashed_prerequisite_verification_only
+  random_audit_access_authorized: false
+  approval_receipt_protocol:
+    path: configs/history_value_adam_random_approval_v010.json
+    exact_contract_SHA256_required: true
+    authorized_stages_must_equal: [preflight, frozen_model_verification, random_audit]
+    automatic_ordered_transitions_authorized_must_be_false: true
+    approved_by_must_equal: project_owner
+    current_receipt_status: absent_pending_project_owner_exact_hash_approval
+
+terminal_interpretation:
+  status: final_Adam_only_history_value_decision_after_random
+  if_random_passes: history_value_supported_on_standard_and_random_exposures_under_frozen_Adam
+  if_random_fails: history_value_supported_on_standard_exposures_but_random_transport_not_supported
+  required_limitation: optimizer_robustness_not_established_because_SGD_is_frozen
+  prohibited_claims: [optimizer_robustness, online_causal_lift]
+
+artifact_protocol:
+  output_root: reports/generated/history_value_adam_random_v010
+  stage_directories:
+    preflight: reports/generated/history_value_adam_random_v010/preflight
+    frozen_model_verification: reports/generated/history_value_adam_random_v010/frozen_model_verification
+    random_audit: reports/generated/history_value_adam_random_v010/random_audit
+  required_global_outputs:
+    - selected_optimizer_configuration_manifest.json
+    - stage_access_ledger.jsonl
+    - final_claim_decision.json
+    - reports/analysis/history_value_adam_random_results_v010.md
+
+implementation_status:
+  contract_written: true
+  runner_exists: true
+  exact_frozen_model_pinned: true
+  validate_only_passed: true
+  applicable_regression_test_result:
+    command: conda_run_n_Kuai_python_m_pytest_q_ignore_completed_v005_v006_v007_v008_v009_receipt_absence_lifecycle_tests
+    passed: 123
+    failed: 0
+    elapsed_seconds: 71.50
+    excluded_test_files:
+      - tests/test_history_value_adam_validation_v005.py
+      - tests/test_history_value_adam_validation_v006.py
+      - tests/test_history_value_adam_validation_v007.py
+      - tests/test_history_value_adam_sealed_v008.py
+      - tests/test_history_value_adam_random_v009.py
+    exclusion_reason: exact_approval_receipts_now_legitimately_exist_after_those_runs
+    completed_at_local: "2026-08-23"
+  v010_targeted_test_result:
+    passed: 6
+    failed: 0
+    elapsed_seconds: 1.52
+  result_producing_files:
+    - path: src/kuairand_longseq/features/history_value_feature_sql.py
+      sha256: 06330a74ed5fc2384c7799ec33877ba7a0f73f51aaf23e1e42c284f5607bfeb2
+    - path: src/kuairand_longseq/models/history_value_gpu.py
+      sha256: f6e52fb68d03ae0447bc59c53bd77c3a6bd9dd79681daa68e59f7e933c5bcfec
+    - path: scripts/run_history_value_adam_confirmation_v004.py
+      sha256: 6d07fd322f8ee03de590990e24213d075f22a91b5ea62acc36b6dceaf9754e14
+    - path: scripts/run_history_value_adam_validation_v007.py
+      sha256: 5ca4f9afe541e504ff599bd70999e3358981de2e4138958145ba9a03053385c6
+    - path: scripts/run_history_value_adam_sealed_v008.py
+      sha256: e7d634ca4e6ce66c6cf3ed0f5c60e777df49130349b3c1ee5f2ea0a776b84219
+    - path: scripts/run_history_value_adam_random_v009.py
+      sha256: 332b949552b4a8e342008c8c336e649aca6df50d8d2ccb9d4a954973e03ad14a
+    - path: scripts/diagnose_sealed_model_reconstruction_v010.py
+      sha256: 882cbe71d000cad4326f1c7ab420ff23cc46b942854ab7026442f2be435ab307
+    - path: scripts/run_history_value_adam_random_v010.py
+      sha256: 76582078d3251a84672ea00b5861bc288ef5b02208a14ce4a56a0123a653bd74
+    - path: tests/test_history_value_adam_random_v010.py
+      sha256: 0c05f25d92f5b667c38ebfa58a1e8c3c16fb2581e3f7ecc84e297a70048287ec
+    - path: reports/analysis/random_target_count_precheck_2026-08-23.csv
+      sha256: 6d349e0e5abf2a2ad821043c293ff4c799c90c724ef12bce56bd606518e6f4b2
+
+operational_budget:
+  budget_status: proposed_not_active_pending_exact_hash_approval
+  maximum_elapsed_hours:
+    preflight_and_frozen_model_verification: 1
+    random_audit: 2
+  new_Adam_or_SGD_fits: 0
+  random_target_model_fits_or_calibrations: 0
+
+review_checklist_before_hash_approval:
+  - verify_exact_v008_sealed_pass_and_all_stage_artifact_hashes
+  - verify_v009_stopped_before_any_random_access
+  - verify_sealed_diagnostic_all_artifact_hashes_and_numeric_acceptance
+  - verify_frozen_pickle_and_state_exact_hashes_before_loading
+  - verify_random_data_cannot_open_before_frozen_model_verification_pass
+  - verify_random_labels_never_update_history_fit_calibration_or_thresholds
+  - verify_only_BL0_ADAM_BL1_ADAM_BL2_prediction_streams
+  - pass_applicable_regression_tests_and_validate_only
+  - obtain_new_exact_hash_approval

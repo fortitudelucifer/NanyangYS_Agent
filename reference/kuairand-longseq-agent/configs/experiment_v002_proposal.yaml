@@ -1,0 +1,671 @@
+version: 2
+experiment_id: longseq_v002_proposal
+status: approved_for_train_only_data_modeling
+inherits_from: longseq_v001
+supersedes: null
+
+governance:
+  gold_and_later_stages_proposal_only: true
+  preserve_v001: true
+  modify_existing_silver: false
+  rerun_silver: false
+  approved_for_train_only_data_modeling: true
+  approved_for_gold_build: false
+  approved_for_training: false
+  approved_for_restricted_test: false
+  train_only_data_modeling_scope:
+    purpose: measurement_design_feature_availability_and_gold_contract_preparation
+    allowed:
+      - train_only_descriptive_association
+      - train_only_fixed_row_baseline_prototyping
+      - feature_availability_registration
+      - research_question_preregistration
+      - gold_contract_drafting
+    forbidden:
+      - full_gold_build
+      - formal_model_training
+      - validation_model_selection
+      - restricted_test_model_evaluation
+      - random_audit_model_evaluation
+
+inputs:
+  formal_silver:
+    run_id: silver-20260814-155536
+    cleaning_version: v0.1.0
+    immutable: true
+    allowed_root: data/silver
+    run_manifest: data/manifests/silver_run_manifest.json
+    output_manifest: data/manifests/silver_output_manifest.json
+    recursive_parquet_discovery: denied
+  excluded_roots:
+    - artifacts/rejected_runs
+    - artifacts/.silver_build_tmp
+  formula_mismatch_quarantine:
+    path: data/quarantine/label_formula_mismatch_rows.parquet
+    access:
+      train_only_data_modeling:
+        allowed: true
+        source_table_allowlist: [early_standard]
+        event_date_range: ["2022-04-08", "2022-04-17"]
+        allowed_purposes:
+          - canonical_train_measurement_design
+          - train_only_feature_label_analysis
+          - train_only_fixed_row_baseline_prototyping
+        validation_dates: denied
+        late_standard: denied
+        random: denied
+      future_gold_builders:
+        allowed_after_explicit_gold_build_approval: true
+        builders:
+          - canonical_gold_builder
+          - formula_recomputed_same_row_sensitivity_builder
+    allowed_exclusion_reason: LONG_VIEW_FORMULA_MISMATCH
+    expected_exclusive_rows: 55953
+    modify_source: false
+
+task:
+  name: candidate_long_view_prediction
+  unit: observed_candidate_event
+  output: calibrated_probability
+  primary_label: long_view
+  claim_scope: observed_candidates_in_target_scene
+  forbidden_claims:
+    - full_catalog_recall
+    - reconstructed_online_slate_ranking
+    - online_causal_lift
+    - unbiased_policy_value
+    - semantic_preference_understanding
+
+population:
+  primary: users_seen_before_2022_04_22
+  target_tab: 1
+  history_tabs: all
+  cold_user_slice:
+    definition: users_first_seen_on_or_after_2022_04_22
+    inference_status: descriptive_only
+  content_scope:
+    primary: all_observed_candidates
+    modality_proxy:
+      field: content_modality_proxy
+      levels: [video_like, picture_like, unknown]
+      mapping_version: content_modality_proxy_v1_train_name_duration_consensus
+      role: diagnostic_slice_only
+      predictor_use: forbidden_in_v002_initial_modeling
+      official_semantic_mapping_available: false
+      do_not_infer_unmapped_upload_types: true
+    required_slices: [video_like, picture_like, unknown]
+    video_like_only_sensitivity: true
+
+splits:
+  source_train: ["2022-04-08", "2022-04-17"]
+  train_backtest: rolling_origin_within_source_train
+  validation: ["2022-04-18", "2022-04-21"]
+  final_train: ["2022-04-08", "2022-04-21"]
+  restricted_test:
+    range: ["2022-04-22", "2022-05-08"]
+    access_status: partially_unblinded_confirmatory
+    confirmatory_strength: limited
+  random_audit:
+    range: ["2022-04-22", "2022-05-08"]
+    access_after_primary_claim_freeze: true
+
+estimands:
+  primary:
+    name: observed_candidate_long_view_probability
+    interpretation: event_level_response_prediction
+    primary_metric: pr_auc_event_micro
+    used_for_model_selection: true
+    used_for_release_claim: true
+  key_secondary:
+    name: within_user_discrimination
+    metric: user_gauc
+    interpretation: discrimination_within_users_having_both_label_classes
+    role: noninferiority_guardrail
+    used_for_release_gate: true
+    superiority_required_for_ranking_claim: true
+  exploratory_diagnostic:
+    name: within_timestamp_conditional_discrimination
+    grouping_key: [user_id, time_ms]
+    semantic_name: timestamp_batch_not_verified_impression
+    interpretation: conditional_comparison_inside_observed_timestamp_groups
+    used_for_model_selection: false
+    used_for_release_claim: false
+
+labels:
+  primary:
+    field: long_view
+    source: official_label
+    overwrite_forbidden: true
+  nested_outcome_diagnostic:
+    fields: [is_click, long_view]
+    role: descriptive_or_auxiliary_multitask_only
+    causal_stage_claim: forbidden
+    product_identity_without_nonclick_term: forbidden
+    preserve_nonclick_long_view_rows: true
+  continuous_outcome:
+    field: capped_watch_ratio
+    role: auxiliary_sensitivity_only
+    valid_when: duration_ms_is_positive
+    invalid_or_nonpositive_duration: not_applicable
+  current_event_outcomes_as_features: denied
+
+gold_views:
+  canonical:
+    view_id: gold_v002_canonical
+    event_sources:
+      base: formal_silver
+      additive: formula_mismatch_quarantine
+    additive_policy:
+      quarantine_reason_allowlist: [LONG_VIEW_FORMULA_MISMATCH]
+      exclusive_reason_required: true
+      conflicting_event_groups_reattached: false
+      invalid_domain_rows_reattached: false
+      dimension_conflicts_reattached: false
+      unexpected_quarantine_reason_action: fail_build
+    source_identity_key: [source_table, source_row_number]
+    preserve_official_long_view: true
+    recomputed_long_view_role: diagnostic_audit_field_only
+    split_identity:
+      preserve_original_source_table: true
+      preserve_original_event_time: true
+      preserve_original_split_assignment: true
+      cross_split_movement: forbidden
+      source_table_roles:
+        early_standard: source_train_or_validation_by_frozen_date
+        late_standard: restricted_test
+        random: random_audit
+    expected_formula_mismatch_additive_rows: 55953
+    role: primary_analysis
+    separate_manifest_required: true
+
+  formula_recomputed_same_row_sensitivity:
+    view_id: gold_v002_formula_recomputed_same_rows
+    base_view: gold_v002_canonical
+    comparison_scope:
+      definition: duration_ms_is_positive_and_recomputed_long_view_is_defined
+      scope_manifest_required: true
+      canonical_and_sensitivity_target_rows_identical_within_scope: true
+      canonical_and_sensitivity_split_identity_identical_within_scope: true
+      outside_scope_status: not_applicable
+      outside_scope_in_sensitivity_metrics: false
+    official_long_view_preserved_as_audit_field: true
+    sensitivity_label:
+      field: long_view_formula_sensitivity
+      within_comparison_scope: use_recomputed_long_view
+      official_label_fallback: forbidden
+      outside_comparison_scope: not_applicable
+    split_identity_must_match_canonical: true
+    overwrite_silver_forbidden: true
+    independent_output_root: data/gold_sensitivity/formula_recomputed_same_rows
+    independent_manifest_required: true
+    used_for_model_selection: false
+    used_for_primary_release_claim: false
+    promotion_requires_new_approval: true
+    required_comparison:
+      - target_row_identity
+      - label_change_count
+      - duration_slice_change
+      - primary_metric_change
+      - calibration_change
+
+  legacy_silver_only_reproducibility:
+    view_id: gold_v002_legacy_silver_only
+    event_source: formal_silver_only
+    formula_mismatch_rows_included: false
+    role: legacy_reproducibility_only
+    preserve_official_long_view: true
+    split_identity_must_match_canonical_for_shared_rows: true
+    independent_output_root: data/gold_reproducibility/legacy_silver_only
+    independent_manifest_required: true
+    used_for_model_selection: false
+    used_for_primary_release_claim: false
+
+history:
+  batch_key: [user_id, time_ms]
+  ordering_key: time_ms
+  rule: history_time_strictly_less_than_target_time
+  same_timestamp_feedback_access: denied
+  within_batch_order_is_unknown: true
+  primary_protocol:
+    model_weights: frozen_after_validation
+    feature_state: rolling_point_in_time
+    feedback_rule: completed_batches_strictly_before_target_time
+    test_period_retraining: denied
+  sensitivity_protocol:
+    model_weights: frozen_after_validation
+    feature_state: frozen_at_2022_04_21
+    test_period_retraining: denied
+  required_time_slices: [date, days_since_weight_freeze]
+
+history_depth:
+  global_minimum_history_batches: 0
+  use_as_global_eligibility: false
+  feature: prior_history_batch_count
+  legacy_reporting_thresholds: [50, 200]
+  required_slices:
+    - id: history_0_49
+      minimum: 0
+      maximum: 49
+    - id: history_50_199
+      minimum: 50
+      maximum: 199
+    - id: history_200_plus
+      minimum: 200
+      maximum: null
+  calendar_burn_in:
+    status: frozen_protocol_decision_no_training_authorization
+    history_accumulation_range: ["2022-04-08", "2022-04-10"]
+    canonical_train_row_exclusion: false
+    canonical_all_rows_policy: use_all_available_history_with_mask
+    rolling_origin_assessment_target_eligibility:
+      start_date: "2022-04-11"
+      applies_only_to: backtest_assessment_targets
+    pre_start_rows:
+      retained_in_canonical: true
+      excluded_from_backtest_assessment_targets: true
+    evidence: reports/analysis/gate2_train_design_evidence_v002.md
+
+window_comparisons:
+  invariant:
+    identical_target_rows_within_comparison: true
+    identical_candidate_rows: true
+    identical_labels: true
+    identical_split: true
+    dropping_rows_per_model_forbidden: true
+    cross_cohort_metric_difference_not_interpreted_as_window_effect: true
+  gate2_source_identity_prototype_manifest:
+    identity_key: [source_table, source_row_number]
+    role: train_only_design_prototype
+    logical_manifest_and_identity_digest_required: true
+    gold_manifest_equivalence_claim: forbidden
+  gate3_gold_target_row_manifest:
+    identity_key: sample_id
+    lineage_key: [source_table, source_row_number]
+    creation_stage: gold_build
+    hash_frozen_before_training: true
+  all_rows_prediction:
+    windows: [10, 50, 200]
+    short_history_policy: use_all_available_with_mask
+    report_by_history_depth_slice: true
+  short_history_ablation:
+    windows: [10, 50]
+    analysis_slice: history_50_plus
+    fixed_target_row_set: true
+  long_sequence_primary_ablation:
+    windows: [10, 50, 200]
+    analysis_slice: history_200_plus
+    fixed_target_row_set: true
+  extended_history_exploratory:
+    windows: [10, 50, 200, 500]
+    analysis_slice: history_500_plus
+    create_slice_only_if_sample_gate_passes: true
+    fixed_target_row_set: true
+    claim_role: exploratory
+
+feature_governance:
+  admission_rule: point_in_time_availability_contract_and_fixed_row_ablation
+  univariate_association_role: descriptive_only
+  univariate_auc_as_hard_filter: denied
+  current_event_forbidden_features:
+    - is_click
+    - is_like
+    - is_follow
+    - is_comment
+    - is_forward
+    - is_hate
+    - long_view
+    - play_time_ms
+    - profile_stay_time
+    - comment_stay_time
+    - is_profile_enter
+  controlled_sources:
+    video_features_statistic_1k.csv: denied
+  point_in_time_features:
+    train_only_fit_required: true
+    smoothing_parameters_fit_on_train_only: true
+    cold_category_policy_required: true
+    feature_availability_manifest_required: true
+
+evaluation:
+  primary_metric:
+    name: pr_auc
+    aggregation: event_micro
+    role: sole_superiority_metric
+    contrast: candidate_minus_frozen_primary_baseline
+    identical_target_rows_required: true
+    superiority_gate:
+      lower_bound_95ci_greater_than: 0.0
+      point_estimate_at_least_frozen_sesoi: true
+  probability_quality_gates:
+    log_loss:
+      role: noninferiority_guardrail
+      direction: lower_is_better
+      contrast: candidate_minus_frozen_primary_baseline
+      noninferiority_margin: null
+      margin_status: freeze_before_restricted_test
+      gate: upper_bound_95ci_at_most_margin
+    brier_score:
+      role: noninferiority_guardrail
+      direction: lower_is_better
+      contrast: candidate_minus_frozen_primary_baseline
+      noninferiority_margin: null
+      margin_status: freeze_before_restricted_test
+      gate: upper_bound_95ci_at_most_margin
+    ece:
+      role: descriptive_calibration_diagnostic
+      binning_definition_status: freeze_before_restricted_test
+    calibration_intercept_and_slope:
+      role: descriptive_calibration_diagnostic
+  reported_descriptive_metrics: [roc_auc]
+  key_secondary:
+    user_gauc:
+      role: noninferiority_guardrail
+      inclusion: users_with_both_label_classes
+      weighting: event_weighted
+      supplementary_weighting: user_equal
+      contrast: candidate_minus_frozen_primary_baseline
+      identical_eligible_users_and_rows_required: true
+      report_eligible_users_and_rows: true
+      noninferiority_margin: null
+      noninferiority_margin_status: freeze_before_restricted_test
+      noninferiority_gate: lower_bound_95ci_at_least_negative_margin
+      ranking_superiority_sesoi: null
+      ranking_superiority_sesoi_status: freeze_before_restricted_test
+      ranking_superiority_gate:
+        lower_bound_95ci_greater_than: 0.0
+        point_estimate_at_least_frozen_ranking_sesoi: true
+      coverage_gate:
+        minimum_eligible_users: null
+        minimum_eligible_user_fraction: null
+        minimum_eligible_event_fraction: null
+        status: freeze_after_train_only_coverage_review
+      implementation:
+        minimum_positive_labels_per_user: null
+        minimum_negative_labels_per_user: null
+        ties_method: null
+        status: freeze_before_validation
+  decision_rule:
+    type: conjunctive_gatekeeping
+    shared_paired_user_bootstrap_replicates: true
+    primary_release_success_requires:
+      - pr_auc_superiority_and_sesoi_pass
+      - user_gauc_noninferiority_pass
+      - log_loss_noninferiority_pass
+      - brier_score_noninferiority_pass
+    failure_interpretation:
+      pr_auc_pass_user_gauc_fail: aggregate_prediction_improves_but_within_user_discrimination_may_degrade
+      pr_auc_fail_user_gauc_pass: no_primary_superiority_claim
+      probability_guardrail_fail: ranking_improvement_does_not_support_calibrated_probability_release
+  claim_gates:
+    probability_prediction_claim:
+      requires_primary_release_success: true
+    within_user_ranking_claim:
+      scope: within_user_discrimination_on_observed_candidates
+      requires_primary_release_success: true
+      additionally_requires_user_gauc_superiority: true
+      timestamp_diagnostic_cannot_satisfy_gate: true
+    reconstructed_slate_ranking_claim:
+      permitted: false
+  exploratory_diagnostics:
+    within_timestamp_pair_auc:
+      grouping_key: [user_id, time_ms]
+      inclusion: mixed_label_groups_only
+      primary_weighting: discordant_pair_weighted
+      sensitivity_weighting: group_equal
+      report_coverage:
+        - total_groups
+        - eligible_groups
+        - excluded_homogeneous_groups
+        - total_rows
+        - eligible_rows
+        - excluded_rows
+        - users_represented
+        - discordant_pairs
+        - cross_tab_group_rate
+  aggregation_views:
+    - event_micro
+    - user_macro_with_eligibility_and_coverage
+  slice_reporting:
+    same_frozen_candidate_and_baseline_models: true
+    identical_rows_within_each_slice: true
+    raw_pr_auc_not_compared_directly_across_slices: true
+    pr_auc_fields:
+      - slice_event_count
+      - slice_user_count
+      - positive_count
+      - negative_count
+      - prevalence
+      - no_skill_pr_auc_equal_to_prevalence
+      - frozen_baseline_pr_auc
+      - candidate_pr_auc
+      - absolute_delta_pr_auc
+      - relative_lift_over_baseline
+    relative_lift:
+      formula: (candidate_pr_auc - baseline_pr_auc) / baseline_pr_auc
+      undefined_when_baseline_is_zero: true
+      absolute_delta_remains_required: true
+    probability_quality_fields:
+      - baseline_log_loss
+      - candidate_log_loss
+      - delta_log_loss
+      - baseline_brier_score
+      - candidate_brier_score
+      - delta_brier_score
+      - ece
+      - calibration_intercept
+      - calibration_slope
+    cross_slice_claim:
+      estimand: interaction_contrast_of_candidate_increment_over_baseline
+      direct_absolute_pr_auc_ranking: forbidden
+      multiplicity_method: BH_FDR
+      family_q: 0.05
+    sample_gates:
+      minimum_slice_users: null
+      minimum_slice_positives: null
+      minimum_slice_negatives: null
+      status: freeze_before_restricted_test
+      undersized_slice_role: descriptive_only
+  calibration:
+    candidate_methods: null
+    candidate_methods_status: freeze_before_validation
+    final_method: null
+    final_method_status: freeze_before_restricted_test
+    final_fit_source: cross_fitted_predictions_from_final_train_range
+    fit_on_restricted_test: forbidden
+    per_restricted_test_slice_refit: forbidden
+    same_frozen_calibrator_applied_across_restricted_test_slices: true
+    calibrated_pr_auc_term: forbidden_use_probability_quality_metrics_instead
+  uncertainty_by_stage:
+    train_only_design:
+      method: user_cluster_bootstrap
+      iterations: 2000
+      confidence_level: 0.95
+      resampling_seed: 20260814
+      shared_user_multiplicities_across_compared_estimands: true
+      role: descriptive_and_implementation_smoke_test_only
+      may_fill_validation_mde: false
+      confirmatory_claim: forbidden
+    validation_model_contrast:
+      status: reserved_not_authorized
+      method: paired_user_cluster_bootstrap
+      identical_users_rows_and_predictions_required: true
+  training_randomness:
+    neural_minimum_seeds: 3
+    neural_finalist_seed_values: null
+    seed_values_status: freeze_before_validation
+    confirmatory_seed_aggregation: null
+    confirmatory_seed_aggregation_status: freeze_before_restricted_test
+    report_separately_from_bootstrap: true
+  practical_significance:
+    sesoi:
+      metric: pr_auc_event_micro
+      value: null
+      status: freeze_before_restricted_test
+      selection_basis: substantive_relevance_not_power_only
+    mde:
+      value: null
+      status: estimate_after_paired_validation_predictions
+      estimation_basis: paired_model_difference_variance
+      gate2_requirement: deferred_not_blocking
+      train_only_bootstrap_is_not_valid_mde_input: true
+      single_feature_auc_proxy_as_final_basis: denied
+  multiplicity:
+    unique_primary_comparison_adjustment: none
+    descriptive_slices: effect_size_and_confidence_interval
+    inferential_slice_test: interaction_contrast
+    inferential_slice_family_method: BH_FDR
+    inferential_slice_family_q: 0.05
+    family_definition_required_before_restricted_test: true
+  required_slices:
+    - date
+    - days_since_weight_freeze
+    - user_activity_quartile
+    - history_depth
+    - content_modality_proxy
+    - duration_state_and_bucket
+    - warm_cold_user
+    - warm_behavior_cold_video
+    - missingness_state
+
+protocol:
+  train_backtest: rolling_origin
+  model_order:
+    - constant_and_simple_rules
+    - static_no_history
+    - statistical_history
+    - short_sequence
+    - long_sequence
+  same_target_rows_for_nested_comparisons: true
+  stop_if_statistical_history_has_no_stable_increment: true
+  validation_for_final_selection: true
+  neural_seed_budget_frozen_before_validation: true
+  no_test_informed_model_changes: true
+
+compute_and_search_budget:
+  contract: configs/compute_search_budget_v002.yaml
+  purpose:
+    - bound_researcher_degrees_of_freedom
+    - prevent_unlimited_validation_search
+    - control_local_resource_cost
+  planning_envelope:
+    status: frozen_upper_bounds_only_no_training_authorization
+    includes:
+      - allowed_model_ladder
+      - maximum_search_trials_and_fit_runs
+      - search_and_finalist_backtest_fold_limits
+      - seed_limits
+      - per_run_and_stage_resource_caps
+      - scientific_and_resource_stop_rules
+  operational_training_budget:
+    status: pending_gold_pilot_benchmark_and_explicit_training_approval
+    must_remain_within_planning_envelope: true
+    may_only_tighten_without_versioned_amendment: true
+  budget_expansion_requires_versioned_amendment: true
+  budget_file_itself_grants_stage_authorization: false
+
+partial_unblinding:
+  status: partially_unblinded_for_silver_quality_governance
+  restricted_test_is_pristine: false
+  known_information:
+    - aggregate_and_daily_label_rates
+    - formula_mismatch_counts_by_official_label
+    - short_content_official_label_by_watch_ratio_and_play_time_strata
+    - row_and_user_counts
+    - selected_covariate_coverage_and_drift
+    - current_review_late_standard_aggregate_label_and_covariate_access
+    - current_review_random_aggregate_label_and_coverage_access
+  not_yet_authorized:
+    - model_predictions
+    - model_metric_comparisons
+    - feature_label_screening_on_restricted_test
+    - hyperparameter_selection
+    - threshold_selection
+    - random_audit_model_selection
+  controls:
+    append_only_access_log_required: true
+    known_statistics_registry_required: true
+    one_controlled_primary_test_run: true
+    test_consumed_after_primary_run: true
+    random_audit_after_primary_claim_freeze: true
+
+artifacts_required:
+  - gold_data_contract
+  - canonical_gold_run_manifest
+  - formula_recomputed_same_row_sensitivity_gold_run_manifest
+  - legacy_silver_only_reproducibility_gold_run_manifest
+  - gold_view_row_identity_and_split_reconciliation
+  - feature_availability_manifest
+  - train_only_source_identity_target_row_prototype_manifest
+  - gold_sample_id_target_row_manifests
+  - row_reconciliation_by_split_and_slice
+  - point_in_time_leakage_tests
+  - timestamp_metric_coverage_report
+  - modality_mapping_and_unknown_audit
+  - train_only_analysis_queries_and_hashes
+  - train_association_report
+  - hypothesis_registry
+  - compute_and_search_budget_manifest
+  - actual_compute_usage_report
+  - calibration_protocol_manifest
+  - release_decision_gate_report
+  - partial_unblinding_access_log
+  - experiment_card
+  - model_card
+
+entry_gates:
+  before_gold_build:
+    - gold_build_explicitly_approved
+    - gold_contract_approved
+    - content_modality_proxy_mapping_reviewed
+    - canonical_formula_mismatch_union_keys_verified
+    - canonical_formula_mismatch_exclusive_reason_verified
+    - conflict_invalid_and_dimension_quarantines_excluded
+    - canonical_split_identity_preservation_verified
+    - formula_recomputed_sensitivity_same_row_identity_verified
+    - legacy_silver_only_reproducibility_view_specified
+    - target_sample_id_rule_frozen
+    - point_in_time_tests_defined
+    - calendar_burn_in_decision_frozen
+    - train_only_source_identity_target_row_prototypes_complete
+    - compute_planning_envelope_frozen_no_training_authorization
+  before_train_backtest:
+    - canonical_gold_manifest_complete
+    - formula_recomputed_sensitivity_gold_manifest_complete
+    - legacy_silver_only_reproducibility_manifest_complete
+    - gold_sample_id_target_row_manifests_complete_and_hashed
+    - feature_allowlist_and_denylist_frozen
+    - gold_pilot_compute_benchmark_complete
+    - operational_train_backtest_budget_frozen_within_planning_envelope
+    - per_run_and_total_resource_caps_frozen
+  before_formal_model_training:
+    - formal_training_explicitly_approved
+    - train_backtest_gates_passed
+    - allowed_model_families_and_search_spaces_frozen
+    - scientific_stop_rule_frozen
+  before_first_validation_read:
+    - maximum_finalist_configurations_frozen
+    - maximum_validation_metric_reads_frozen
+    - neural_finalist_seed_values_frozen
+    - calibration_method_candidates_frozen
+    - invalid_run_replacement_policy_frozen
+  before_restricted_test:
+    - unique_primary_comparison_frozen
+    - sesoi_frozen
+    - validation_paired_mde_estimated
+    - user_gauc_noninferiority_margin_frozen
+    - user_gauc_ranking_superiority_sesoi_frozen
+    - user_gauc_coverage_and_implementation_frozen
+    - log_loss_noninferiority_margin_frozen
+    - brier_score_noninferiority_margin_frozen
+    - slice_sample_gates_and_increment_interactions_frozen
+    - final_calibration_method_and_fit_protocol_frozen
+    - primary_history_protocol_frozen
+    - metrics_and_multiplicity_frozen
+    - model_and_calibrator_frozen
+    - restricted_test_compute_and_retry_budget_frozen
+    - final_code_and_config_hashes_recorded
+    - partial_unblinding_registry_signed_off
+  before_random_audit:
+    - restricted_test_complete
+    - primary_claim_frozen
+    - random_access_explicitly_approved

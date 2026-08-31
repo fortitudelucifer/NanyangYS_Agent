@@ -1,0 +1,86 @@
+version: 2
+dataset: KuaiRand-1K
+raw_is_immutable: true
+
+event_tables:
+  early_standard:
+    expected_date_min: "2022-04-08"
+    expected_date_max: "2022-04-21"
+    expected_is_rand: 0
+  late_standard:
+    expected_date_min: "2022-04-22"
+    expected_date_max: "2022-05-08"
+    expected_is_rand: 0
+  random:
+    expected_date_min: "2022-04-22"
+    expected_date_max: "2022-05-08"
+    expected_is_rand: 1
+
+required_event_columns:
+  - user_id
+  - video_id
+  - date
+  - hourmin
+  - time_ms
+  - is_click
+  - is_like
+  - is_follow
+  - is_comment
+  - is_forward
+  - is_hate
+  - long_view
+  - play_time_ms
+  - duration_ms
+  - profile_stay_time
+  - comment_stay_time
+  - is_profile_enter
+  - is_rand
+  - tab
+
+binary_columns:
+  - is_click
+  - is_like
+  - is_follow
+  - is_comment
+  - is_forward
+  - is_hate
+  - long_view
+  - is_profile_enter
+  - is_rand
+
+domains:
+  tab:
+    minimum: 0
+    maximum: 14
+    source: KuaiRand-1K/README.md
+
+sequence:
+  user_key: [user_id]
+  batch_key: [user_id, time_ms]
+  ordering_key: [time_ms]
+  history_rule: history_time_strictly_less_than_target_time
+  within_batch_order_is_unknown: true
+
+deduplication:
+  exact_duplicate_key: all_columns
+  composite_event_key: [user_id, video_id, time_ms]
+  composite_key_is_not_assumed_unique: true
+
+current_prediction_forbidden_features:
+  - is_click
+  - is_like
+  - is_follow
+  - is_comment
+  - is_forward
+  - is_hate
+  - long_view
+  - play_time_ms
+  - profile_stay_time
+  - comment_stay_time
+  - is_profile_enter
+
+controlled_sources:
+  video_features_statistic_1k.csv:
+    default_access: denied
+    reason: same_month_post_hoc_aggregation_leakage_risk
+

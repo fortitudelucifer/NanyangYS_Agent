@@ -1,0 +1,29 @@
+# TEMPLATE ONLY. This file is deliberately not accepted as scientific evidence.
+schema_version: "1.0"
+evidence_id: replace_with_authorized_run_id
+evidence_kind: paired_model_comparison
+status: pending
+tier: validation
+claim_eligible: false
+execution_authorized: false
+placeholder: true
+contract_sha256: replace_with_64_lowercase_hex
+code_sha256: replace_with_64_lowercase_hex
+input_manifest_sha256: replace_with_64_lowercase_hex
+model_config_sha256: replace_with_64_lowercase_hex
+authorization_sha256: replace_with_64_lowercase_hex
+models:
+  - static_baseline
+  - strict_statistical_history
+  - short_sequence
+  - long_sequence
+scope:
+  dataset: KuaiRand-1K
+  task: candidate_long_view_probability_prediction
+  split: validation
+  target_manifest_sha256: replace_after_real_run
+metrics: {}
+gates: {}
+limitations:
+  - Real GPU experiment has not been registered in this template.
+artifacts: []

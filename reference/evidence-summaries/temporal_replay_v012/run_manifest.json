@@ -1,0 +1,43 @@
+{
+  "bootstrap_replicates_sha256": "4748ff0f6d94fd78f900e89fda0ec7afe58da11669f1e591b65055f5d8bc2fa6",
+  "contract_sha256": "bd362bbd40a6cedcb7f6859713337bdadb2e9e03690e9117224801a35e1cb6d5",
+  "decision": {
+    "all_required_gates_passed": true,
+    "changes_v010_history_conclusion": false,
+    "changes_v011_calibration_conclusion": false,
+    "evidence_level": "post_audit_target_adaptation_temporal_replay_not_pristine_confirmation",
+    "gates": {
+      "calibration_health_gate": true,
+      "daily_stability_gate": true,
+      "history_value_gate": true,
+      "old_ranking_noninferiority_gate": true,
+      "retraining_probability_value_gate": true,
+      "selection_eligibility_gate": true,
+      "static_baseline_gate": true
+    },
+    "positive_history_AP_days": 3,
+    "required_positive_history_AP_days": 2,
+    "scientific_status": "retraining_adds_value"
+  },
+  "environment": {
+    "compiled_cuda": "12.8",
+    "cuda_available": true,
+    "device": "NVIDIA GeForce RTX 5070 Ti",
+    "executable": "/home/forcifer-123/miniconda3/envs/Kuai/bin/python",
+    "versions": {
+      "numpy": "2.4.6",
+      "pyarrow": "25.0.1",
+      "python": "3.11.15",
+      "scikit_learn": "1.9.0",
+      "scipy": "1.17.1",
+      "torch": "2.11.0+cu128"
+    }
+  },
+  "positives": 1039,
+  "prediction_sha256": "e9d3fb67ee7a2722f5b2470f32a85632fd79748001091777218f62d1e9103b1a",
+  "rows": 12399,
+  "selected_config_id": "C2_balanced",
+  "selected_model_state_sha256": "5f4023f32749a44b555559d25a7793cd7b2dff856a594998f03c8bf138b63308",
+  "status": "complete",
+  "users": 857
+}

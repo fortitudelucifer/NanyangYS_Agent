@@ -1,0 +1,956 @@
+version: 2
+registry_id: feature_availability_v002
+status: approved_for_train_only_data_modeling
+created_on: "2026-08-14"
+
+authority:
+  experiment_contract: configs/experiment_v002_proposal.yaml
+  data_contract: configs/data_contract.yaml
+  formal_silver_run_id: silver-20260814-155536
+  formal_silver_run_manifest: data/manifests/silver_run_manifest.json
+  formal_silver_output_manifest: data/manifests/silver_output_manifest.json
+  public_field_reference: KuaiRand-1K/README.md
+  precedence:
+    - experiment_contract
+    - data_contract
+    - formal_silver_manifests_and_schema
+    - public_field_reference
+  silver_is_immutable: true
+  raw_is_immutable: true
+
+role_semantics:
+  allow: access_is_permitted_only_for_the_listed_uses_and_point_in_time_conditions
+  diagnostic: audit_or_descriptive_use_only_until_the_named_promotion_gate_passes
+  deny: predictor_use_is_forbidden
+  note: role_is_not_a_blanket_permission; feature_use_and_permitted_non_feature_uses_are_binding
+
+stage_scope:
+  stage: train_only_data_modeling
+  approved: true
+  purpose:
+    - measurement_design
+    - feature_availability_registration
+    - train_only_descriptive_association
+    - train_only_fixed_row_baseline_prototyping
+    - gold_contract_preparation
+  source_train_event_dates: ["2022-04-08", "2022-04-17"]
+  target_tab: 1
+  history_tabs: all
+  forbidden:
+    - full_gold_build
+    - formal_model_training
+    - validation_model_selection
+    - restricted_test_model_evaluation
+    - random_audit_model_evaluation
+    - reading_validation_rows_for_new_feature_label_modeling
+    - reading_late_or_random_rows_for_new_feature_label_modeling
+
+controlled_sources:
+  canonical_train_events:
+    role: allow
+    construction: union_all_then_assert_unique_source_identity
+    base:
+      path: data/silver/events_early_standard.parquet
+      source_table_required: early_standard
+      event_date_range: ["2022-04-08", "2022-04-17"]
+    additive:
+      path: data/quarantine/label_formula_mismatch_rows.parquet
+      source_table_required: early_standard
+      event_date_range: ["2022-04-08", "2022-04-17"]
+      exclusion_reason_allowlist: [LONG_VIEW_FORMULA_MISMATCH]
+      exclusive_reason_required: true
+      preserve_official_long_view: true
+      train_slice_expected_row_count: 14070
+      train_slice_official_long_view_counts:
+        positive_1: 14069
+        negative_0: 1
+    expected_row_counts_after_union:
+      all_tabs: 3671408
+      target_tab_1: 2399844
+    source_identity_key: [source_table, source_row_number]
+    gate2_prototype_identity_key: [source_table, source_row_number]
+    gate2_prototype_role: train_only_design_not_gold_manifest
+    gold_sample_id_available_at_current_stage: false
+    batch_key: [user_id, time_ms]
+    filters:
+      target_rows:
+        tab: 1
+      conflicts_reattached: false
+      invalid_domain_rows_reattached: false
+      dimension_conflicts_reattached: false
+    split_identity:
+      preserve_source_table: true
+      preserve_event_time: true
+      preserve_split_assignment: true
+      cross_split_movement: forbidden
+    required_checks:
+      - every_additive_row_has_exclusive_allowed_exclusion_reason
+      - no_source_identity_overlap_between_base_and_additive
+      - no_duplicate_source_identity_after_union
+      - all_rows_are_early_standard_and_within_source_train_dates
+      - official_long_view_is_unchanged
+      - row_counts_and_hashes_are_manifested_before_gold_build
+
+  events_early_validation:
+    path: data/silver/events_early_standard.parquet
+    event_date_range: ["2022-04-18", "2022-04-21"]
+    role: deny
+    reason: validation_dates_are_closed_to_train_only_feature_label_modeling
+
+  events_late_standard:
+    path: data/silver/events_late_standard.parquet
+    event_date_range: ["2022-04-22", "2022-05-08"]
+    role: deny
+    reason: restricted_test_is_partially_unblinded_and_not_available_at_this_stage
+
+  events_random:
+    path: data/silver/events_random.parquet
+    event_date_range: ["2022-04-22", "2022-05-08"]
+    role: deny
+    reason: random_audit_requires_primary_claim_freeze_and_later_approval
+
+  users:
+    path: data/silver/users.parquet
+    role: allow
+    join_key: [user_id]
+    join_cardinality: many_events_to_one_user
+    snapshot_cutoff_status: undocumented
+
+  videos_basic:
+    path: data/silver/videos_basic.parquet
+    role: allow
+    join_key: [video_id]
+    join_cardinality: many_events_to_one_video
+    snapshot_cutoff_status: partially_documented_by_intrinsic_fields_only
+
+  quality_flags_dictionary:
+    path: data/silver/quality_flags_dictionary.parquet
+    role: diagnostic
+    join_key: [quality_flags]
+    use: decode_silver_audit_flags_only
+
+  video_features_statistic_1k_csv:
+    path: KuaiRand-1K/data/video_features_statistic_1k.csv
+    role: deny
+    predictor_use: forbidden
+    derived_feature_use: forbidden
+    join_use: forbidden
+    reason: one_month_post_hoc_aggregates_are_not_point_in_time_safe
+
+  raw_csv_files:
+    role: deny
+    reason: formal_silver_paths_only_and_no_recursive_or_direct_raw_discovery
+
+point_in_time_contract:
+  target_time_field: time_ms
+  target_batch_key: [user_id, time_ms]
+  ordering_key: [time_ms]
+  history_predicate: history_time_ms_strictly_less_than_target_time_ms
+  completed_history_batches_only: true
+  same_timestamp_feedback_access: deny
+  within_batch_order_is_unknown: true
+  current_event_outcomes_as_predictors: deny
+  target_row_feature_requirement: known_or_computable_before_observing_target_feedback
+  fit_state:
+    training_rows_only: true
+    smoothing_parameters_train_only: true
+    category_vocabulary_train_only: true
+    imputation_parameters_train_only_if_later_approved: true
+  validation_test_random_fit_access: deny
+
+join_contracts:
+  target_event_to_user:
+    left_source: canonical_train_events
+    right_source: users
+    key: [user_id]
+    temporal_rule: user_field_must_have_pre_target_snapshot_provenance_or_remain_diagnostic
+    missing_join_policy: retain_target_row_and_emit_user_join_missing
+    row_multiplication: forbidden
+  target_event_to_video:
+    left_source: canonical_train_events
+    right_source: videos_basic
+    key: [video_id]
+    temporal_rule: field_must_be_intrinsic_or_known_by_target_time
+    missing_join_policy: retain_target_row_and_emit_video_join_missing
+    row_multiplication: forbidden
+  history_event_to_target:
+    source: canonical_train_events
+    key: [user_id]
+    temporal_rule: history_time_ms_strictly_less_than_target_time_ms
+    same_timestamp_join: forbidden
+    future_event_join: forbidden
+  history_event_to_video:
+    left_source: canonical_train_events
+    right_source: videos_basic
+    key: [video_id]
+    temporal_rule: join_only_after_history_event_passes_strict_history_predicate
+    row_multiplication: forbidden
+
+global_missing_unknown_policy:
+  retain_target_rows_for_unknown_attributes: true
+  unknown_attribute_is_not_invalid_row: true
+  categorical:
+    preserve_source_unknown_and_sentinel_states: true
+    unseen_category_token: UNKNOWN_OR_UNSEEN
+    fit_vocabulary_on_train_only: true
+    ordinal_interpretation_without_documentation: forbidden
+  numeric:
+    blanket_zero_fill: forbidden
+    blanket_mean_fill: forbidden
+    retain_missing_indicator: true
+    learned_imputation_requires_train_only_fit_and_separate_approval: true
+  joins:
+    inner_join_to_drop_unknown_dimension_rows: forbidden
+    missing_dimension_indicators_required: true
+  leakage_markers:
+    quality_flags_as_predictors: forbidden
+    exclusion_reason_as_predictor: forbidden
+    record_status_as_predictor: forbidden
+    source_row_number_as_predictor: forbidden
+
+field_groups:
+  event_identity:
+    source: canonical_train_events
+    fields: [user_id, video_id]
+    join_key: [user_id, video_id]
+    point_in_time_availability: present_on_target_request
+    missing_unknown_policy: null_key_fails_contract; unseen_ids_use_cold_entity_state
+    role: allow
+    feature_use:
+      user_id: deny_raw_numeric_or_ordinal_predictor
+      video_id: deny_raw_numeric_or_ordinal_predictor
+      allowed:
+        - user_sequence_partition_key
+        - dimension_join_key
+        - evaluation_group_key
+        - cold_entity_slice
+        - controlled_id_baseline_train_only_categorical_token
+        - controlled_id_baseline_train_only_embedding
+    leakage_risk:
+      level: medium
+      reason: identity_memorization_can_hide_cold_entity_failure
+    required_controls:
+      - cold_user_and_cold_item_states
+      - vocabulary_fit_and_frozen_on_source_train_only
+      - explicit_UNKNOWN_OR_COLD_token
+      - warm_and_cold_user_item_slices
+      - fixed_ID_vs_content_ablation
+      - no_target_encoding_outside_strict_history
+
+  target_event_time:
+    source: canonical_train_events
+    fields: [date, event_date, hourmin, time_ms]
+    join_key: []
+    point_in_time_availability: target_request_time
+    missing_unknown_policy:
+      event_date_and_time_ms: missing_is_contract_failure
+      hourmin: retain_raw_and_mark_unvalidated
+    role: allow
+    feature_use:
+      date: split_and_reconciliation_only
+      event_date: split_and_reconciliation_only
+      time_ms: ordering_batching_and_time_gap_derivation_only
+      hourmin: diagnostic_until_format_and_timezone_gate
+      raw_absolute_timestamp_predictor: deny
+      derived_calendar_predictors: diagnostic_until_timezone_and_consistency_gate
+    leakage_risk:
+      level: medium
+      reason: absolute_time_can_encode_frozen_split_or_post_period_information
+    notes:
+      - public_README_hourmin_format_is_ambiguous
+      - time_ms_is_authoritative_for_ordering_under_the_current_contract
+
+  target_scene_and_partition:
+    source: canonical_train_events
+    fields: [tab, is_rand, source_table]
+    join_key: []
+    point_in_time_availability: target_request_or_dataset_partition
+    missing_unknown_policy: unexpected_tab_or_is_rand_fails_domain_check
+    role: allow
+    feature_use:
+      tab: target_filter_only_with_target_value_1
+      is_rand: partition_assertion_only_with_expected_value_0
+      source_table: split_identity_and_audit_only
+      predictor_use: deny
+    leakage_risk:
+      level: high
+      reason: partition_columns_can_directly_reveal_evaluation_regime
+
+  current_primary_label:
+    source: canonical_train_events
+    fields: [long_view]
+    join_key: []
+    point_in_time_availability: after_target_event_completion
+    missing_unknown_policy: missing_or_nonbinary_label_fails_target_contract
+    role: deny
+    predictor_use: forbidden
+    permitted_non_feature_uses:
+      - official_primary_label
+      - label_rate_audit
+      - evaluation
+    label_policy:
+      preserve_official_value: true
+      formula_recomputed_value_as_canonical_fallback: forbidden
+    leakage_risk:
+      level: critical
+      reason: direct_current_target_leakage
+
+  current_binary_feedback:
+    source: canonical_train_events
+    fields:
+      - is_click
+      - is_like
+      - is_follow
+      - is_comment
+      - is_forward
+      - is_hate
+      - is_profile_enter
+    join_key: []
+    point_in_time_availability: after_target_event_completion
+    missing_unknown_policy: preserve_and_audit_nonbinary_or_missing_values
+    role: deny
+    predictor_use: forbidden
+    permitted_non_feature_uses:
+      - descriptive_outcome_audit
+      - preregistered_auxiliary_target_design
+    semantic_cautions:
+      is_click: scene_dependent_click_or_valid_play_semantics
+      is_hate: safety_outcome_not_a_pre_event_feature
+    leakage_risk:
+      level: critical
+      reason: current_event_results_are_not_available_at_prediction_time
+
+  current_continuous_feedback:
+    source: canonical_train_events
+    fields: [play_time_ms, profile_stay_time, comment_stay_time]
+    join_key: []
+    point_in_time_availability: after_target_event_completion
+    missing_unknown_policy: retain_for_outcome_audit_without_predictor_imputation
+    role: deny
+    predictor_use: forbidden
+    permitted_non_feature_uses:
+      - descriptive_outcome_audit
+      - preregistered_auxiliary_target_design
+    leakage_risk:
+      level: critical
+      reason: current_event_engagement_results_reveal_the_response
+
+  current_event_duration_copy:
+    source: canonical_train_events
+    fields: [duration_ms]
+    join_key: []
+    point_in_time_availability: dataset_event_row_with_serving_provenance_unverified
+    missing_unknown_policy: retain_nonpositive_or_missing_state_for_audit
+    role: diagnostic
+    predictor_use: forbidden
+    permitted_non_feature_uses:
+      - formula_consistency_audit
+      - compare_with_videos_basic_video_duration
+    preferred_model_source: videos_basic.video_duration
+    leakage_risk:
+      level: high
+      reason: event_copy_is_tied_to_label_formula_and_has_unverified_pre_event_provenance
+
+  current_formula_and_watch_diagnostics:
+    source: canonical_train_events
+    fields:
+      - expected_long_view
+      - long_view_formula_mismatch
+      - raw_watch_ratio
+      - capped_watch_ratio
+      - play_time_greater_than_duration
+      - duration_missing_or_nonpositive
+    join_key: []
+    point_in_time_availability: after_target_event_completion_or_silver_derivation
+    missing_unknown_policy: undefined_formula_scope_is_not_applicable
+    role: deny
+    predictor_use: forbidden
+    permitted_non_feature_uses:
+      - label_formula_audit
+      - formula_recomputed_same_row_sensitivity_scope_design
+      - duration_quality_slice
+    leakage_risk:
+      level: critical
+      reason: fields_are_derived_from_current_play_time_duration_or_label
+
+  event_duplicate_lineage_audit:
+    source: canonical_train_events
+    fields:
+      - source_row_number
+      - exact_duplicate_count
+      - exact_duplicate_rank
+      - canonical_source_row_number
+      - duplicate_group_id
+      - conflict_group_size
+      - conflict_group_id
+      - timestamp_batch_id
+      - timestamp_batch_video_count
+    join_key: [source_table, source_row_number]
+    point_in_time_availability: silver_build_audit_time
+    missing_unknown_policy: missing_audit_id_fails_reconciliation_where_required
+    role: diagnostic
+    predictor_use: forbidden
+    permitted_non_feature_uses:
+      - source_identity
+      - duplicate_reconciliation
+      - conflict_and_batch_audit
+    leakage_risk:
+      level: high
+      reason: cleaning_and_batch_artifacts_can_proxy_row_selection_or_outcomes
+
+  event_quality_and_cleaning_audit:
+    source: canonical_train_events
+    fields:
+      - same_timestamp_multiple_videos
+      - invalid_domain
+      - invalid_reason_codes
+      - exclusion_reason
+      - record_status
+      - quality_flags
+      - cleaning_version
+    join_key: []
+    point_in_time_availability: silver_build_audit_time
+    missing_unknown_policy: preserve_audit_nulls_and_never_impute_into_feature_values
+    role: diagnostic
+    predictor_use: forbidden
+    permitted_non_feature_uses:
+      - contract_assertion
+      - quality_report
+      - point_in_time_test
+    leakage_risk:
+      level: high
+      reason: quality_and_exclusion_metadata_can_encode_cleaning_decisions_and_target_information
+
+  historical_event_feedback:
+    source: canonical_train_events
+    fields:
+      - is_click
+      - is_like
+      - is_follow
+      - is_comment
+      - is_forward
+      - is_hate
+      - long_view
+      - play_time_ms
+      - profile_stay_time
+      - comment_stay_time
+      - is_profile_enter
+    join_key: [user_id]
+    point_in_time_availability: only_after_the_history_event_batch_is_complete
+    eligibility_predicate: history_time_ms_strictly_less_than_target_time_ms
+    same_timestamp_access: deny
+    missing_unknown_policy:
+      missing_feedback: preserve_missing_and_exclude_only_from_that_aggregate_denominator
+      no_history: explicit_zero_history_state
+    role: allow
+    feature_use:
+      - lagged_completed_feedback_counts
+      - lagged_completed_feedback_rates
+      - lagged_watch_summaries_on_valid_history_rows
+      - recency_and_time_since_last_completed_feedback
+    fit_constraints:
+      smoothing_parameters: train_only
+      normalization_parameters: train_only
+      future_rows: forbidden
+    leakage_risk:
+      level: high
+      reason: safe_only_with_strict_less_than_target_time_and_completed_batch_enforcement
+
+  historical_event_context:
+    source: canonical_train_events
+    fields: [video_id, tab, duration_ms, event_date, time_ms]
+    join_key: [user_id, video_id]
+    point_in_time_availability: completed_history_batches_strictly_before_target
+    eligibility_predicate: history_time_ms_strictly_less_than_target_time_ms
+    missing_unknown_policy: retain_unknown_history_categories_and_explicit_no_history_state
+    role: allow
+    feature_use:
+      - history_length
+      - history_time_gap
+      - historical_scene_counts
+      - historical_item_and_category_exposure_counts
+    constraints:
+      duration_source_for_new_features: prefer_videos_basic_video_duration
+      history_tab_values: all
+      same_timestamp_events: excluded_from_feedback_and_sequence_features
+    leakage_risk:
+      level: high
+      reason: temporal_join_errors_or_same_batch_order_assumptions_leak_target_context
+
+  user_join_key:
+    source: users
+    fields: [user_id]
+    join_key: [user_id]
+    point_in_time_availability: dimension_join_time
+    missing_unknown_policy: missing_join_emits_user_join_missing_without_dropping_target
+    role: allow
+    feature_use:
+      - join_and_grouping
+      - controlled_id_baseline_train_only_categorical_token
+      - controlled_id_baseline_train_only_embedding
+    raw_numeric_or_ordinal_predictor_use: deny
+    id_baseline_controls:
+      vocabulary_fit: source_train_only
+      frozen_vocabulary: required
+      unknown_or_cold_token: required
+      warm_and_cold_user_slices: required
+      ID_vs_content_ablation: required
+    leakage_risk:
+      level: medium
+      reason: identity_memorization_and_dimension_join_loss
+
+  user_activity_snapshot:
+    source: users
+    fields:
+      - user_active_degree
+      - is_lowactive_period
+      - is_video_author
+      - follow_user_num
+      - follow_user_num_range
+      - fans_user_num
+      - fans_user_num_range
+      - friend_user_num
+      - friend_user_num_range
+      - register_days
+      - register_days_range
+    join_key: [user_id]
+    point_in_time_availability: snapshot_cutoff_is_not_documented
+    missing_unknown_policy:
+      categorical: explicit_UNKNOWN_OR_UNSEEN
+      counts: preserve_missing_with_indicator_and_no_blanket_imputation
+      ranges: treat_as_categorical_not_ordinal_without_mapping_review
+    role: diagnostic
+    predictor_use: forbidden_until_user_snapshot_provenance_gate
+    permitted_non_feature_uses:
+      - train_only_coverage_audit
+      - missingness_and_distribution_report
+    leakage_risk:
+      level: high
+      reason: dynamic_user_state_may_have_been_computed_after_target_time
+
+  user_live_streamer_state:
+    source: users
+    fields: [is_live_streamer, is_live_streamer_state, is_live_streamer_unknown_sentinel]
+    join_key: [user_id]
+    point_in_time_availability: snapshot_cutoff_is_not_documented
+    missing_unknown_policy:
+      raw_minus_124: preserve_as_UNKNOWN_SENTINEL
+      unknown_as_false: forbidden
+      preferred_semantic_field: is_live_streamer_state
+    role: diagnostic
+    predictor_use: forbidden_until_user_snapshot_provenance_gate
+    permitted_non_feature_uses:
+      - sentinel_coverage_audit
+      - unknown_state_slice_design
+    leakage_risk:
+      level: high
+      reason: sentinel_misclassification_and_unknown_snapshot_cutoff
+
+  user_encrypted_onehot:
+    source: users
+    fields:
+      - onehot_feat0
+      - onehot_feat1
+      - onehot_feat2
+      - onehot_feat3
+      - onehot_feat4
+      - onehot_feat5
+      - onehot_feat6
+      - onehot_feat7
+      - onehot_feat8
+      - onehot_feat9
+      - onehot_feat10
+      - onehot_feat11
+      - onehot_feat12
+      - onehot_feat13
+      - onehot_feat14
+      - onehot_feat15
+      - onehot_feat16
+      - onehot_feat17
+    join_key: [user_id]
+    point_in_time_availability: snapshot_cutoff_and_semantics_are_not_documented
+    missing_unknown_policy:
+      storage_type: treat_integral_values_as_anonymous_categorical_tokens
+      missing: explicit_UNKNOWN_OR_UNSEEN
+      numeric_or_ordinal_interpretation: forbidden
+    role: diagnostic
+    predictor_use: forbidden_until_user_snapshot_provenance_gate
+    permitted_non_feature_uses:
+      - train_only_cardinality_audit
+      - missingness_audit
+    leakage_risk:
+      level: high
+      reason: encrypted_fields_have_unknown_semantics_and_snapshot_timing
+
+  user_silver_audit:
+    source: users
+    fields:
+      - source_row_number
+      - duplicate_group_id
+      - record_status
+      - quality_flags
+      - source_table
+      - cleaning_version
+    join_key: []
+    point_in_time_availability: silver_build_audit_time
+    missing_unknown_policy: preserve_for_reconciliation_only
+    role: diagnostic
+    predictor_use: forbidden
+    leakage_risk:
+      level: high
+      reason: silver_lineage_and_cleaning_state_are_not_serving_features
+
+  video_join_key:
+    source: videos_basic
+    fields: [video_id]
+    join_key: [video_id]
+    point_in_time_availability: target_request_time_if_dimension_row_exists
+    missing_unknown_policy: missing_join_emits_video_join_missing_without_dropping_target
+    role: allow
+    feature_use:
+      - join_and_cold_item_slice
+      - controlled_id_baseline_train_only_categorical_token
+      - controlled_id_baseline_train_only_embedding
+    raw_numeric_or_ordinal_predictor_use: deny
+    id_baseline_controls:
+      vocabulary_fit: source_train_only
+      frozen_vocabulary: required
+      unknown_or_cold_token: required
+      warm_and_cold_item_slices: required
+      ID_vs_content_ablation: required
+    leakage_risk:
+      level: medium
+      reason: identity_memorization_and_missing_dimension_coverage
+
+  video_author:
+    source: videos_basic
+    fields: [author_id]
+    join_key: [video_id]
+    point_in_time_availability: intrinsic_metadata_expected_before_target_but_snapshot_not_timestamped
+    missing_unknown_policy: explicit_UNKNOWN_OR_UNSEEN_author
+    role: allow
+    feature_use:
+      - anonymous_author_category
+      - strict_history_author_exposure_features
+    constraints:
+      vocabulary_fit: train_only
+      cold_author_state: required
+      raw_numeric_or_ordinal_use: deny
+    leakage_risk:
+      level: medium
+      reason: high_cardinality_memorization_requires_cold_category_controls
+
+  video_type_and_upload_type:
+    source: videos_basic
+    fields: [video_type, upload_type]
+    join_key: [video_id]
+    point_in_time_availability: intrinsic_upload_metadata_expected_before_target
+    missing_unknown_policy:
+      video_type: preserve_UNKNOWN
+      upload_type: explicit_UNKNOWN_OR_UNSEEN
+    role: allow
+    feature_use: anonymous_categorical_tokens
+    constraints:
+      upload_type_to_modality_semantic_inference: forbidden
+      vocabulary_fit: train_only
+    leakage_risk:
+      level: medium
+      reason: upload_type_names_are_not_an_approved_content_modality_mapping
+
+  video_upload_time:
+    source: videos_basic
+    fields: [upload_dt, upload_dt_missing]
+    join_key: [video_id]
+    point_in_time_availability: available_only_when_upload_dt_is_not_after_target_event_date
+    missing_unknown_policy:
+      missing_upload_dt: retain_with_explicit_missing_indicator
+      future_upload_dt: quarantine_join_anomaly_and_do_not_use
+    role: allow
+    feature_use:
+      - nonnegative_video_age_at_target
+      - upload_date_missing_indicator
+    raw_upload_date_predictor_use: deny
+    leakage_risk:
+      level: high
+      reason: future_upload_dates_or_absolute_dates_can leak split_information
+
+  video_visibility_snapshot:
+    source: videos_basic
+    fields: [visible_status]
+    join_key: [video_id]
+    point_in_time_availability: README_describes_current_APP_status_without_target_time_snapshot
+    missing_unknown_policy: explicit_UNKNOWN_OR_UNSEEN
+    role: diagnostic
+    predictor_use: forbidden_until_visibility_snapshot_provenance_gate
+    permitted_non_feature_uses:
+      - train_only_distribution_audit
+      - missingness_audit
+    leakage_risk:
+      level: high
+      reason: current_visibility_may_postdate_the_2022_target_event
+
+  video_duration:
+    source: videos_basic
+    fields: [video_duration, video_duration_missing_or_nonpositive]
+    join_key: [video_id]
+    point_in_time_availability: intrinsic_content_metadata_expected_before_target
+    missing_unknown_policy:
+      positive_duration: use_as_numeric_duration
+      missing_or_nonpositive: retain_target_with_explicit_unknown_duration_state
+      blanket_imputation: forbidden
+    role: allow
+    feature_use:
+      - positive_video_duration
+      - duration_missing_or_nonpositive_indicator
+      - preregistered_duration_slices
+    leakage_risk:
+      level: low
+      reason: intrinsic_metadata_but_missingness_and_event_copy_disagreement_require_audit
+
+  video_geometry:
+    source: videos_basic
+    fields: [server_width, server_height]
+    join_key: [video_id]
+    point_in_time_availability: intrinsic_content_metadata_expected_before_target
+    missing_unknown_policy:
+      nonpositive_or_missing: explicit_unknown_geometry_state
+      aspect_ratio: compute_only_when_both_dimensions_are_positive
+    role: allow
+    feature_use:
+      - width_and_height
+      - valid_aspect_ratio
+      - geometry_missing_indicator
+    leakage_risk:
+      level: low
+      reason: intrinsic_metadata_with_numeric_quality_checks_required
+
+  video_music:
+    source: videos_basic
+    fields: [music_id, music_type]
+    join_key: [video_id]
+    point_in_time_availability: intrinsic_content_metadata_expected_before_target
+    missing_unknown_policy: explicit_UNKNOWN_OR_UNSEEN_for_each_field
+    role: allow
+    feature_use: anonymous_categorical_tokens
+    constraints:
+      vocabulary_fit: train_only
+      raw_numeric_or_ordinal_use: deny
+      cold_music_state: required
+    leakage_risk:
+      level: medium
+      reason: high_cardinality_categories_can_memorize_train_entities
+
+  video_tags:
+    source: videos_basic
+    fields: [tag, tag_clean, tag_missing]
+    join_key: [video_id]
+    point_in_time_availability: intrinsic_content_metadata_expected_before_target
+    missing_unknown_policy:
+      raw_tag: diagnostic_only
+      tag_clean: preserve_anonymous_multi_category_tokens
+      missing_tag: explicit_tag_missing_state
+    role: allow
+    feature_use:
+      tag: deny_raw_predictor
+      tag_clean: allow_train_only_vocabulary_or_hashing
+      tag_missing: allow
+    constraints:
+      semantic_label_inference: forbidden
+      vocabulary_or_hash_seed_fit: train_only
+    leakage_risk:
+      level: medium
+      reason: parsing_and_vocabulary_must_not_use_validation_test_or_random_rows
+
+  video_silver_audit:
+    source: videos_basic
+    fields:
+      - source_row_number
+      - duplicate_group_id
+      - record_status
+      - quality_flags
+      - source_table
+      - cleaning_version
+    join_key: []
+    point_in_time_availability: silver_build_audit_time
+    missing_unknown_policy: preserve_for_reconciliation_only
+    role: diagnostic
+    predictor_use: forbidden
+    leakage_risk:
+      level: high
+      reason: silver_lineage_and_cleaning_state_are_not_serving_features
+
+derived_feature_registry:
+  strict_history_aggregates:
+    source_groups: [historical_event_feedback, historical_event_context]
+    role: allow
+    point_in_time_availability: completed_batches_strictly_before_target_time_ms
+    same_timestamp_feedback_access: deny
+    fit_on: source_train_only
+    missing_unknown_policy: explicit_no_history_and_unknown_category_states
+    canonical_target_rows_preserved: true
+    history_accumulation_range: ["2022-04-08", "2022-04-10"]
+    rolling_origin_assessment_target_start_date: "2022-04-11"
+    burn_in_is_not_global_eligibility_filter: true
+    leakage_risk: high
+
+  target_time_calendar_features:
+    source_groups: [target_event_time]
+    role: diagnostic
+    point_in_time_availability: target_request_time
+    promotion_gate: hourmin_format_timezone_and_time_ms_consistency_verified
+    leakage_risk: medium
+
+  content_modality_proxy:
+    source_groups: [video_type_and_upload_type, video_geometry, video_duration]
+    output_field: content_modality_proxy
+    levels: [video_like, picture_like, unknown]
+    role: diagnostic
+    mapping_version: content_modality_proxy_v1_train_name_duration_consensus
+    mapping_status: frozen_diagnostic_proxy_no_true_modality_claim
+    official_semantic_mapping_available: false
+    default_for_unmapped_or_uncertain_values: unknown
+    train_only_mapping_rule:
+      picture_name_flag: case_insensitive_upload_type_contains_picture_or_photo_or_album
+      nonpositive_duration_flag: videos_basic_video_duration_is_null_or_nonpositive
+      picture_like: picture_name_flag_and_nonpositive_duration_flag
+      video_like: not_picture_name_flag_and_positive_video_duration
+      unknown: all_name_duration_disagreements_unseen_or_unmapped_states
+    mapping_evidence: reports/analysis/gate2_train_design_evidence_v002.md
+    observed_target_row_counts:
+      picture_like: 177827
+      video_like: 2208377
+      unknown: 13640
+      total: 2399844
+    conservative_rules:
+      - never_infer_modality_from_upload_type_name_alone
+      - duration_is_an_audit_signal_not_true_modality_ground_truth
+      - preserve_unknown_as_a_required_slice
+      - future_unseen_upload_type_values_default_to_unknown
+      - proxy_levels_must_not_be_described_as_official_or_true_modality
+    point_in_time_availability: diagnostic_slice_after_gold_contract_approval
+    predictor_use: forbidden_in_v002_initial_modeling
+    slice_use: diagnostic_only
+    leakage_risk: medium
+
+  target_quality_or_formula_features:
+    source_groups:
+      - current_formula_and_watch_diagnostics
+      - event_quality_and_cleaning_audit
+      - event_duplicate_lineage_audit
+    role: deny
+    predictor_use: forbidden
+    leakage_risk: critical
+
+hard_denylist:
+  current_event_columns:
+    - is_click
+    - is_like
+    - is_follow
+    - is_comment
+    - is_forward
+    - is_hate
+    - long_view
+    - play_time_ms
+    - profile_stay_time
+    - comment_stay_time
+    - is_profile_enter
+  current_event_derived_columns:
+    - expected_long_view
+    - long_view_formula_mismatch
+    - raw_watch_ratio
+    - capped_watch_ratio
+    - play_time_greater_than_duration
+  audit_or_selection_columns:
+    - duration_missing_or_nonpositive
+    - same_timestamp_multiple_videos
+    - timestamp_batch_video_count
+    - timestamp_batch_id
+    - source_table
+    - is_rand
+    - tab
+    - exclusion_reason
+    - record_status
+    - quality_flags
+    - invalid_domain
+    - invalid_reason_codes
+    - exact_duplicate_count
+    - exact_duplicate_rank
+    - duplicate_group_id
+    - conflict_group_id
+    - conflict_group_size
+    - source_row_number
+    - canonical_source_row_number
+    - cleaning_version
+  files:
+    - KuaiRand-1K/data/video_features_statistic_1k.csv
+  forbidden_access:
+    - same_timestamp_target_feedback
+    - future_event_rows
+    - validation_rows_for_feature_label_modeling
+    - late_standard_rows_for_feature_label_modeling
+    - random_rows_for_feature_label_modeling
+
+promotion_gates:
+  before_gold_build:
+    - explicit_gold_build_approval
+    - canonical_train_union_source_identity_and_exclusive_reason_checks_pass
+    - train_only_source_identity_target_row_prototypes_complete
+    - content_modality_proxy_mapping_reviewed_and_frozen
+    - point_in_time_tests_defined
+    - feature_allowlist_and_denylist_reviewed
+  before_user_snapshot_fields_can_be_predictors:
+    - user_dimension_snapshot_cutoff_proven
+    - every_promoted_field_available_on_or_before_target_time
+    - sentinel_and_missing_state_encodings_frozen
+  before_visibility_status_can_be_predictor:
+    - visible_status_target_time_snapshot_proven
+  before_calendar_fields_can_be_predictors:
+    - hourmin_format_verified
+    - timestamp_timezone_verified
+    - date_event_date_time_ms_consistency_verified
+  before_modality_proxy_can_be_a_feature_or_claim_slice:
+    - mapping_evidence_documented
+    - mapping_version_frozen
+    - unknown_default_and_unknown_slice_preserved
+    - train_only_mapping_audit_complete
+  before_train_backtest:
+    - canonical_gold_manifest_complete
+    - gold_sample_id_target_row_manifests_complete_and_hashed
+    - feature_allowlist_and_denylist_frozen
+    - cold_category_policy_frozen
+    - strict_history_leakage_tests_pass
+
+required_audits:
+  - canonical_train_base_additive_row_reconciliation
+  - source_identity_uniqueness
+  - event_user_and_event_video_join_coverage
+  - zero_row_multiplication_on_dimension_joins
+  - strict_less_than_target_history_test
+  - same_timestamp_feedback_exclusion_test
+  - future_upload_date_join_test
+  - event_duration_vs_video_duration_disagreement_report
+  - user_snapshot_provenance_report
+  - visible_status_snapshot_provenance_report
+  - hourmin_time_ms_timezone_consistency_report
+  - modality_mapping_and_unknown_coverage_report
+  - hard_denylist_column_presence_test_at_model_matrix_boundary
+  - video_features_statistic_source_absence_test
+
+freeze_record:
+  registry_frozen_for_train_only_data_modeling: true
+  unresolved_items:
+    - user_dimension_snapshot_cutoff
+    - visible_status_snapshot_cutoff
+    - hourmin_format_and_timestamp_timezone
+    - learned_numeric_imputation_policy
+    - gold_builder_implementation
+  resolved_train_only_design_items:
+    - content_modality_proxy_v1_diagnostic_mapping
+    - calendar_burn_in_protocol
+    - gate2_source_identity_prototype_identity_rule
+  changes_require:
+    - new_registry_version
+    - rationale
+    - affected_field_groups
+    - leakage_review
+    - approval_before_validation_or_test_access

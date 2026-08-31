@@ -1,0 +1,379 @@
+contract_id: gate2b_fixed_row_baseline_v002
+created_at_local: "2026-08-15"
+status: approved_for_gate2b_train_only_fixed_row_fitting
+
+operational_amendment_001:
+  amended_at_local: "2026-08-15"
+  reason: full_H3_high_cardinality_feature_materialization_exceeded_55_minute_quick_stop_before_any_model_metric
+  model_metrics_observed_before_amendment: false
+  policy: tighten_only_within_frozen_planning_envelope
+  changes:
+    - defer_H3_user_content_history_to_separate_incremental_stage
+    - retain_controlled_video_id_and_intrinsic_video_metadata_in_BL1_and_BL2
+    - reduce_search_fit_cap_from_27_to_18
+    - reduce_total_fit_cap_from_41_to_32
+  scientific_effect: current_BL2_tests_strict_user_history_increment_not_user_by_content_history_increment
+
+authorization:
+  source: project_owner_explicit_conversation_approval
+  approved_scope:
+    - source_train_fixed_row_feature_materialization
+    - bl0_constant_reference_evaluation
+    - bl1_static_no_history_sparse_linear_fitting
+    - bl2_strict_statistical_history_sparse_linear_fitting
+    - three_origin_bounded_search
+    - seven_origin_frozen_daily_backtest_if_search_gate_passes
+    - paired_user_cluster_bootstrap_on_frozen_daily_predictions
+  supersedes_for_this_scope_only:
+    - prior_no_training_status_in_experiment_v002_proposal
+    - prior_reserved_status_for_bl0_bl1_bl2_in_compute_search_budget_v002
+    - prior_gold_sample_id_requirement_for_source_identity_gate2b_prototype
+  does_not_authorize:
+    - silver_recleaning
+    - gold_build_or_gold_sample_id_claim
+    - general_formal_model_training
+    - sequence_or_neural_models
+    - validation_access
+    - late_table_access
+    - restricted_test_access
+    - random_table_access
+    - video_statistic_feature_access
+  terminology:
+    model_ids: [BL0, BL1, BL2]
+    note: BL_prefix_avoids_collision_with_existing_B0_to_B3_calendar_burn_in_policies
+
+input_allowlist:
+  - path: data/silver/events_early_standard.parquet
+    role: canonical_early_train
+    expected_size_bytes: 143161102
+    expected_sha256: b9f954eebae4c01e616dc1cca01d5428650e334a83cdaa174618cc77494ad0a0
+    query_allowed: true
+  - path: data/quarantine/label_formula_mismatch_rows.parquet
+    role: exclusive_official_label_additive_rows
+    expected_size_bytes: 2776464
+    expected_sha256: 1779f544dd0be64ccbd0a4e4107746045750e25af5a189070465b385e5ce843b
+    query_allowed: true
+    required_filter:
+      source_table: early_standard
+      exclusion_reason: LONG_VIEW_FORMULA_MISMATCH
+      date_range: ["2022-04-08", "2022-04-17"]
+  - path: data/silver/videos_basic.parquet
+    role: intrinsic_content_metadata
+    expected_size_bytes: 77851324
+    expected_sha256: c0184fd2df1356deeca1faebfc23451bb7269f3d00d4213d8b8150d6134ace1f
+    query_allowed: true
+  - path: data/silver/users.parquet
+    role: lineage_hash_verification_only
+    expected_size_bytes: 30450
+    expected_sha256: 044b473ec7158ef726484cf282cd08ec2f4b72e529d85b3dc3a1b128f88aa842
+    query_allowed: false
+input_policy:
+  recursive_input_discovery: forbidden
+  all_input_members_size_and_sha256_required_for_release: true
+
+population:
+  canonical_definition: early_standard_silver_union_exclusive_early_formula_mismatch_official_labels
+  canonical_date_range: ["2022-04-08", "2022-04-17"]
+  history_tabs: all
+  target_tab: 1
+  identity_key: [source_table, source_row_number]
+  expected_all_tab_history_rows: 3671408
+  expected_target_rows: 2399844
+  expected_target_users: 950
+  expected_target_videos: 974550
+  expected_target_positives: 765417
+  expected_all_target_identity_sha256: bf058e955f3f8dddaaf2686e6ff2e2a0516bcb6a94d28bc0716b78b0bde0ae0f
+  calendar_burn_in:
+    history_accumulation_only: ["2022-04-08", "2022-04-10"]
+    assessment_origins: ["2022-04-11", "2022-04-12", "2022-04-13", "2022-04-14", "2022-04-15", "2022-04-16", "2022-04-17"]
+    canonical_rows_deleted: false
+
+point_in_time_semantics:
+  history_rule: history_time_ms_strictly_less_than_target_time_ms
+  batch_key: [user_id, time_ms]
+  same_timestamp_rule: compute_features_for_whole_batch_before_any_label_in_batch_updates_state
+  assessment_day_online_history: earlier_completed_timestamps_on_same_day_are_available_to_features
+  assessment_day_model_update: forbidden
+  model_fit_rule: target_event_date_strictly_before_origin_date
+  assessment_rule: target_event_date_equals_origin_date
+  current_batch_label_access: forbidden
+  future_label_access: forbidden
+
+static_feature_bundle:
+  bundle_id: S_ID_CONTENT_V1
+  categorical_tokens:
+    - user_id_controlled_category
+    - video_id_controlled_category
+    - author_id_controlled_category
+    - music_id_controlled_category
+    - video_type_category
+    - upload_type_category
+    - music_type_category
+    - tag_clean_combination_category
+    - video_duration_bucket_category
+  numeric:
+    - log1p_video_duration_seconds
+    - video_duration_valid
+    - log1p_nonnegative_upload_age_days
+    - upload_age_valid
+    - upload_date_future_or_invalid
+    - log1p_server_width
+    - log1p_server_height
+    - clipped_aspect_ratio
+    - geometry_valid
+    - tag_missing
+  category_encoding:
+    implementation: sklearn_OneHotEncoder
+    fit_scope: origin_training_rows_only
+    handle_unknown: infrequent_if_exist
+    minimum_frequency: 20
+    maximum_categories_per_input_field: 4096
+    output_dtype: float32
+    raw_id_numeric_or_ordinal_use: forbidden
+  numeric_scaling:
+    implementation: sklearn_StandardScaler
+    with_mean: false
+    fit_scope: origin_training_rows_only
+  excluded_static_fields:
+    - all_user_snapshot_attributes
+    - visible_status
+    - raw_event_duration_ms
+    - raw_calendar_or_hourmin
+    - content_modality_proxy
+
+history_feature_bundles:
+  - bundle_id: H2_USER_STRICT_V1
+    inherits: S_ID_CONTENT_V1
+    completed_user_timestamp_windows: [10, 50, 200]
+    fields_per_window: [event_count, positive_count, smoothed_long_view_rate, full_window_mask]
+    lifetime_fields: [prior_batch_count, prior_event_count, prior_positive_count, smoothed_long_view_rate, has_history, last_batch_gap_seconds]
+    smoothing:
+      prior_probability: origin_training_target_prevalence
+      prior_strength: 20.0
+      fitted_or_tuned_on_assessment: false
+  - bundle_id: H3_USER_CONTENT_STRICT_V1
+    status: deferred_after_pre_metric_quick_performance_stop_not_in_current_run
+    inherits: H2_USER_STRICT_V1
+    entity_families: [video_id, author_id, tag_clean_combination, video_duration_bucket]
+    fields_per_entity: [prior_event_count, prior_positive_count, smoothed_long_view_rate, seen_before, last_seen_gap_seconds]
+    entity_missing_policy: unobserved_or_missing_entity_has_zero_counts_and_seen_before_zero
+    smoothing:
+      prior_probability: origin_training_target_prevalence
+      prior_strength: 10.0
+      fitted_or_tuned_on_assessment: false
+history_feature_policy:
+  materialization_rule: store_counts_numerators_masks_and_gaps_then_derive_origin_specific_rates
+
+hard_predictor_denylist:
+  - long_view
+  - is_click
+  - is_like
+  - is_follow
+  - is_comment
+  - is_forward
+  - is_hate
+  - play_time_ms
+  - profile_stay_time
+  - comment_stay_time
+  - is_profile_enter
+  - source_table
+  - source_row_number
+  - event_date
+  - time_ms
+  - tab
+  - exclusion_reason
+  - any_quality_or_audit_field
+  - any_formula_recalculation_field
+  - any_video_statistic_field
+  - content_modality_proxy
+  - visible_status
+  - any_user_snapshot_field
+
+models:
+  BL0:
+    role: constant_probability_pipeline_reference
+    probability: origin_training_target_prevalence
+    learned_fit_count: 0
+  BL1:
+    role: unique_primary_static_no_history_baseline
+    bundle: S_ID_CONTENT_V1
+    estimator:
+      implementation: sklearn_SGDClassifier
+      loss: log_loss
+      penalty: l2
+      alphas: [0.000001, 0.00001, 0.0001]
+      max_iter: 15
+      tol: null
+      shuffle: true
+      random_state: 20260814
+      early_stopping: false
+      average: true
+      class_weight: null
+  BL2:
+    role: strict_statistical_history_candidate
+    bundles: [H2_USER_STRICT_V1]
+    estimator:
+      implementation: sklearn_SGDClassifier
+      loss: log_loss
+      penalty: l2
+      alphas: [0.000001, 0.00001, 0.0001]
+      max_iter: 15
+      tol: null
+      shuffle: true
+      random_state: 20260814
+      early_stopping: false
+      average: true
+      class_weight: null
+  calibration:
+    method: identity
+    fitting_or_selection_in_gate2b: forbidden
+  output_probability_clip: [0.0000001, 0.9999999]
+
+search_and_backtest:
+  search_origins: ["2022-04-11", "2022-04-14", "2022-04-17"]
+  search_trials:
+    BL1: 3
+    BL2: 3
+    total: 6
+  search_fit_runs: 18
+  BL1_selection:
+    primary: maximum_pooled_out_of_origin_event_micro_average_precision
+    tie_break_order: [maximum_user_gauc_event_weighted, minimum_log_loss, minimum_brier, larger_alpha]
+  BL2_advancement_gate:
+    comparison: BL2_minus_frozen_BL1
+    minimum_positive_daily_delta_average_precision: 2
+    total_search_origins: 3
+    pooled_delta_average_precision_must_be_positive: true
+    pooled_delta_user_gauc_event_weighted_must_be_nonnegative: true
+    pooled_delta_log_loss_must_be_nonpositive: true
+    pooled_delta_brier_must_be_nonpositive: true
+    failure_action: stop_before_daily_backtest_and_sequence_models
+  BL2_selection_among_passing:
+    primary: maximum_pooled_out_of_origin_event_micro_average_precision
+    tie_break_order: [maximum_user_gauc_event_weighted, minimum_log_loss, minimum_brier, simpler_H2_bundle, larger_alpha]
+  daily_origins: ["2022-04-11", "2022-04-12", "2022-04-13", "2022-04-14", "2022-04-15", "2022-04-16", "2022-04-17"]
+  daily_fit_runs_if_advanced: 14
+  daily_hyperparameter_or_bundle_changes: forbidden
+  daily_stability_gate:
+    minimum_positive_daily_delta_average_precision: 5
+    total_daily_origins: 7
+    pooled_delta_average_precision_must_be_positive: true
+    pooled_delta_user_gauc_event_weighted_must_be_nonnegative: true
+    pooled_delta_log_loss_must_be_nonpositive: true
+    pooled_delta_brier_must_be_nonpositive: true
+    failure_action: report_no_stable_statistical_history_increment_and_stop_before_sequence_models
+
+evaluation:
+  average_precision:
+    implementation: sklearn_average_precision_score
+    aggregation: event_micro
+    trapezoidal_pr_area: forbidden
+  user_gauc:
+    eligibility: at_least_one_positive_and_one_negative_per_user
+    ties: midrank
+    primary_weighting: eligible_event_count
+    supplementary_weighting: user_equal
+    identical_eligible_rows_and_users_within_comparison: true
+  log_loss:
+    probability_clip: [0.0000001, 0.9999999]
+    direction: lower_is_better
+  brier_score:
+    direction: lower_is_better
+  ece:
+    role: descriptive_only_no_gate
+    bins: 20
+    binning: equal_width_on_0_1
+    probability_one_in_last_bin: true
+  roc_auc:
+    role: descriptive_only
+  slices:
+    - all_assessment_rows
+    - history_0_49
+    - history_50_199
+    - history_200_plus
+    - history_500_plus_exploratory
+  cross_slice_raw_average_precision_comparison: forbidden
+  required_slice_context: [rows, users, positives, prevalence, baseline_metric, candidate_metric, paired_delta]
+
+bootstrap:
+  cluster: user_id
+  user_order: ascending_user_id_from_full_target_universe
+  replicates: 2000
+  seed: 20260814
+  bit_generator: numpy_PCG64
+  draw_shape: [2000, 950]
+  multiplicity_dtype: little_endian_uint16
+  expected_multiplicity_matrix_sha256: 582d0ef006da0f61fb753fa6d15d6ee801f7fce5f820fc1c92a376268112d972
+  pairing: shared_multiplicity_matrix_for_BL2_minus_BL1
+  interval: percentile_2.5_97.5
+  role: train_only_design_uncertainty_not_validation_MDE_or_confirmatory_CI
+
+operational_budget:
+  accelerator: cpu_only
+  gpu_device_hours: 0
+  maximum_cpu_threads: 8
+  duckdb_memory_limit_gb: 12
+  maximum_search_fit_runs: 18
+  maximum_daily_fit_runs: 14
+  maximum_total_fit_runs: 32
+  maximum_elapsed_minutes: 60
+  maximum_artifact_storage_gb: 20
+  overrun_tolerance: 0
+  on_projected_or_actual_breach: stop_before_next_fit_and_write_usage_ledger
+  quick_mode:
+    checkpoint_eligible: false
+    isolated_output_directory: reports/generated/gate2b_baselines_v002_quick
+  release_mode:
+    checkpoint_eligible: true
+    output_directory: reports/generated/gate2b_baselines_v002
+    full_input_sha256: true
+
+required_outputs:
+  - feature_manifest.json
+  - target_row_manifests.csv
+  - search_trial_manifest.csv
+  - search_predictions_origin_2022-04-11.parquet
+  - search_predictions_origin_2022-04-14.parquet
+  - search_predictions_origin_2022-04-17.parquet
+  - search_metrics.csv
+  - selected_models.json
+  - daily_predictions.parquet
+  - daily_metrics.csv
+  - pooled_and_slice_metrics.csv
+  - paired_user_cluster_bootstrap.csv
+  - calibration_bins.csv
+  - usage_ledger.csv
+  - run_manifest.json
+  - reports/analysis/gate2b_baseline_results_v002.md
+  - reports/figures/gate2b_baseline_results_v002.png
+
+release_stop_conditions:
+  - input_size_or_sha256_mismatch
+  - canonical_count_or_identity_mismatch
+  - current_or_future_label_leakage_detected
+  - same_timestamp_batch_semantics_test_failure
+  - predictor_denylist_intersection_nonempty
+  - training_or_assessment_date_overlap
+  - nonfinite_or_out_of_range_probability
+  - paired_prediction_identity_or_label_mismatch
+  - bootstrap_multiplicity_digest_mismatch
+  - fit_or_resource_budget_breach
+
+deferred_before_first_validation_metric_read:
+  - primary_average_precision_SESOI
+  - user_gauc_noninferiority_margin
+  - user_gauc_superiority_SESOI
+  - log_loss_noninferiority_margin
+  - brier_noninferiority_margin
+  - final_release_thresholds
+  - explicit_validation_access_approval
+
+claim_boundary:
+  permitted_if_complete: train_only_fixed_row_association_and_temporal_stability_evidence
+  forbidden:
+    - validation_generalization_claim
+    - test_performance_claim
+    - causal_claim
+    - full_catalog_recommendation_claim
+    - gold_dataset_claim
+    - sequence_model_claim

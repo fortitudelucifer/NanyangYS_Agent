@@ -1,0 +1,10 @@
+{
+  "date_max": "2022-05-08",
+  "date_min": "2022-05-03",
+  "positives": 2063,
+  "prevalence": 0.08685584371842371,
+  "rows": 23752,
+  "split": "held_out_test",
+  "unique_identities": 23752,
+  "users": 967
+}

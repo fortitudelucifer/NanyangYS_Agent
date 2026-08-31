@@ -1,0 +1,20 @@
+version: 1
+path_resolution: project_root_relative
+
+raw:
+  root: ../KuaiRand-1K/data
+  early_standard: ../KuaiRand-1K/data/log_standard_4_08_to_4_21_1k.csv
+  late_standard: ../KuaiRand-1K/data/log_standard_4_22_to_5_08_1k.csv
+  random: ../KuaiRand-1K/data/log_random_4_22_to_5_08_1k.csv
+  users: ../KuaiRand-1K/data/user_features_1k.csv
+  videos_basic: ../KuaiRand-1K/data/video_features_basic_1k.csv
+  videos_statistic: ../KuaiRand-1K/data/video_features_statistic_1k.csv
+
+generated:
+  manifests: data/manifests
+  silver: data/silver
+  gold: data/gold
+  quarantine: data/quarantine
+  reports: reports/generated
+  artifacts: artifacts
+

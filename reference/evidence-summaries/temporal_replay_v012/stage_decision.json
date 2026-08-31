@@ -1,0 +1,18 @@
+{
+  "all_required_gates_passed": true,
+  "changes_v010_history_conclusion": false,
+  "changes_v011_calibration_conclusion": false,
+  "evidence_level": "post_audit_target_adaptation_temporal_replay_not_pristine_confirmation",
+  "gates": {
+    "calibration_health_gate": true,
+    "daily_stability_gate": true,
+    "history_value_gate": true,
+    "old_ranking_noninferiority_gate": true,
+    "retraining_probability_value_gate": true,
+    "selection_eligibility_gate": true,
+    "static_baseline_gate": true
+  },
+  "positive_history_AP_days": 3,
+  "required_positive_history_AP_days": 2,
+  "scientific_status": "retraining_adds_value"
+}

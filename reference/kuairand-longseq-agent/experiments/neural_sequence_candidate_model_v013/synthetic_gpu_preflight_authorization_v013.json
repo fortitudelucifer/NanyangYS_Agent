@@ -1,0 +1,22 @@
+{
+  "contract_id": "neural_sequence_candidate_model_v013",
+  "recorded_at": "2026-08-24T04:21:58+08:00",
+  "record_type": "synthetic_gpu_engineering_preflight_only",
+  "authorization_source": "project_owner_request_in_current_conversation",
+  "observed_draft_contract_sha256": "a08f5e12a22a28854588139ea865089cddfd306150bf738956036c72a3c76df6",
+  "authorized_scope": [
+    "install_pytorch_in_workspace_virtual_environment",
+    "write_synthetic_only_v013_model_geometry",
+    "write_and_run_focused_unit_and_cuda_preflight_tests",
+    "run_synthetic_hier500_gpu_memory_and_throughput_stress"
+  ],
+  "synthetic_gpu_preflight_authorized": true,
+  "gold_build_authorized": false,
+  "scientific_neural_training_authorized": false,
+  "validation_label_access_authorized": false,
+  "restricted_test_access_authorized": false,
+  "random_audit_access_authorized": false,
+  "release_authorized": false,
+  "evidence_level": "engineering_synthetic_only",
+  "formal_v013_approval_unchanged": true
+}

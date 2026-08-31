@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "reference_run_id": "silver-20260814-155536",
+  "cleaning_version": "v0.1.0",
+  "started_at_utc": "2026-08-14T07:55:36.667573+00:00",
+  "completed_at_utc": "2026-08-14T07:57:11.308830+00:00",
+  "config_bundle_sha256": "4a2490cb84403c2c62c00efd13dbccef4566a09ec80df75d82ef942f10f0be99",
+  "code_sha256": "c4180b3e8a3407cb6f51c5b2852dc873b79bdd89ea6b9388a96ecea53bc69854",
+  "config_sha256": {
+    "data_paths.yaml": "f9ca6ede2fbd1d3c154e6a7ddf4520d4bb77c76c6ff6877d3d13bf562f5b0125",
+    "data_contract.yaml": "a294c43c0804f710e8c4afd2ac4b44ee448087294c4cad71e73ee403f7886a57",
+    "cleaning_rules.yaml": "a56da3f8d69c4ad39aa39e3d17cf69c2e5ac6c4fcb7665167499bf5447970394",
+    "experiment_v001.yaml": "15dc7c7c39d0032fef9633c795a3206cef810cbb48f127e7f5fe3de0fd684460"
+  },
+  "files": [
+    {"path": "data/silver/events_early_standard.parquet", "rows": 4992443, "size_bytes": 143161102, "sha256": "b9f954eebae4c01e616dc1cca01d5428650e334a83cdaa174618cc77494ad0a0"},
+    {"path": "data/silver/events_late_standard.parquet", "rows": 6556501, "size_bytes": 188975589, "sha256": "c4f1434f6e608d8d0f908a0f5f97d8e51a75e6ecff6054649e3bd2efe939f790"},
+    {"path": "data/silver/events_random.parquet", "rows": 42982, "size_bytes": 2127439, "sha256": "9566bde1b674c5edc67e0e30114ff5528f8a5358519b706cac9992032458a34a"},
+    {"path": "data/silver/quality_flags_dictionary.parquet", "size_bytes": 1577, "sha256": "1984bc5dd4e24c78df80e85315fd8d62a9e70183b80b8a55d70597f95398ecc7"},
+    {"path": "data/silver/users.parquet", "rows": 1000, "size_bytes": 30450, "sha256": "044b473ec7158ef726484cf282cd08ec2f4b72e529d85b3dc3a1b128f88aa842"},
+    {"path": "data/silver/videos_basic.parquet", "rows": 4371868, "size_bytes": 77851324, "sha256": "c0184fd2df1356deeca1faebfc23451bb7269f3d00d4213d8b8150d6134ace1f"},
+    {"path": "data/quarantine/conflicting_event_groups.parquet", "size_bytes": 571610, "sha256": "5daf8d25a68d751b2327a388d5d9259034bfe45bf70651dc0dd5b583a6d5644e"},
+    {"path": "data/quarantine/dimension_conflicts.parquet", "size_bytes": 277, "sha256": "48d25bf6f7813c1bfd24d25434fd3de7a6bc8b4db4846cb75bd0192f08dd1a80"},
+    {"path": "data/quarantine/invalid_domain_rows.parquet", "size_bytes": 1232, "sha256": "b4c77b9fc1c9e81d4a69ba49e9b2bbde60f4f1d94d1d216822adf685a6f4d664"},
+    {"path": "data/quarantine/label_formula_mismatch_rows.parquet", "size_bytes": 2776464, "sha256": "1779f544dd0be64ccbd0a4e4107746045750e25af5a189070465b385e5ce843b"}
+  ],
+  "row_reconciliation": [
+    {"source": "early_standard", "raw_rows": 5055984, "canonical_rows": 5021422, "duplicate_copy_rows": 34562, "conflicting_rows": 5455, "label_formula_mismatch_rows": 23524, "silver_rows": 4992443},
+    {"source": "late_standard", "raw_rows": 6657061, "canonical_rows": 6597399, "duplicate_copy_rows": 59662, "conflicting_rows": 8514, "label_formula_mismatch_rows": 32384, "silver_rows": 6556501},
+    {"source": "random", "raw_rows": 43028, "canonical_rows": 43027, "duplicate_copy_rows": 1, "conflicting_rows": 0, "label_formula_mismatch_rows": 45, "silver_rows": 42982},
+    {"source": "users", "raw_rows": 1000, "canonical_rows": 1000, "silver_rows": 1000},
+    {"source": "videos_basic", "raw_rows": 4371868, "canonical_rows": 4371868, "silver_rows": 4371868}
+  ]
+}

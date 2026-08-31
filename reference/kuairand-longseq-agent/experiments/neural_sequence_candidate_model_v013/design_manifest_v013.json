@@ -1,0 +1,51 @@
+{
+  "contract_id": "neural_sequence_candidate_model_v013",
+  "snapshot_at": "2026-08-24T00:00:00+08:00",
+  "status": "design_registered_fail_closed",
+  "contract_execution_authorized": false,
+  "artifacts": [
+    {
+      "path": "experiments/neural_sequence_candidate_model_v013/contract_v013.yaml",
+      "size_bytes": 12506,
+      "sha256": "a08f5e12a22a28854588139ea865089cddfd306150bf738956036c72a3c76df6"
+    },
+    {
+      "path": "experiments/neural_sequence_candidate_model_v013/approval_v013.json",
+      "size_bytes": 816,
+      "sha256": "303b882dc50a631d6bceadea633c93c0acea10b75cd5040682d3babfa2f58349"
+    },
+    {
+      "path": "experiments/neural_sequence_candidate_model_v013/predecessor_integrity_requirements_v013.json",
+      "size_bytes": 2003,
+      "sha256": "b2b131ad2c13e8c49376511bb6b68809ce153dc91a96c29e9efd7b85ea8663d9"
+    },
+    {
+      "path": "experiments/neural_sequence_candidate_model_v013/README.md",
+      "size_bytes": 1835,
+      "sha256": "61589c6689b29c092e7c3453b5b9099f415723c58c7bd5c96c212186be6ce74a"
+    },
+    {
+      "path": "reports/experiments/v013-neural-sequence/2026-08-24_neural-sequence-model-design_v013.md",
+      "size_bytes": 9954,
+      "sha256": "1fcfee26683485305a45d924403ebcc7c567605746d4ce9b02644db8fb9bd032"
+    },
+    {
+      "path": "reports/experiments/v013-neural-sequence/README.md",
+      "size_bytes": 459,
+      "sha256": "35930807f452d8ccebf9022e960454f4f026a42a3defe823963506982e83e752"
+    },
+    {
+      "path": "scripts/experiments/v013-neural-sequence/README.md",
+      "size_bytes": 793,
+      "sha256": "7184ef993feb085db563e8ac8e8506ec3c8793360994423ed4ee44fba1563b5c"
+    }
+  ],
+  "not_present_by_design": [
+    "Gold run manifest",
+    "result-producing runner",
+    "model predictions",
+    "scientific metrics",
+    "final_decision.json",
+    "approved exact contract hash"
+  ]
+}

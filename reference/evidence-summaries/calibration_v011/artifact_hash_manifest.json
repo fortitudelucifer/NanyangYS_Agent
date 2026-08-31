@@ -1,0 +1,55 @@
+{
+  "artifacts": [
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/bootstrap_multiplicity.npy",
+      "sha256": "fdcb4df23cd020852354d05a8284f30ac69e969e2ca8ed8c58cf618628e1f521",
+      "size_bytes": 3868128
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/daily_metrics.csv",
+      "sha256": "9b7383259ab032cebeab6b9bafece8212dbbd909204fe3efab200d888d13fcf8",
+      "size_bytes": 3727
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/paired_user_cluster_bootstrap.csv",
+      "sha256": "e7bc4d688e4d2502a314a5495b605292993e2b8563ab151666bf3f88a98e0fb3",
+      "size_bytes": 866
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/pooled_metrics.csv",
+      "sha256": "701013df826c3affe27d1594eb17aa4c28efad30557788337462a16be5ea38e3",
+      "size_bytes": 863
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/predictions.parquet",
+      "sha256": "6113666356ccb4bcbf9682bcc7ddc3c5f2b2b2e18534ceac5433ea4a198606b2",
+      "size_bytes": 726079
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/probability_distribution_audit.csv",
+      "sha256": "583aec051289c1aeb00f45898fe40056dd1a6d310a0be2ed389d41eb4c587d7c",
+      "size_bytes": 565
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/reliability_equal_width_20.csv",
+      "sha256": "06451d67243a9289479b3f91f1d3fa66c7b6e02f96343fe9328c477bfd616ba3",
+      "size_bytes": 3243
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/run_manifest.json",
+      "sha256": "59e973649109db962895e225327d047e06f169adb92aa3e13526f3fcf7e9d7fe",
+      "size_bytes": 1280
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/split_audit.json",
+      "sha256": "e31592defa68fa9e77660b40e7258b26978e3df4e3a5aa6a444a5597281ee3fb",
+      "size_bytes": 207
+    },
+    {
+      "path": "experiments/bl2_target_domain_calibration_v011/outputs/held_out_to_calibrator_test/stage_decision.json",
+      "sha256": "4add4b9a31e4227abc72e181e0992a3b6c8d1883bc36d2df4a252989cabd3245",
+      "size_bytes": 523
+    }
+  ],
+  "hash_algorithm": "SHA-256"
+}

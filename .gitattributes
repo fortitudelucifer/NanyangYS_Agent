@@ -1,0 +1,15 @@
+# Binary presentation/report assets.
+*.png binary
+*.pdf binary
+
+# Portable authored sources.
+*.py text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+
+# Hash-sensitive evidence snapshots override the generic text rules above.
+demo/gpu_train_only_snapshot/** -text
+reference/evidence-summaries/** -text

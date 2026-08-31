@@ -1,0 +1,581 @@
+version: 2
+budget_id: kuairand_longseq_compute_search_budget_v002
+status: frozen_planning_envelope_only_no_training_authorization
+created_date: "2026-08-14"
+
+contract_links:
+  experiment: configs/experiment_v002_proposal.yaml
+  hypotheses: configs/hypothesis_registry_v002.yaml
+  feature_availability: configs/feature_availability_v002.yaml
+  research_sequence: NEXT_RESEARCH_SEQUENCE.md
+  release_analysis_manifest: reports/generated/train_association_v002/analysis_manifest.json
+  quick_analysis_manifest: reports/generated/train_association_v002_quick/analysis_manifest.json
+
+authorization:
+  authorization_effect_of_this_file: none
+  current_authorized_stage: train_only_data_modeling
+  current_authorizing_contract_status: approved_for_train_only_data_modeling
+  allowed_now:
+    - train_only_descriptive_association_quick
+    - train_only_descriptive_association_release
+    - fixed_row_baseline_protocol_design_without_formal_training
+    - gold_contract_preparation_without_gold_build
+  not_authorized:
+    gold_build: true
+    formal_model_training: true
+    validation_access_or_model_selection: true
+    restricted_test_prediction_or_evaluation: true
+    random_audit_prediction_or_evaluation: true
+    statistic_feature_source_access: true
+  future_stage_budgets_are_reserved_upper_bounds_only: true
+  explicit_stage_approval_still_required: true
+
+data_boundary:
+  currently_permitted_event_scope:
+    source_table: early_standard
+    event_date_range: ["2022-04-08", "2022-04-17"]
+    target_tab: 1
+    history_tabs: all
+    strict_history_rule: history_time_ms_strictly_less_than_target_time_ms
+  currently_permitted_input_files:
+    - data/silver/events_early_standard.parquet
+    - data/quarantine/label_formula_mismatch_rows.parquet
+    - data/silver/users.parquet
+    - data/silver/videos_basic.parquet
+    - data/manifests/silver_run_manifest.json
+    - data/manifests/silver_output_manifest.json
+  quarantine_filter_required:
+    source_table: early_standard
+    exclusion_reason: LONG_VIEW_FORMULA_MISMATCH
+    event_date_range: ["2022-04-08", "2022-04-17"]
+  explicitly_unavailable_now:
+    validation_rows_2022_04_18_through_2022_04_21: deny
+    data_silver_events_late_standard_parquet: deny
+    data_silver_events_random_parquet: deny
+    late_or_random_quarantine_rows: deny
+    KuaiRand_1K_data_video_features_statistic_1k_csv: deny
+    rejected_or_temporary_silver_runs: deny
+    raw_csv_feature_discovery: deny
+  recursive_input_discovery: forbidden
+  current_event_outcome_features: forbidden
+  same_timestamp_feedback: forbidden
+  future_or_same_time_history: forbidden
+  silver_recleaning: forbidden
+
+budget_units_and_accounting:
+  trial_definition: one_hyperparameter_configuration_for_one_model_family_and_feature_bundle
+  fit_run_definition: one_trial_times_one_rolling_origin_fold_times_one_training_seed
+  metric_read_definition: one_materialized_metric_batch_from_a_frozen_prediction_artifact
+  cpu_unit: logical_core_hour
+  gpu_unit: one_gpu_device_hour
+  wall_clock_unit: elapsed_hour
+  all_attempts_count_toward_run_and_resource_caps: true
+  failed_runs_are_recorded: true
+  smoke_runs_count_toward_resource_caps: true
+  verified_infrastructure_replacements:
+    count_toward_resource_caps: true
+    count_as_new_scientific_trial: false
+    exact_scientific_configuration_required: true
+  bootstrap_resamples_are_not_training_seeds: true
+
+observed_hardware_envelope:
+  observation_date: "2026-08-14"
+  logical_cpu_processors_observed: 14
+  gpu:
+    name: NVIDIA_GeForce_RTX_5060_Laptop_GPU
+    memory_mib_observed: 8151
+    driver_version_observed: "591.74"
+    devices_allowed_per_run: 1
+    maximum_allocated_vram_gb_per_run: 7.0
+  current_analysis_backend: duckdb_cpu
+  current_gpu_dataframe_backend_available: false
+  portable_limits:
+    maximum_cpu_threads_per_run: 8
+    maximum_peak_ram_gb_per_run: 16
+    leave_interactive_cpu_headroom: true
+    require_hardware_profile_in_every_release_or_training_manifest: true
+
+analysis_execution_modes:
+  quick:
+    purpose: noncheckpoint_train_only_iteration
+    command_flag: --quick
+    authorized_now: true
+    checkpoint_eligible: false
+    output_isolation_required: true
+    canonical_release_paths_may_be_updated: false
+    input_sha256_verification: skip_large_input_hash_recomputation
+    cpu_threads: 8
+    gpu_policy: optional_only_after_semantic_and_numeric_parity_gate
+    silent_gpu_to_cpu_fallback: forbidden
+    current_selected_backend: duckdb_cpu
+    maximum_wall_clock_seconds_per_run: 120
+    maximum_runs_per_release_candidate: 20
+    maximum_cpu_core_hours_per_release_candidate: 6.0
+    observed_reference:
+      manifest_status: quick_iteration_complete_nonrelease
+      elapsed_seconds_before_manifest: 5.258138699999108
+      accelerator_used: false
+  release:
+    purpose: deterministic_checkpoint_artifact
+    command_flag: --release
+    authorized_now: true
+    checkpoint_eligible: true
+    full_input_sha256_verification: required
+    canonical_release_paths_updated: true
+    deterministic_execution: required
+    cpu_threads: 1
+    gpu_policy: forbidden_until_a_versioned_release_parity_amendment
+    current_selected_backend: duckdb_cpu
+    maximum_wall_clock_seconds_per_run: 600
+    maximum_runs_per_release_candidate: 3
+    maximum_cpu_core_hours_per_release_candidate: 0.5
+    observed_reference:
+      manifest_status: complete_train_only_descriptive_release
+      accelerator_used: false
+  quick_to_release_parity_gate:
+    identical_input_scope_and_row_identity: required
+    exact_invariant_counts: required
+    exact_nonfloating_output_hashes_where_applicable: required
+    maximum_absolute_metric_difference: 1.0e-12
+    any_material_divergence_action: stop_and_investigate
+    quick_result_may_change_research_gate: false
+  future_gpu_data_processing_gate:
+    permitted_scope: quick_only_until_release_amendment
+    backend_must_be_recorded: true
+    no_unsupported_operator_fallback: true
+    exact_row_identity_and_invariants_required: true
+    metric_parity_with_cpu_release_required: true
+    gpu_setup_time_counts_toward_budget: true
+
+rolling_origin_budget:
+  authorization_status: reserved_not_authorized
+  split: source_train_only
+  search_folds:
+    count: 3
+    origin_dates: ["2022-04-11", "2022-04-14", "2022-04-17"]
+    assessment_windows_per_fold: 1
+    purpose: bounded_hyperparameter_and_feature_bundle_search
+    origin_selection_rule: first_middle_last_of_frozen_seven_day_train_backtest_range
+    date_boundaries_status: frozen_planning_no_training_authorization
+  frozen_finalist_daily_backtest:
+    count: 7
+    origin_dates:
+      - "2022-04-11"
+      - "2022-04-12"
+      - "2022-04-13"
+      - "2022-04-14"
+      - "2022-04-15"
+      - "2022-04-16"
+      - "2022-04-17"
+    per_origin_train_rule: source_train_dates_strictly_before_origin_date
+    per_origin_assessment_rule: target_rows_on_origin_date_only
+    purpose: rq4_daily_temporal_stability_on_source_train
+    maximum_frozen_finalist_configurations: 3
+    maximum_fit_runs_if_all_finalists_are_neural: 63
+    hyperparameter_or_feature_changes_between_origins: forbidden
+    origin_dates_status: frozen_aligned_with_calendar_burn_in_protocol_no_training_authorization
+    calendar_burn_in_alignment_required: true
+    incompatible_burn_in_decision_action: do_not_run_until_versioned_amendment
+  target_row_manifest_per_fold: required
+  target_row_manifest_per_daily_origin: required
+  identical_target_rows_within_each_nested_comparison: required
+  fixed_feature_computation_code_across_folds: required
+  maximum_model_families: 5
+  maximum_feature_bundles: 6
+  maximum_hyperparameter_trials: 31
+  maximum_search_fit_runs_including_folds_and_seeds: 141
+  maximum_frozen_finalist_daily_fit_runs: 63
+  maximum_train_backtest_fit_runs_total: 204
+  search_sampler_seed: 20260814
+  search_strategy: preregistered_grid_or_seeded_random_search_only
+  adaptive_unbounded_search: forbidden
+
+seed_budget:
+  deterministic_or_tree_models:
+    values: [20260814]
+    seeds_per_trial: 1
+  neural_models:
+    values: [20260814, 20260815, 20260816]
+    seeds_per_trial: 3
+    minimum_and_maximum_seeds_per_frozen_trial: 3
+  bootstrap:
+    seed: 20260814
+    iterations: 2000
+    separate_from_training_randomness: true
+  changing_or_adding_seeds_after_metric_observation: forbidden
+
+model_ladder:
+  baseline_0_constant_and_rules:
+    authorization_status: future_reserved_not_authorized
+    model_family: constant_and_simple_rules
+    feature_bundles:
+      - global_constant
+      - calendar_or_scene_rule_after_availability_gate
+      - smoothed_user_history_rule
+    maximum_trials: 3
+    seeds_per_trial: 1
+    search_folds: 3
+    maximum_fit_or_evaluation_runs: 9
+    advancement_gate: metric_pipeline_and_probability_invariants_pass
+
+  baseline_1_static_no_history:
+    authorization_status: future_reserved_not_authorized
+    model_families:
+      logistic_regression:
+        maximum_trials: 4
+      gradient_boosted_tree:
+        maximum_trials: 4
+    maximum_trials_total: 8
+    seeds_per_trial: 1
+    search_folds: 3
+    maximum_fit_runs: 24
+    feature_scope: approved_static_and_pre_exposure_features_only
+    advancement_gate: choose_at_most_two_fixed_static_references_on_train_rolling_origin
+
+  baseline_2_statistical_history:
+    authorization_status: future_reserved_not_authorized
+    model_families:
+      logistic_regression_with_history:
+        maximum_trials: 6
+      gradient_boosted_tree_with_history:
+        maximum_trials: 6
+    maximum_trials_total: 12
+    seeds_per_trial: 1
+    search_folds: 3
+    maximum_fit_runs: 36
+    allowed_history_windows: [10, 50, 200]
+    required_feature_bundle_ablations:
+      - static_no_history
+      - strict_user_history_statistics
+      - strict_user_by_content_history_interactions
+    advancement_gate: statistical_history_stability_gate
+
+  short_sequence:
+    authorization_status: future_reserved_not_authorized
+    model_family: one_frozen_short_sequence_encoder_family
+    windows: [10, 50]
+    maximum_trials_per_window: 2
+    maximum_trials_total: 4
+    seeds_per_trial: 3
+    search_folds: 3
+    maximum_fit_runs: 36
+    prerequisite: baseline_2_statistical_history_advancement_gate_passed
+    advancement_gate: window_50_over_window_10_stability_gate
+
+  hierarchical_long_sequence:
+    authorization_status: future_reserved_not_authorized
+    model_family: one_frozen_hierarchical_long_sequence_encoder_family
+    window_200:
+      maximum_trials: 3
+      claim_role: candidate_long_sequence
+    window_500:
+      maximum_trials: 1
+      claim_role: exploratory_only
+      sample_gate_required: true
+    maximum_trials_total: 4
+    seeds_per_trial: 3
+    search_folds: 3
+    maximum_fit_runs: 36
+    prerequisite: window_50_over_window_10_stability_gate_passed
+    advancement_gate: no_further_architecture_escalation_in_v002
+
+trial_reconciliation:
+  deterministic_trials: 23
+  deterministic_search_fit_runs_at_three_folds: 69
+  neural_trials: 8
+  neural_search_fit_runs_at_three_folds_and_three_seeds: 72
+  maximum_trials_total: 31
+  maximum_search_fit_runs_total: 141
+  maximum_frozen_finalist_configurations: 3
+  frozen_finalist_daily_origins: 7
+  frozen_finalist_neural_seeds: 3
+  maximum_frozen_finalist_daily_fit_runs_if_all_neural: 63
+  maximum_train_backtest_fit_runs_total: 204
+  note: daily_backtest_fits_are_additional_fits_and_are_not_derived_aggregates_of_search_fold_predictions
+
+per_run_caps:
+  deterministic_rule_or_linear:
+    maximum_cpu_threads: 8
+    maximum_wall_clock_minutes: 20
+    maximum_peak_ram_gb: 16
+    maximum_temporary_disk_gb: 10
+  gradient_boosted_tree:
+    maximum_cpu_threads: 8
+    maximum_wall_clock_minutes: 30
+    maximum_peak_ram_gb: 16
+    maximum_temporary_disk_gb: 15
+    maximum_boosting_iterations: 1000
+    early_stopping_patience_evaluations: 50
+  neural_sequence:
+    maximum_cpu_threads: 8
+    maximum_gpu_devices: 1
+    maximum_allocated_vram_gb: 7.0
+    maximum_wall_clock_minutes: 60
+    maximum_peak_ram_gb: 16
+    maximum_temporary_disk_gb: 20
+    maximum_epochs: 30
+    minimum_epochs_before_early_stop: 5
+    early_stopping_patience_epochs: 4
+    automatic_mixed_precision: allowed_if_finite_metric_and_cpu_reference_checks_pass
+  cap_hit_action: fail_run_with_reason_code
+  checkpoint_resume:
+    maximum_resumes_per_fit_run: 1
+    allowed_only_before_any_fold_metric_is_used_for_selection: true
+    consumed_compute_still_counts: true
+
+stage_resource_caps:
+  enforcement:
+    per_stage_and_global_caps_are_conjunctive: true
+    first_reached_cap_stops_further_runs: true
+    unused_budget_may_not_be_transferred_to_expand_trials_without_amendment: true
+  gold_pilot_benchmark:
+    authorization_status: future_reserved_not_authorized
+    maximum_cpu_core_hours: 16
+    maximum_gpu_device_hours: 2
+    maximum_elapsed_wall_clock_hours: 4
+    maximum_artifact_storage_gb: 10
+    purpose: tighten_or_confirm_per_run_caps_without_expanding_this_envelope
+  train_rolling_origin:
+    authorization_status: future_reserved_not_authorized
+    includes_search_and_frozen_finalist_daily_backtest: true
+    maximum_cpu_core_hours: 256
+    maximum_gpu_device_hours: 64
+    maximum_elapsed_wall_clock_hours: 84
+    maximum_artifact_storage_gb: 60
+  validation_selection:
+    authorization_status: future_reserved_not_authorized
+    maximum_cpu_core_hours: 24
+    maximum_gpu_device_hours: 8
+    maximum_elapsed_wall_clock_hours: 12
+    maximum_artifact_storage_gb: 15
+  final_train_after_validation:
+    authorization_status: future_reserved_not_authorized
+    maximum_cpu_core_hours: 24
+    maximum_gpu_device_hours: 8
+    maximum_elapsed_wall_clock_hours: 12
+    maximum_artifact_storage_gb: 10
+  restricted_test_evaluation:
+    authorization_status: future_reserved_not_authorized
+    maximum_cpu_core_hours: 8
+    maximum_gpu_device_hours: 0
+    maximum_elapsed_wall_clock_hours: 4
+    maximum_artifact_storage_gb: 5
+  random_audit_evaluation:
+    authorization_status: future_reserved_not_authorized
+    maximum_cpu_core_hours: 8
+    maximum_gpu_device_hours: 0
+    maximum_elapsed_wall_clock_hours: 4
+    maximum_artifact_storage_gb: 5
+  global_project_envelope_after_explicit_future_approvals:
+    reconciliation_rule: exact_sum_of_stage_caps_no_unallocated_contingency
+    maximum_cpu_core_hours: 336
+    maximum_gpu_device_hours: 82
+    maximum_elapsed_wall_clock_hours: 120
+    maximum_cumulative_artifact_storage_gb: 105
+    maximum_peak_temporary_disk_gb: 40
+
+validation_budget:
+  authorization_status: unavailable_not_authorized
+  maximum_finalist_configurations: 3
+  maximum_fit_runs_if_all_finalists_are_neural: 9
+  maximum_validation_metric_read_batches: 1
+  maximum_prediction_artifacts: 9
+  maximum_calibration_method_candidates: 3
+  finalist_and_prediction_artifact_hashes_required_before_metric_read: true
+  all_finalists_evaluated_on_identical_validation_rows: true
+  validation_may_not_create_new_feature_or_model_families: true
+  validation_result_informed_budget_expansion: forbidden
+  first_validation_read_requires_explicit_stage_approval: true
+
+finalization_budget:
+  authorization_status: unavailable_not_authorized
+  maximum_final_model_configurations: 2
+  roles: [frozen_primary_baseline, frozen_primary_candidate]
+  maximum_final_fit_runs: 6
+  exact_seed_ensemble_required_before_final_fit: true
+  seed_prediction_aggregation_required_before_final_fit: true
+  no_test_period_retraining: true
+
+restricted_test_budget:
+  authorization_status: unavailable_not_authorized
+  candidate_baseline_pairs: 1
+  metric_materialization_batches: 1
+  prediction_artifacts_must_be_hashed_before_metric_materialization: true
+  technical_retry_before_metric_materialization:
+    maximum_verified_infrastructure_retries: 1
+    identical_code_config_model_and_predictions_required: true
+  retry_after_any_metric_materialization: forbidden
+  test_consumed_after_any_metric_materialization: true
+  no_model_or_calibrator_change_after_test_access: true
+
+random_audit_budget:
+  authorization_status: unavailable_not_authorized
+  opens_only_after_restricted_test_and_primary_claim_freeze: true
+  model_selection_or_threshold_selection: forbidden
+  training_or_refitting: forbidden
+  maximum_metric_materialization_batches: 1
+  result_may_not_return_to_training_loop: true
+
+scientific_stop_rules:
+  frozen_finalist_daily_stability_gate:
+    comparison: frozen_candidate_minus_frozen_baseline
+    source_train_origin_dates: ["2022-04-11", "2022-04-12", "2022-04-13", "2022-04-14", "2022-04-15", "2022-04-16", "2022-04-17"]
+    required_completed_origins: 7
+    required_positive_pr_auc_origins: 5
+    pooled_daily_backtest_pr_auc_delta_must_be_positive: true
+    pooled_daily_backtest_user_gauc_delta_must_be_nonnegative: true
+    all_daily_effects_and_coverage_must_be_reported: true
+    no_refreeze_or_tuning_between_daily_origins: true
+    not_a_confirmatory_sesoi_or_noninferiority_gate: true
+    failure_action: stop_before_validation_and_review_temporal_instability
+  statistical_history_stability_gate:
+    comparison: baseline_2_statistical_history_minus_baseline_1_static_no_history
+    required_positive_pr_auc_folds: 2
+    total_folds: 3
+    pooled_train_rolling_origin_pr_auc_delta_must_be_positive: true
+    pooled_user_gauc_delta_must_be_nonnegative: true
+    probability_quality_direction_must_not_show_systematic_degradation: true
+    not_a_confirmatory_sesoi_or_noninferiority_gate: true
+    failure_action: stop_before_sequence_models_and_review_feature_time_sparse_and_confounding_definitions
+  window_50_over_window_10_stability_gate:
+    fixed_target_rows_required: true
+    required_positive_pr_auc_folds: 2
+    total_folds: 3
+    pooled_pr_auc_delta_must_be_positive: true
+    pooled_user_gauc_delta_must_be_nonnegative: true
+    failure_action: do_not_run_window_200_or_window_500_models
+  window_200_over_window_50_gate:
+    fixed_target_rows_required: true
+    required_positive_pr_auc_folds: 2
+    total_folds: 3
+    pooled_pr_auc_delta_must_be_positive: true
+    failure_action: do_not_run_window_500_exploration
+  sequence_sample_gate:
+    window_500_requires_frozen_sample_gate: true
+    unresolved_sample_gate_action: do_not_run_window_500_exploration
+  universal_scientific_stops:
+    - target_row_identity_differs_within_a_comparison
+    - leakage_or_same_timestamp_access_test_fails
+    - feature_denylist_boundary_test_fails
+    - remaining_trials_cannot_be_run_inside_resource_caps
+    - validation_or_later_data_would_be_needed_to_define_the_search_space
+  scientific_stop_does_not_authorize_result_peeking: true
+
+technical_failure_and_replacement_policy:
+  required_reason_codes:
+    - OUT_OF_MEMORY
+    - WALL_CLOCK_CAP
+    - NONFINITE_LOSS_OR_METRIC
+    - DATA_OR_MANIFEST_MISMATCH
+    - POINT_IN_TIME_OR_DENYLIST_ASSERTION_FAILURE
+    - CHECKPOINT_OR_IO_FAILURE
+    - ENVIRONMENT_OR_DRIVER_FAILURE
+    - USER_INTERRUPTION
+  maximum_verified_infrastructure_replacements_per_stage: 2
+  replacement_requires:
+    - no_scientific_metric_was_used_from_failed_run
+    - identical_scientific_configuration
+    - same_frozen_target_rows
+    - reason_and_evidence_logged
+    - remaining_stage_resource_budget
+  hyperparameter_or_seed_change_is_new_trial: true
+  batch_size_or_precision_change_is_new_configuration_unless_predeclared: true
+  silent_trial_replacement: forbidden
+  silent_budget_expansion: forbidden
+
+over_budget_policy:
+  automatic_overrun_tolerance: 0
+  on_projected_or_actual_cap_breach: stop_before_launching_next_run
+  amendment_required: true
+  amendment_requirements:
+    - new_budget_version_or_versioned_amendment
+    - current_actual_usage_ledger
+    - reason_for_original_estimation_error
+    - exact_requested_increment_by_resource_and_trial
+    - scientific_necessity_and_alternatives
+    - confirmation_that_next_stage_results_have_not_been_used_to_request_expansion
+    - explicit_project_owner_approval
+    - method_governance_review
+  validation_result_informed_expansion: forbidden
+  restricted_test_or_random_result_informed_expansion: forbidden
+  retroactive_approval: forbidden
+
+actual_usage_ledger:
+  required_before_any_future_stage_transition: true
+  append_only: true
+  required_fields:
+    - run_id
+    - stage
+    - model_family
+    - feature_bundle
+    - trial_id
+    - fold_id
+    - seed
+    - run_status
+    - failure_reason_code
+    - cpu_threads
+    - cpu_core_hours
+    - gpu_name_and_id
+    - gpu_device_hours
+    - peak_vram_gb
+    - peak_ram_gb
+    - peak_temporary_disk_gb
+    - elapsed_wall_clock_hours
+    - artifact_storage_gb
+    - code_config_data_and_output_hashes
+    - metric_materialized
+    - stop_reason
+  aggregate_fields:
+    - trials_attempted_completed_failed_by_model_family
+    - fit_runs_attempted_completed_failed
+    - validation_metric_read_batches
+    - restricted_test_metric_materialization_batches
+    - cumulative_cpu_core_hours
+    - cumulative_gpu_device_hours
+    - cumulative_elapsed_wall_clock_hours
+    - cumulative_artifact_storage_gb
+
+freeze_and_review:
+  planning_envelope_frozen: true
+  operational_training_budget_status: pending_gold_pilot_benchmark_and_explicit_training_approval
+  gold_pilot_post_benchmark_revision_policy:
+    within_this_budget_version: unchanged_or_tightened_only
+    any_numeric_or_search_space_expansion_within_this_budget_version: forbidden
+    expansion_requires_successor_budget_version_and_explicit_pretraining_approval: true
+    observed_validation_restricted_test_or_random_results_may_not_justify_expansion: true
+  values_that_may_only_be_tightened_after_gold_pilot:
+    - per_run_wall_clock_caps
+    - model_specific_batch_and_memory_limits
+    - maximum_trials_inside_the_frozen_upper_bounds
+  any_expansion_requires_versioned_amendment: true
+  before_train_backtest:
+    - gold_pilot_compute_benchmark_complete
+    - calendar_burn_in_decision_frozen
+    - exact_search_fold_date_boundaries_frozen
+    - daily_backtest_origin_dates_aligned_with_calendar_burn_in
+    - exact_model_parameter_spaces_frozen
+    - exact_feature_bundles_frozen
+    - gold_sample_id_target_row_manifests_complete_and_hashed
+    - formal_training_explicitly_approved
+  before_frozen_finalist_daily_backtest:
+    - three_fold_search_complete_with_usage_ledger
+    - at_most_three_finalist_configurations_frozen
+    - finalist_code_config_and_feature_hashes_recorded
+    - seven_daily_gold_sample_id_target_row_manifests_frozen
+    - no_validation_restricted_test_or_random_metrics_accessed
+  before_first_validation_read:
+    - train_rolling_origin_complete_with_usage_ledger
+    - finalist_configurations_frozen
+    - neural_seed_values_frozen
+    - calibration_candidates_frozen
+    - invalid_run_replacement_policy_reconfirmed
+    - explicit_validation_access_approval
+  before_restricted_test:
+    - unique_primary_baseline_and_candidate_frozen
+    - exact_seed_ensemble_and_aggregation_frozen
+    - prediction_code_config_and_artifact_hashes_frozen
+    - SESOI_and_noninferiority_margins_frozen
+    - paired_validation_MDE_estimated
+    - restricted_test_retry_policy_reconfirmed
+    - explicit_restricted_test_approval
+  current_gate_decision: formal_training_not_authorized

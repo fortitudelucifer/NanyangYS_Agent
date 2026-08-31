@@ -1,0 +1,12 @@
+{
+  "contract_id": "supplementary_learning_curve_v013",
+  "contract_sha256": "0e67c6d5388fba55157fd5f2af7d0681a55e280b96ebed492a9d3c77ac522c24",
+  "execution_authorized": true,
+  "authorized_stages": [
+    "preflight",
+    "validation_reuse_learning_curve"
+  ],
+  "approved_by": "project_owner",
+  "approved_at_local": "2026-08-30",
+  "approval_evidence": "Project owner replied '继续' to the immediately preceding exact-hash authorization request."
+}

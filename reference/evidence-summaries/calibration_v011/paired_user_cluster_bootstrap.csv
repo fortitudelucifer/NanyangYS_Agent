@@ -1,0 +1,5 @@
+contrast,metric,point_estimate,bootstrap_replicates_requested,effective_replicates,bootstrap_mean,bootstrap_se,ci95_lower,ci95_upper,multiplicity_content_sha256
+selected_minus_original,average_precision,0.0,2000,2000,0.0,0.0,0.0,0.0,394e0d866ba5bf3916cded249ce73c0fc94c80b6a2cb4e437a1ae71ee5df3f75
+selected_minus_original,log_loss,-0.24313674209936098,2000,2000,-0.24282465469526118,0.008138001904264844,-0.25863335444533847,-0.22683607760637486,394e0d866ba5bf3916cded249ce73c0fc94c80b6a2cb4e437a1ae71ee5df3f75
+selected_minus_original,brier,-0.09515104863617553,2000,2000,-0.09501930889002332,0.0036768851398575543,-0.10221938737449947,-0.08795941939723415,394e0d866ba5bf3916cded249ce73c0fc94c80b6a2cb4e437a1ae71ee5df3f75
+selected_minus_original,user_gauc_event_weighted,0.0,2000,2000,0.0,0.0,0.0,0.0,394e0d866ba5bf3916cded249ce73c0fc94c80b6a2cb4e437a1ae71ee5df3f75

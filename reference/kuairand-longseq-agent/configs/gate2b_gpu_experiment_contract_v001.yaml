@@ -1,0 +1,73 @@
+version: 1
+contract_id: gate2b_gpu_experiment_v001
+created_at_local: "2026-08-16"
+status: authorized_for_owner_requested_train_only_gpu_exploration
+authorization:
+  execution_authorized: true
+  source: project_owner_explicit_request_to_start_the_experiment_on_GPU_and_record_results
+  authorized_scope:
+    - frozen_Train_only_feature_artifact
+    - all_seven_frozen_rolling_origins
+    - BL0_BL1_BL2_probability_and_history_analysis
+    - Markdown_and_machine_readable_result_artifacts
+  prohibited_scope:
+    - Validation
+    - late_or_restricted_test
+    - random_audit
+    - video_statistic_features
+    - Gold_or_sequence_model_claim
+source_protocol:
+  canonical_contract: configs/gate2b_probability_repair_contract_v003.yaml
+  canonical_contract_sha256_at_creation: 8df12e4280d1b09167637e95a5aafdd2342bae7844678f9bfa393a4b8b02c917
+  inherited_without_change:
+    - input_artifact_and_SHA256
+    - population_and_seven_temporal_splits
+    - grouped_BL1_and_BL2_feature_preprocessing
+    - strict_history_feature_semantics
+    - previous_day_sigmoid_calibration
+    - metrics_probability_gates_and_paired_user_cluster_bootstrap
+  deliberately_not_claimed:
+    - sklearn_SGD_optimizer_parity
+    - reference_solver_objective_adequacy
+    - canonical_v003_release
+input:
+  path: reports/generated/gate2b_baselines_v002/gate2b_feature_matrix.parquet
+  expected_size_bytes: 79193207
+  expected_sha256: 4981ee32c4c367bf42f27fdff81171e2bedbe5eb7fabf66d6b3e2796b9e428cd
+execution:
+  conda_environment: Kuai
+  backend: pytorch_sparse_CSR_CUDA
+  required_device_type: cuda
+  expected_device_name: NVIDIA GeForce RTX 5070 Ti
+  model_optimizer: torch.optim.Adam
+  full_batch: true
+  initialization: all_zero_coefficients_and_intercept
+  seed: 20260814
+  learning_rate: 0.03
+  steps: 30
+  alpha: 0.0001
+  objective: mean_binary_log_loss_plus_alpha_over_2_times_coefficient_L2_squared
+  row_limits: none_full_frozen_origins
+evaluation:
+  models: [BL0, BL1, BL2]
+  probability_metrics: [average_precision, user_gauc_event_weighted, log_loss, brier, ece20_equal_width]
+  daily_and_pooled: true
+  calibration: previous_day_sigmoid_v1
+  probability_quality_gate: inherited_from_canonical_v003
+  relative_history_gate: inherited_from_canonical_v003
+  bootstrap:
+    cluster: user_id
+    replicates: 2000
+    seed: 20260814
+    expected_users: 943
+    expected_multiplicity_sha256: c954a293bfc21ef3bb1630607184754b7656964f787d66cf1165c5685ef4aaff
+claim_boundary:
+  evidence_role: posthoc_Train_only_GPU_exploratory_result
+  permitted:
+    - describe_GPU_protocol_probability_quality_and_history_increment_on_frozen_Train_origins
+    - compare_BL0_BL1_BL2_inside_this_exact_GPU_protocol
+  forbidden:
+    - call_this_the_canonical_v003_release
+    - claim_independent_confirmation_or_out_of_time_generalization
+    - authorize_Gold_Validation_or_sequence_models_from_this_result_alone
+

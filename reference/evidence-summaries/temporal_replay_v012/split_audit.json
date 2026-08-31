@@ -1,0 +1,10 @@
+{
+  "end": "2022-05-08",
+  "positives": 1039,
+  "prevalence": 0.08379708040971046,
+  "rows": 12399,
+  "split": "final_temporal_replay_test",
+  "start": "2022-05-06",
+  "unique_identities": 12399,
+  "users": 857
+}

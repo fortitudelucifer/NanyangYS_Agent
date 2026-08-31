@@ -12,17 +12,21 @@ NanyangYS Agent 是一个面向**真实开源大厂视频播放数据**的轻量
 
 ### 研究进展
 
-当前仍在持续研究数据集阶段。已在 **RTX 4090** 上完成部分用户长时序视频偏好研究并产出实验数据（Train-only 的 BL0 / BL1 / BL2 基线对比与数值核验），后续仍在继续深入建模与验证工作。
+早期演示快照曾在 **RTX 4090** 上完成 Train-only 的 BL0 / BL1 / BL2 数值核验。后续 v010-v012 研究运行记录的是 Python 3.11.15、PyTorch 2.11.0+cu128 与 RTX 5070 Ti；公开仓库保留合同和复现元数据，不直接分发对应的大型运行产物。
+
+仓库同时提供一个不分发数据的 KuaiRand-1K 复现包：研究者从官方渠道下载数据，先核验原始文件 SHA-256，再使用冻结的数据合同、清洗规则、代码和种子重建 Silver 与后续实验。入口见 [reproducibility/README.md](reproducibility/README.md)。
 
 ## 当前真实状态
 
 | 模块 | 当前状态 |
 |---|---|
 | Agent Harness | 已可离线运行和校验；无合格证据时确定性停在 `waiting_for_evidence` |
-| GPU 实验快照 | Train-only 的 BL0 / BL1 / BL2 结果已做数值核验 |
+| GPU 演示快照 | 历史 Train-only 的 BL0 / BL1 / BL2 结果已做数值核验 |
+| 研究 producer 证据 | v010-v012 合同、代码、种子、环境与预期哈希可复现；大型输出不入库 |
 | 科学证据准入 | 未完成；provenance 冻结与 Agent Evidence manifest 尚未闭环 |
-| Validation / sealed test | 未使用、未授权 |
+| Agent 消费端 Validation / sealed / random | 尚未准入；producer 证据不能直接替代 Agent Evidence 合同 |
 | 发布 | 未授权；系统保持 fail-closed |
+| 公开复现包 | 提供代码、合同、环境锁、种子和预期哈希；不包含 Raw、Silver、逐行预测或模型文件 |
 
 GPU 快照中，BL2 相对 BL1 的初步结果为：AP `+0.041295`、event-weighted user-GAUC `+0.048758`、Log Loss `-0.022953`、Brier `-0.008907`，AP 的用户聚类 bootstrap 95% CI 为 `[0.037661, 0.045054]`。这些数字只支持 **Train-only 初步结论**，不等于 Validation、Gold 或发布结论。
 
@@ -52,6 +56,20 @@ verification.verified = true
 python -m pip install -e ".[test]"
 python -m pytest tests/agent_system -q
 ```
+
+## 从官方数据开始复现
+
+仓库不使用 Git LFS，也不镜像 KuaiRand 数据。最短路径为：
+
+```powershell
+python reproducibility/scripts/download_kuairand_1k.py
+python reproducibility/scripts/verify_reproduction.py --raw
+python -m pip install -r reproducibility/environment/requirements-release-v010-v012.txt
+python reproducibility/scripts/run_reproduction.py --build-silver
+python reproducibility/scripts/verify_reproduction.py --silver
+```
+
+下载器只接受官方默认地址或用户显式传入的镜像地址；解压后以冻结的逐文件 SHA-256 作为真正的数据身份检查。正式实验的时间切分、种子、bootstrap 次数和合同哈希见 [reproducibility/seeds-and-splits.yaml](reproducibility/seeds-and-splits.yaml)。
 
 完整的 3 分钟展示顺序见 [demo/DEMO_GUIDE.md](demo/DEMO_GUIDE.md)。
 

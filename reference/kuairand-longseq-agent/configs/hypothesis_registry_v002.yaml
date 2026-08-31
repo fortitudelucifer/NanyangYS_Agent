@@ -1,0 +1,210 @@
+version: 2
+registry_id: kuairand_longseq_hypotheses_v002
+status: draft_with_train_only_design_evidence_no_gold_or_training_authorization
+experiment_contract: configs/experiment_v002_proposal.yaml
+created_date: "2026-08-14"
+
+evidence_artifacts:
+  train_association_report: reports/analysis/train_association_report_v002.md
+  analysis_manifest: reports/generated/train_association_v002/analysis_manifest.json
+  gate2_train_design_report: reports/analysis/gate2_train_design_evidence_v002.md
+  gate2_train_design_manifest: reports/generated/gate2_train_design_v002/design_manifest.json
+  compute_search_budget: configs/compute_search_budget_v002.yaml
+
+governance:
+  current_authorized_stage: train_only_data_modeling
+  hypothesis_generation_split: source_train
+  hypothesis_generation_range: ["2022-04-08", "2022-04-17"]
+  target_tab: 1
+  history_tabs: all
+  validation_used_for_hypothesis_generation: false
+  restricted_test_used_for_hypothesis_generation: false
+  random_used_for_hypothesis_generation: false
+  formal_model_training_authorized: false
+  gold_build_authorized: false
+  train_findings_are_exploratory_until_temporal_validation: true
+
+canonical_train:
+  base: data/silver/events_early_standard.parquet
+  additive: data/quarantine/label_formula_mismatch_rows.parquet
+  additive_filter:
+    source_table: early_standard
+    exclusion_reason: LONG_VIEW_FORMULA_MISMATCH
+    event_date_range: ["2022-04-08", "2022-04-17"]
+  target_filter:
+    event_date_range: ["2022-04-08", "2022-04-17"]
+    tab: 1
+  label: official_long_view
+  source_identity_key: [source_table, source_row_number]
+
+common_rules:
+  fixed_target_rows_within_each_comparison: required
+  gate2_prototype_identity_key: [source_table, source_row_number]
+  gate2_prototype_role: train_only_design_not_gold_manifest
+  gate3_gold_target_identity_key: sample_id
+  gate3_gold_target_manifests_required_before_training: true
+  strict_history_rule: history_time_strictly_less_than_target_time
+  same_timestamp_feedback_access: denied
+  current_event_outcome_features: denied
+  univariate_association_as_hard_filter: denied
+  train_only_uncertainty: user_cluster_bootstrap_descriptive_and_implementation_only
+  future_validation_model_contrast_inference: paired_user_cluster_bootstrap
+  confidence_level: 0.95
+  event_micro_and_user_macro_reporting: required
+  train_rolling_origin_before_validation: required
+  probability_release_gate:
+    - pr_auc_superiority_and_sesoi
+    - user_gauc_noninferiority
+    - log_loss_noninferiority
+    - brier_score_noninferiority
+  within_user_improvement_claim_requires:
+    - user_gauc_superiority
+  timestamp_pair_auc_role: exploratory_diagnostic_only
+
+research_questions:
+  rq1_history_probability_increment:
+    status: open_protocol_defined_from_source_identity_prototype_pending_gold_sample_id_manifest_and_backtest
+    role: candidate_primary_question
+    question: >-
+      在相同目标事件、用户/视频静态信息和曝光前上下文上，严格先验的统计历史
+      是否改善已观测候选事件的 long_view 概率预测？
+    frozen_baseline_family: static_no_history
+    candidate_family: statistical_history
+    primary_contrast: candidate_minus_frozen_baseline_pr_auc_event_micro
+    guardrails:
+      - user_gauc_noninferiority
+      - log_loss_noninferiority
+      - brier_score_noninferiority
+    prohibited_interpretation:
+      - history_is_identified_causal_preference
+      - online_business_lift
+    required_ablations:
+      - user_static_and_context_only
+      - strict_user_history_statistics
+      - strict_user_by_content_history_interactions
+
+  rq2_within_user_content_discrimination:
+    status: open_pending_feature_availability_contract
+    role: key_secondary_question
+    question: >-
+      严格先验的 user-by-author、user-by-tag 和其他 user-by-content 交互，
+      是否改善同一用户内部的候选判别，而不只是分离不同用户的基础率？
+    primary_metric: user_gauc
+    superiority_required_for_positive_claim: true
+    supporting_metrics:
+      - pr_auc_event_micro
+      - log_loss
+      - brier_score
+    timestamp_diagnostic:
+      metric: within_timestamp_pair_auc
+      claim_role: supporting_diagnostic_not_verified_slate
+    prohibited_interpretation:
+      - reconstructed_online_impression_ranking
+      - full_catalog_ranking
+
+  rq3_history_depth_increment:
+    status: open_protocol_defined_from_source_identity_prototype_pending_gold_sample_id_manifest_and_backtest
+    role: long_sequence_question
+    question: >-
+      在完全相同的目标行上，10、50 与 200 个严格先验时间戳批次的历史窗口
+      是否提供递增且稳定的预测价值？
+    windows_primary: [10, 50, 200]
+    window_exploratory: 500
+    comparison_design:
+      all_rows_policy: use_available_history_with_mask
+      short_ablation_slice: history_50_plus
+      long_ablation_slice: history_200_plus
+      extended_slice: history_500_plus
+      target_row_manifest_per_comparison: required
+      dropping_rows_per_model: forbidden
+    confounding_controls:
+      - event_date
+      - prior_history_depth
+      - user_activity
+      - content_modality_proxy
+    stop_rule: no_long_sequence_escalation_if_statistical_history_has_no_stable_increment
+
+  rq4_temporal_and_content_stability:
+    status: open_train_rolling_origin_only
+    role: stability_question
+    question: >-
+      模型增量是否在 Train rolling-origin 日期、用户活跃度、历史深度、
+      内容模态代理、时长状态和 warm/cold 内容切片上保持稳定？
+    current_allowed_evidence: train_rolling_origin
+    validation_evidence: reserved
+    restricted_test_evidence: forbidden_until_final_freeze
+    cross_slice_estimand: interaction_contrast_of_candidate_increment_over_baseline
+    raw_pr_auc_cross_slice_ranking: forbidden
+    multiplicity:
+      descriptive_slices: effect_size_and_confidence_interval
+      inferential_family: BH_FDR
+      q: 0.05
+
+exploratory_questions:
+  label_definition_sensitivity:
+    status: deferred_until_gold_sensitivity_view
+    canonical_outcome: official_long_view
+    alternative_outcome: documented_formula_recomputed_long_view
+    scope: positive_duration_rows_where_formula_is_defined
+    identical_rows_within_scope: required
+    official_label_fallback_outside_scope: forbidden
+    used_for_primary_model_selection: false
+
+  content_modality_heterogeneity:
+    status: proxy_v1_frozen_for_diagnostic_slices_no_true_modality_claim
+    primary_population: all_observed_candidates
+    proxy_levels: [video_like, picture_like, unknown]
+    video_like_only_role: sensitivity
+    direct_upload_type_to_true_modality_claim: forbidden
+
+  nested_outcome_diagnostic:
+    status: descriptive_only
+    fields: [is_click, long_view]
+    causal_stage_claim: forbidden
+    current_event_is_click_as_feature: forbidden
+
+freeze_requirements:
+  before_validation:
+    - feature_availability_contract_approved
+    - gold_sample_id_target_row_manifests_complete_and_hashed
+    - train_rolling_origin_design_frozen
+    - allowed_model_families_frozen
+    - search_and_seed_budget_frozen
+    - user_gauc_implementation_frozen
+  before_restricted_test:
+    - unique_primary_model_comparison_frozen
+    - pr_auc_sesoi_frozen
+    - user_gauc_noninferiority_margin_frozen
+    - user_gauc_superiority_sesoi_frozen
+    - probability_quality_margins_frozen
+    - calibration_protocol_frozen
+    - multiplicity_family_frozen
+    - partial_unblinding_registry_signed_off
+
+pending_decisions:
+  unique_primary_baseline: null
+  unique_primary_candidate: null
+  pr_auc_sesoi: null
+  user_gauc_noninferiority_margin: null
+  user_gauc_superiority_sesoi: null
+  log_loss_noninferiority_margin: null
+  brier_score_noninferiority_margin: null
+  calendar_burn_in:
+    status: frozen_protocol_decision_no_training_authorization
+    history_accumulation_range: ["2022-04-08", "2022-04-10"]
+    canonical_train_row_exclusion: false
+    canonical_all_rows_policy: use_all_available_history_with_mask
+    rolling_origin_assessment_target_start_date: "2022-04-11"
+    applies_only_to: backtest_assessment_targets
+  content_modality_proxy_mapping_version: content_modality_proxy_v1_train_name_duration_consensus
+
+deferred_decisions:
+  validation_mde:
+    status: deferred_until_authorized_paired_validation_predictions
+    train_only_bootstrap_substitution: forbidden
+
+amendment_policy:
+  train_only_evidence_may_refine_hypotheses_before_validation: true
+  amendment_after_first_validation_read_requires_new_experiment_version: true
+  restricted_or_random_result_informed_amendment: forbidden
+  change_log_required: true

@@ -1,0 +1,11 @@
+contrast,metric,point_estimate
+ADAM_BL1_minus_BL0,average_precision,0.08626952127523715
+ADAM_BL1_minus_BL0,log_loss,0.0682954533576815
+ADAM_BL1_minus_BL0,brier,0.037224274967346455
+ADAM_BL1_minus_BL0,user_gauc_event_weighted,0.056485463597051866
+ADAM_BL1_minus_BL0,user_gauc_user_equal,0.0665143004117058
+ADAM_BL2_minus_ADAM_BL1,average_precision,0.026188431442487198
+ADAM_BL2_minus_ADAM_BL1,log_loss,-0.009589477111937916
+ADAM_BL2_minus_ADAM_BL1,brier,-0.0016544706920002261
+ADAM_BL2_minus_ADAM_BL1,user_gauc_event_weighted,0.0590317322384718
+ADAM_BL2_minus_ADAM_BL1,user_gauc_user_equal,0.0485889751988936

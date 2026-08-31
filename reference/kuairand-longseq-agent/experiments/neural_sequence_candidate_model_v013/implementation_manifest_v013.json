@@ -1,0 +1,85 @@
+{
+  "contract_id": "neural_sequence_candidate_model_v013",
+  "snapshot_at": "2026-08-24T04:31:00+08:00",
+  "status": "synthetic_gpu_preflight_implemented_formal_execution_still_closed",
+  "evidence_level": "engineering_synthetic_only",
+  "contract_execution_authorized": false,
+  "gold_build_authorized": false,
+  "scientific_neural_training_authorized": false,
+  "environment": {
+    "python": "3.11.9",
+    "torch": "2.12.1+cu130",
+    "cuda_build": "13.0",
+    "device": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "compute_capability": "12.0",
+    "pip_check": "no_broken_requirements"
+  },
+  "verification": {
+    "focused_v013_tests": "12_passed",
+    "focused_v013_and_existing_gpu_tests": "27_passed",
+    "full_repository_regression": "172_passed_15_preexisting_or_unrelated_failures",
+    "safe_synthetic_hier500_batch_under_85_percent_reserved_gate": 4096,
+    "batch_6144": "completed_but_insufficient_headroom",
+    "batch_8192": "completed_under_wddm_virtual_reservation_but_insufficient_headroom",
+    "desktop_5070ti_needed_now": false,
+    "formal_training_device_qualified": false
+  },
+  "artifacts": [
+    {
+      "path": "src/kuairand_longseq/models/neural_sequence_v013.py",
+      "size_bytes": 13157,
+      "sha256": "294f32325f2b2577595a54d02239501560bd1e7edfeaa182d3a0ea08816121ce"
+    },
+    {
+      "path": "scripts/experiments/v013-neural-sequence/gpu_preflight_v013.py",
+      "size_bytes": 20451,
+      "sha256": "6b593dcca2aa0a9d468cc0365ae816d1f19b481ab19248fcf98d40657be95fdb"
+    },
+    {
+      "path": "tests/test_neural_sequence_v013.py",
+      "size_bytes": 5283,
+      "sha256": "56f2e983d8558330669cebb5c1c462cf5683e6c0bce1dce14abb8e8085f9cc2d"
+    },
+    {
+      "path": "experiments/neural_sequence_candidate_model_v013/synthetic_gpu_preflight_authorization_v013.json",
+      "size_bytes": 988,
+      "sha256": "f9d0102515c052b93059b96b69fe6d9377f5c00f9f022ef928d56fc1f0f5a1ea"
+    },
+    {
+      "path": "experiments/neural_sequence_candidate_model_v013/requirements-cu130-v013.txt",
+      "size_bytes": 65,
+      "sha256": "c8f4341d2edc4ce599e8ac9bc2656ede2d5d1aa8823bc7243ae289563d4e2677"
+    },
+    {
+      "path": "reports/experiments/v013-neural-sequence/2026-08-24_synthetic-gpu-preflight_v013.md",
+      "size_bytes": 5604,
+      "sha256": "701f451bf7017be6c42069f57d855bf5515394958658e5a0496953e3ca256ae5"
+    },
+    {
+      "path": "pyproject.toml",
+      "size_bytes": 1749,
+      "sha256": "3f0b670d694b157c062a121e04fffad5c11614d29bf7aef319e472562bfa63f1"
+    },
+    {
+      "path": "experiments/neural_sequence_candidate_model_v013/outputs/gpu-preflight-20260824-042812/run_manifest.json",
+      "size_bytes": 1264,
+      "sha256": "9938fa1cea404e0e0db3d200b104696adb16401da4c08ab4a8d0a8a95a427d57"
+    },
+    {
+      "path": "experiments/neural_sequence_candidate_model_v013/outputs/gpu-preflight-20260824-042812/hardware_decision.json",
+      "size_bytes": 595,
+      "sha256": "04efbe79746c0063eb21d2444dbca9fbd2e69f34e57bec1cbe36faaaaf041651"
+    },
+    {
+      "path": "experiments/neural_sequence_candidate_model_v013/outputs/gpu-preflight-20260824-042812/artifact_hash_manifest.json",
+      "size_bytes": 1198,
+      "sha256": "dd766a3ba8145bc6384c1ac35706bb8245b52c7877b9ef780ff67a3cd2db72ac"
+    }
+  ],
+  "supersession_note": {
+    "preserved_prior_output": "gpu-preflight-20260824-042722",
+    "reason": "a sweep containing only unsafe high batches could not support a 5070 Ti recommendation",
+    "recommendation_source": "gpu-preflight-20260824-042812"
+  },
+  "remaining_gate": "freeze Gold cardinalities, actual DataLoader, training configuration, and operational budget, then rerun the implementation gate before formal training"
+}

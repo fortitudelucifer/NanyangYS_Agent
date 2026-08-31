@@ -1,0 +1,78 @@
+{
+  "snapshot_id": "history_value_v010_predecessor_integrity_for_calibration_v011",
+  "created_at_local": "2026-08-23",
+  "status": "all_declared_predecessor_artifacts_verified",
+  "verification_scope": {
+    "validation_artifacts_verified": 17,
+    "sealed_artifacts_verified": 18,
+    "sealed_reconstruction_diagnostic_artifacts_verified": 7,
+    "random_audit_artifacts_verified": 18,
+    "v010_global_artifacts_verified": 3,
+    "final_evidence_artifacts_verified": 9
+  },
+  "manifests": [
+    {
+      "path": "reports/generated/history_value_adam_validation_v007/validation/artifact_hash_manifest.json",
+      "size_bytes": 3928,
+      "sha256": "999fd39f873ecb3587829412849b51c064a65e5c1921dba90a3d9f29a6f102b2"
+    },
+    {
+      "path": "reports/generated/history_value_adam_sealed_v008/sealed_test/artifact_hash_manifest.json",
+      "size_bytes": 4095,
+      "sha256": "360213c8b8027ef7a647cdb209843c0db53a12d74901a8ab0094aafdbd65abe7"
+    },
+    {
+      "path": "reports/generated/sealed_model_reconstruction_diagnostic_v010/artifact_hash_manifest.json",
+      "size_bytes": 1705,
+      "sha256": "366647d447b467b36824e3f505b2344f4c32656d14557fe9c4f57a323b047c24"
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/random_audit/artifact_hash_manifest.json",
+      "size_bytes": 4108,
+      "sha256": "ceffc7d48361008c276792b6fc6ebb137b3c5e67ac068fffb79ecb1c27b9331a"
+    },
+    {
+      "path": "reports/generated/history_value_adam_random_v010/artifact_hash_manifest.json",
+      "size_bytes": 716,
+      "sha256": "a0cf0305673b62848b8aaab31db1fa2eda889acb4e87a15f90ecd0ccb839b714"
+    },
+    {
+      "path": "reports/analysis/history_value_final_evidence_manifest_v010.json",
+      "size_bytes": 2016,
+      "sha256": "b53425915cb71904f07950743e8e0756e78ab3b7fc1c34369f4cfd4911a2c1b6"
+    }
+  ],
+  "calibration_input": {
+    "path": "reports/generated/history_value_adam_random_v010/random_audit/predictions.parquet",
+    "size_bytes": 1985188,
+    "sha256": "48ae0793e554b1eb82d3ba75684915f471cf52f005039a6ad674075b4afffc31",
+    "rows": 43027,
+    "unique_identities": 43027,
+    "users": 1000,
+    "positives": 3621,
+    "date_min": "2022-04-22",
+    "date_max": "2022-05-08",
+    "distinct_dates": 17,
+    "raw_ADAM_BL2_all_finite": true,
+    "p_ADAM_BL2_all_finite": true,
+    "p_ADAM_BL2_minimum": 0.008059605973367866,
+    "p_ADAM_BL2_maximum": 0.9256723780463503
+  },
+  "v010_run_manifest": {
+    "path": "reports/generated/history_value_adam_random_v010/random_audit/run_manifest.json",
+    "size_bytes": 3433,
+    "sha256": "2430932cda13ed87071dfb1ed2a17f124846aaa06b224f3affdd96dbb17020ef"
+  },
+  "v010_final_decision": {
+    "path": "reports/generated/history_value_adam_random_v010/final_claim_decision.json",
+    "size_bytes": 1027,
+    "sha256": "18860a6f6a738d54a11f6b56a47f6af6b039750cdb291f615e64ec631177ca80",
+    "required_status": "history_supported_on_standard_and_random_under_frozen_Adam"
+  },
+  "mutation_policy": {
+    "predecessor_directories_are_read_only_by_protocol": true,
+    "overwrite_or_append_to_v007_v008_v009_v010_outputs": "forbidden",
+    "v011_may_read_only_hash_pinned_v010_predictions": true,
+    "v011_may_open_original_random_or_recompute_features": false
+  }
+}

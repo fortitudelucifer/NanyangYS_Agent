@@ -1,0 +1,127 @@
+version: 3
+contract_id: history_value_gpu_confirmation_v003
+status: abandoned_unapproved_never_executed_replaced_by_Adam_only_v004
+created_at_local: "2026-08-23"
+timezone: Asia/Shanghai
+
+base_contract:
+  path: configs/history_value_gpu_confirmation_contract_v002.yaml
+  sha256: a11e75f43b2fe013e9ea0ee813953b46c224f8a5786e64a1c3bd25a43b37d09b
+  inheritance_rule: merge_v001_then_v002_then_this_v003_overlay_with_each_base_hash_verified
+
+successor_reason:
+  prior_run_contract_sha256: a11e75f43b2fe013e9ea0ee813953b46c224f8a5786e64a1c3bd25a43b37d09b
+  prior_terminal_state: no_adequate_plain_GPU_SGD_configuration
+  prior_failure_artifact: reports/generated/history_value_gpu_confirmation_v002/preflight/preflight_failure.json
+  prior_optimization_adequacy_artifact:
+    path: reports/generated/history_value_gpu_confirmation_v002/preflight/optimization_adequacy.csv
+    size_bytes: 23470
+    sha256: 79867555a31a96f5ffe1be38930de69ad491d70fea5aed56008d7997d8cbcf16
+  validation_accessed_in_prior_runs: false
+  sealed_test_accessed_in_prior_runs: false
+  random_audit_accessed_in_prior_runs: false
+  scientific_result_in_prior_runs: none
+  changes:
+    - inherit_v002_Adam_lr_0_03_steps_100_after_6_of_6_adequacy_pass
+    - replace_failed_plain_SGD_grid_with_Train_diagnostic_supported_lr_1_0
+    - extend_plain_SGD_checkpoints_to_3000_5000_10000
+  unchanged:
+    - five_prediction_streams
+    - full_batch_plain_SGD_with_zero_momentum
+    - common_objective_and_alpha
+    - all_features_and_history_semantics
+    - all_scientific_estimands_metrics_thresholds_and_gates
+    - validation_then_sealed_then_random_order
+    - scientific_failure_continues_policy
+  train_only_diagnostic_basis:
+    origin: "2022-04-11"
+    SGD_lr_1_0_steps_3000:
+      BL1_objective_regret: 0.004381450991184477
+      BL1_allowed_regret: 0.0027321277410767927
+      BL2_objective_regret: 0.0014619353025500104
+      BL2_allowed_regret: 0.0026315253364
+    interpretation: lr_1_0_is_stable_and_close_for_BL1_while_BL2_already_passes
+    SGD_lr_3_0: unstable_and_forbidden
+    scientific_or_protected_metrics_used: false
+
+authorization:
+  contract_creation_authorized: true
+  creation_source: engineering_successor_required_by_v002_preflight_stop
+  execution_authorized: false
+  data_access_authorized_by_this_draft: false
+  abandoned_by_project_owner_direction: >-
+    freeze_SGD_progress_until_after_the_main_Adam_history_value_experiment
+  exact_hash_approval_required_after_implementation: true
+  approval_receipt_protocol:
+    path: configs/history_value_gpu_confirmation_approval_v003.json
+    created_only_after_project_owner_approves_exact_final_contract_SHA256: true
+    receipt_creation_does_not_mutate_or_rehash_the_frozen_contract: true
+    runner_requires_contract_id_exact_SHA256_execution_true_and_automatic_transitions_true: true
+    current_receipt_status: absent_pending_project_owner_exact_hash_approval
+
+GPU_optimizers:
+  GPU_ADAM:
+    learning_rate: 0.03
+    candidate_step_checkpoints: [100]
+    selection_rule: inherit_exact_v002_6_of_6_Train_objective_adequacy_result
+  GPU_SGD:
+    learning_rate_candidates: [1.0]
+    candidate_step_checkpoints: [3000, 5000, 10000]
+    one_trajectory_per_learning_rate_with_checkpoint_reuse: true
+    momentum: 0.0
+    selection_rule:
+      eligibility: pass_adequacy_for_BL1_and_BL2_on_all_train_probe_origins
+      primary: smallest_step_checkpoint
+      scientific_assessment_metric_use: forbidden
+
+sequential_stage_protocol:
+  stage_0_optimizer_preflight:
+    inherited_v002_Adam_evidence_is_hash_verified: true
+    new_GPU_trajectories: plain_SGD_lr_1_0_only
+    all_three_new_SGD_checkpoints_completed_before_selection: true
+    validation_access_during_successor_preflight: forbidden
+
+artifact_protocol:
+  output_root: reports/generated/history_value_gpu_confirmation_v003
+  stage_directories:
+    preflight: reports/generated/history_value_gpu_confirmation_v003/preflight
+    validation: reports/generated/history_value_gpu_confirmation_v003/validation
+    sealed_test: reports/generated/history_value_gpu_confirmation_v003/sealed_test
+    random_audit: reports/generated/history_value_gpu_confirmation_v003/random_audit
+  required_global_outputs:
+    - selected_optimizer_configuration_manifest.json
+    - stage_access_ledger.jsonl
+    - final_claim_decision.json
+    - reports/analysis/history_value_gpu_confirmation_results_v003.md
+
+implementation_status:
+  contract_written: true
+  runner_exists: true
+  stage_access_controller_exists: true
+  exact_implementation_hashes_pinned: false
+  validate_only_passed: false
+  independent_review_complete: false
+  result_producing_files: []
+
+operational_budget:
+  budget_status: proposed_not_active_pending_exact_hash_approval
+  maximum_elapsed_hours_per_stage:
+    optimizer_preflight: 4
+    validation: 4
+    sealed_test: 6
+    random_audit: 2
+  new_plain_SGD_GPU_trajectories: 6
+  maximum_new_plain_SGD_steps_per_trajectory: 10000
+  inherited_failed_v002_fits_count_as_prior_run_not_v003_budget: true
+
+review_checklist_before_hash_approval:
+  - verify_v002_contract_and_adequacy_artifact_SHA256
+  - verify_v001_and_v002_never_opened_validation
+  - verify_v003_changes_only_the_solver_health_preflight_grid
+  - verify_Adam_100_step_configuration_passed_all_6_v002_objective_checks
+  - verify_plain_SGD_remains_torch_optim_SGD_with_zero_momentum
+  - verify_no_predictive_metric_was_used_for_the_new_grid
+  - verify_all_scientific_protocol_fields_are_inherited_unchanged
+  - pin_v003_runner_and_test_hashes
+  - pass_full_tests_and_v003_validate_only_without_governed_stage_access
+  - compute_final_v003_SHA256_and_obtain_explicit_project_owner_approval

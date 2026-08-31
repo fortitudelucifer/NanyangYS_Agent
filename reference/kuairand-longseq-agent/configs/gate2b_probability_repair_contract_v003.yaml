@@ -1,0 +1,2246 @@
+version: 3
+contract_id: gate2b_probability_repair_v003
+created_at_local: "2026-08-15"
+status: proposed_for_explicit_execution_approval_not_authorized_to_run
+
+design_revision_001:
+  revised_at_local: "2026-08-15"
+  stage: pre_execution_contract_design
+  source: project_owner_approved_methodology_disposition_after_independent_review
+  v003_fit_or_scientific_metric_observed_before_revision: false
+  changes:
+    - make_same_alpha_eta0_BL1_BL2_pair_the_primary_history_estimand
+    - select_the_primary_shared_configuration_using_BL1_only
+    - add_nonselectable_equivalent_objective_reference_solver
+    - add_training_objective_optimization_adequacy_gate
+    - add_BL1_minus_BL0_and_fixed_history_rule_diagnostics_without_new_hard_discrimination_thresholds
+    - restate_canonical_union_and_add_categorical_frequency_audit
+    - add_pre_metric_runtime_preflight_and_reconcile_fit_budgets
+  execution_effect: none_until_final_contract_hash_is_explicitly_approved
+
+design_revision_002:
+  revised_at_local: "2026-08-15"
+  stage: pre_execution_contract_design
+  source: project_owner_approved_disposition_after_second_independent_review
+  v003_fit_or_scientific_metric_observed_before_revision: false
+  changes:
+    - extend_the_optimization_adequacy_reference_to_all_seven_frozen_daily_origins
+    - define_frozen_daily_adequacy_failure_as_fail_closed_before_metric_aggregation
+    - register_the_four_terminal_outcome_interpretations_before_any_metric_read
+    - make_the_runtime_preflight_projection_formula_reference_declared_counts_instead_of_literals
+    - reconcile_reference_solver_and_total_fit_operation_caps_for_the_added_daily_reference_fits
+  rationale:
+    - the_seven_daily_fits_produce_the_released_numbers_while_the_three_search_fits_only_select_hyperparameters
+    - per_day_feature_width_prevalence_and_scaler_statistics_differ_so_row_count_interpolation_does_not_imply_optimization_difficulty_interpolation
+    - sklearn_tolerance_stopping_is_self_referential_and_cannot_bound_distance_to_the_regularized_optimum
+  elapsed_budget_decision: keep_120_minutes_and_let_the_runtime_preflight_adjudicate
+  execution_effect: none_until_final_contract_hash_is_explicitly_approved
+
+design_revision_003:
+  revised_at_local: "2026-08-15"
+  stage: post_implementation_status_correction
+  source: project_owner_approved_disposition_D1_after_implementation_and_validate_only_verification
+  v003_fit_or_scientific_metric_observed_before_revision: false
+  scope: status_and_evidence_only
+  changes:
+    - record_that_the_executable_v003_runner_and_synthetic_test_suite_now_exist
+    - pin_the_sha256_of_the_three_result_producing_implementation_files
+    - record_the_validate_only_verification_outcome_against_the_frozen_input
+    - record_the_small_estimator_fit_set_convergence_risk_observed_on_synthetic_data
+    - add_independent_implementation_review_as_an_execution_precondition
+  deliberately_unchanged:
+    - authorization_execution_authorized_remains_false
+    - every_scientific_parameter_gate_threshold_metric_and_budget
+    - the_population_temporal_protocol_and_feature_semantics
+  rationale:
+    - implementation_status_declared_executable_v003_runner_exists_false_which_no_longer_matched_reality
+    - the_contract_requires_code_sha256_pinning_so_approval_must_name_an_exact_implementation
+    - the_same_party_authored_both_the_review_and_the_implementation_so_an_independent_review_is_required_before_execution
+  execution_effect: none_until_final_contract_hash_is_explicitly_approved
+
+design_revision_004:
+  revised_at_local: "2026-08-15"
+  stage: pre_execution_ambiguity_resolution_and_diagnostic_completion
+  source: project_owner_decisions_on_four_flagged_ambiguities_before_any_v003_fit
+  v003_fit_or_scientific_metric_observed_before_revision: false
+  trigger: >-
+    a mechanical field-coverage check of the contract against the implementation
+    found declared diagnostics that were never implemented, and four clauses whose
+    reading materially changes the reported result
+  decisions:
+    bootstrap_user_universe:
+      question: is expected_users the target population or the assessment-date union
+      measured_assessment_date_union: 943
+      decision: use_943_the_actually_observed_assessment_date_union
+      rationale: the_clustered_universe_must_be_the_set_that_is_verifiable_and_reproducible_at_any_time
+      consequence: digest_recomputed_and_mismatch_now_stops_the_run
+    assessment_calibration_regression_for_BL0:
+      question: how to regress on a constant predictor
+      decision: record_not_applicable_with_an_explicit_zero_variance_reason
+      note: this_is_a_mathematical_fact_not_a_choice_of_functional_form
+    nonlinear_calibration_diagnostic:
+      question: should a nonlinear calibration fit be registered
+      decision: not_registered_for_v003
+      rationale: >-
+        the twenty ECE bins already expose miscalibration of any shape, and
+        choosing a functional form after seeing the residuals would be exactly the
+        researcher degree of freedom this contract exists to remove
+    daily_nonworse_baseline:
+      question: is the daily non-worse count taken against the same-day BL0 or the pooled BL0
+      decision: same_day_BL0_is_the_gate
+      rationale: a_separate_pooled_requirements_block_already_covers_the_pooled_comparison
+      pooled_baseline_count: reported_as_a_diagnostic_never_as_a_gate
+      note: a_gate_must_have_exactly_one_definition_or_pass_and_fail_both_become_defensible
+    evaluation_slice_scope:
+      question: pooled only or per origin as well
+      decision: both_scopes_retained_and_labelled
+      rationale: slices_are_descriptive_only_so_retaining_both_costs_nothing_and_forecloses_nothing
+    numerical_comparison_tolerance_direction:
+      decision: unchanged
+      note: the_1e_10_allowance_cannot_change_any_realistic_verdict
+  implementation_gaps_closed:
+    - assessment_calibration_regression_intercept_and_slope
+    - raw_score_within_origin_average_precision_and_user_gauc
+    - assessment_regret_diagnostics_in_the_objective_audit
+    - contract_field_name_alignment_for_reported_metrics
+    - field_coverage_guards_extended_to_probability_diagnostics_and_evaluation_slices
+  deliberately_unchanged:
+    - authorization_execution_authorized_remains_false
+    - every_estimator_calibrator_and_reference_solver_parameter
+    - the_population_temporal_protocol_and_feature_semantics
+    - the_search_order_selection_rule_and_both_terminal_gates
+  execution_effect: none_until_final_contract_hash_is_explicitly_approved
+
+design_revision_005:
+  revised_at_local: "2026-08-16"
+  stage: pre_execution_independent_review_remediation
+  source: project_owner_rulings_and_defect_disposition_after_independent_implementation_review
+  v003_fit_or_scientific_metric_observed_before_revision: false
+  ruling_implementations:
+    A1:
+      - distinguish_search_ineligibility_from_frozen_daily_fail_closed_nonconvergence
+      - require_configuration_eligibility_counts_and_reduced_robustness_disclosures
+      - freeze_Arrow_null_semantics_for_ineligible_search_calibrator_outputs_and_exclude_them_from_metrics_and_selection
+    A2:
+      - move_three_source_level_stop_conditions_to_inherited_upstream_guarantees
+      - attest_those_guarantees_through_the_exact_frozen_feature_artifact_SHA256
+    A3:
+      - freeze_the_assessment_calibration_regression_as_an_unpenalized_logistic_fit
+      - record_the_sklearn_1_9_API_representation_of_no_penalty
+  defect_repairs:
+    D1: correct_reference_fit_definition_to_cover_search_and_frozen_daily_origins
+    D2: rename_24_calibration_regression_slots_to_declared_slots_while_retaining_16_executed_fits
+    D3: register_significantly_negative_BL1_minus_BL0_separately_from_a_CI_that_includes_zero
+    D4: define_the_mapping_between_scientific_interpretation_families_and_terminal_states
+    D5: make_shared_preprocessing_failure_origin_level_and_fail_closed
+    D6: declare_BL0_raw_score_fields_not_applicable_and_null
+    D7: define_artifact_hash_manifest_filename_coverage_and_schema
+    C9:
+      - add_the_four_previously_undeclared_governance_artifacts_to_required_outputs
+      - require_size_and_SHA256_for_every_other_required_artifact_before_a_complete_release_state
+    C18: declare_the_AP_bootstrap_block_size_as_a_computational_partition_only
+  terminal_semantics_completion:
+    - register_canonical_terminal_state_names_and_distinct_exit_codes_zero_and_two_through_ten
+    - keep_A_B_and_B2_as_nonterminal_scientific_annotations_only
+    - define_pre_execution_refusal_full_completion_and_active_release_partial_failure_artifact_lifecycles
+    - require_a_partial_hash_inventory_for_every_failure_after_the_active_release_boundary
+    - prohibit_failure_capable_operations_after_full_completion_is_committed
+  schema_completion:
+    - add_terminal_state_and_run_manifest_schemas
+    - complete_paired_configuration_objective_coefficient_selected_model_and_get_params_fields
+    - separate_per_origin_raw_score_applicability_from_pooled_probability_diagnostics
+    - define_the_34_entry_run_manifest_inventory_and_35_entry_independent_hash_manifest
+  resource_governance_completion:
+    - enforce_fit_scoped_threadpoolctl_limits_for_every_sklearn_OpenBLAS_and_OpenMP_fit
+    - record_observed_native_thread_pools_per_fit_in_ledgers_and_the_run_manifest
+    - fail_closed_if_any_observed_pool_exceeds_the_component_limit
+  fixed_rule_freeze_clarification:
+    - freeze_fixed_rule_raw_score_vectors_inside_the_three_search_prediction_parquets_before_any_derived_rule_metric
+    - count_only_six_search_and_fourteen_frozen_daily_per_origin_rule_evaluations
+    - treat_the_two_pooled_rows_per_stage_as_aggregation_of_frozen_vectors_not_additional_rule_evaluations
+    - require_per_origin_and_pooled_comparison_with_the_primary_BL2
+  evidence_correction:
+    - do_not_describe_a_strict_history_window_test_as_direct_predictor_denylist_evidence
+  implementation_hash_status:
+    current_pins_are_the_pre_repair_values: true
+    final_repair_SHA256_values_must_replace_them_after_code_and_tests_are_stable: true
+    execution_against_stale_implementation_pins: forbidden
+  deliberately_unchanged:
+    - authorization_execution_authorized_remains_false
+    - every_estimator_primary_calibrator_and_reference_solver_scientific_parameter
+    - alpha_eta0_grid_regret_tolerances_and_both_terminal_scientific_gates
+    - population_time_protocol_feature_semantics_and_bootstrap_seed_replicates_and_user_universe
+    - the_943_user_multiplicity_digest_and_the_2000_replicate_count
+    - the_input_allowlist_and_all_source_data_access_prohibitions
+  execution_effect: none_until_repaired_implementation_hashes_and_this_final_contract_hash_receive_separate_explicit_approval
+
+predecessor:
+  contract: configs/gate2b_fixed_row_baseline_contract_v002.yaml
+  release_run_id: gate2b-20260815-015949
+  release_manifest: reports/generated/gate2b_baselines_v002/run_manifest.json
+  probability_audit: reports/gate2b_probability_sanity_audit_2026-08-15.md
+  audit_manifest: reports/generated/gate2b_baselines_v002/postrelease_audit_manifest.json
+  terminal_decision: relative_BL2_vs_BL1_stability_pass_but_absolute_probability_sanity_fail
+  evidence_already_observed: true
+  retained_finding: strict_user_history_has_train_only_ranking_signal
+  failed_finding: BL1_and_BL2_are_usable_probability_models
+  observed_failure:
+    BL1_lower_clip_share: 0.984985052690333
+    BL1_upper_clip_share: 0.014711491940152263
+    BL2_lower_clip_share: 0.8288511715936525
+    BL2_upper_clip_share: 0.11878571541736081
+    BL2_minus_BL0_log_loss: 3.642285888711356
+    BL2_minus_BL0_brier: 0.0579948961610082
+
+purpose:
+  primary: repair_absolute_probability_quality_without_expanding_the_scientific_feature_hypothesis
+  secondary:
+    - preserve_the_previously_observed_BL2_over_BL1_ranking_increment
+    - estimate_the_primary_history_increment_at_identical_alpha_and_eta0
+    - verify_SGD_optimization_adequacy_against_an_equivalent_objective_reference_solver
+    - separate_probability_optimization_from_probability_calibration
+    - make_optimizer_scaling_convergence_and_search_limits_executable
+  not_a_new_confirmatory_experiment: true
+  same_train_dates_have_already_been_observed: true
+  evidence_role_if_executed: posthoc_train_only_developmental_repair
+
+authorization:
+  creation_source: project_owner_request_to_create_a_versioned_probability_repair_contract
+  contract_creation_authorized: true
+  execution_authorized: false
+  required_before_execution:
+    - project_owner_explicit_approval_of_this_exact_contract_hash
+    - implementation_code_and_tests_complete
+    - validate_only_contract_check_passed
+    - actual_executable_budget_confirmed_not_to_exceed_the_frozen_planning_envelope
+    - independent_implementation_review_complete
+  required_before_execution_status:
+    project_owner_explicit_approval_of_this_exact_contract_hash: pending
+    implementation_code_and_tests_complete: pending_reverification_after_design_revision_005
+    validate_only_contract_check_passed: pending_reverification_after_design_revision_005
+    actual_executable_budget_confirmed_not_to_exceed_the_frozen_planning_envelope: >-
+      deferred_to_the_runtime_preflight_which_stops_before_the_remaining_search_fits
+    independent_implementation_review_complete: pending
+  proposed_scope:
+    - read_one_frozen_gate2b_point_in_time_feature_artifact
+    - BL0_constant_reference_evaluation
+    - BL1_static_sparse_linear_probability_repair
+    - BL2_strict_user_history_sparse_linear_probability_repair
+    - fixed_previous_day_sigmoid_calibration
+    - nonselectable_equivalent_objective_reference_solver
+    - fixed_nonfitted_history_rule_diagnostics
+    - same_alpha_eta0_BL1_BL2_primary_pairing
+    - three_origin_bounded_search
+    - seven_origin_frozen_daily_backtest_if_search_gate_passes
+    - paired_user_cluster_bootstrap_on_frozen_daily_predictions
+  does_not_authorize:
+    - silver_recleaning
+    - silver_or_quarantine_source_query
+    - feature_semantics_expansion
+    - H3_user_by_content_history
+    - gold_build_or_gold_sample_id_claim
+    - sequence_or_neural_models
+    - validation_access
+    - late_table_access
+    - restricted_test_access
+    - random_table_access
+    - video_statistic_feature_access
+  supersedes_if_approved_for_this_scope_only:
+    - v002_optimizer_scaling_and_identity_calibration_configuration
+    - v002_relative_only_probability_gate
+  does_not_erase:
+    - v002_predictions_metrics_manifests_or_failure_decision
+    - the_postrelease_status_of_this_repair_design
+  retained_section_interpretation: explicit_v003_declarations_control_and_predecessor_references_do_not_fill_unspecified_runtime_defaults
+  v002_sections_retained:
+    - population_and_source_identity_as_redeclared_in_v003
+    - point_in_time_history_semantics_as_redeclared_in_v003
+    - scientific_feature_fields_as_redeclared_in_v003
+    - predictor_denylist_as_redeclared_in_v003
+    - paired_user_cluster_bootstrap_multiplicities_as_redeclared_in_v003
+    - claim_boundaries_as_redeclared_in_v003
+  v002_sections_superseded_if_approved:
+    - numeric_preprocessing
+    - SGD_optimizer_and_hyperparameter_grid
+    - identity_calibration
+    - relative_only_model_selection_gate
+    - operational_fit_budget_for_the_repair_run
+
+implementation_status:
+  contract_only_created: false
+  executable_v003_runner_exists: true
+  implementation_completed_at_local: "2026-08-15"
+  implementation_record: reports/gate2b_v003_implementation_record_2026-08-15.md
+  existing_v002_runner_is_compatible: false
+  execution_with_existing_v002_runner: forbidden
+  result_producing_implementation:
+    approval_pins_these_exact_files: true
+    any_change_requires_a_contract_revision_before_execution: true
+    files:
+      - path: scripts/run_gate2b_probability_repair_v003.py
+        role: protocol_orchestration_gates_and_artifacts
+        sha256: 2fe7bf29928f43381f2ad50c62070d579e6f99fd27db091acad69b2a5eaf6e20
+      - path: src/kuairand_longseq/models/gate2b_repair_v003.py
+        role: preprocessing_estimators_reference_solver_objective_and_calibration
+        sha256: dc77dec86018beb547bdd27b38fc646080744653a4c1ec43f0cbd5184b7a9c85
+      - path: src/kuairand_longseq/evaluation/gate2b_metrics.py
+        role: metrics_and_paired_user_cluster_bootstrap
+        sha256: 73bd13efa5586efb669bab5975bb2e001468f6eb08a69ebfe98411c34f7b765c
+        change_in_this_revision: optional_epsilon_and_contrast_parameters_added
+        v002_defaults_unchanged: true
+        v002_published_numbers_remain_bit_identical: true
+        reason: >-
+          the declared metric_only_numerical_clip is 1e-15 while the module
+          hard-coded 1e-7, which would have systematically misstated v003 log loss
+  design_revision_005_remediation:
+    status: implementation_and_test_reverification_pending
+    the_three_SHA256_values_above_are_stale_pre_repair_pins: true
+    stale_pins_must_not_authorize_execution: true
+    required_completion_actions:
+      - finish_the_review_remediation_in_the_three_result_producing_files
+      - run_the_complete_test_suite_and_validate_only
+      - replace_all_three_SHA256_values_with_the_final_repaired_file_hashes
+      - obtain_a_new_independent_review_against_the_final_hashes
+  completeness_correction_2026_08_15:
+    prior_claim: all_eleven_implementation_preconditions_complete
+    finding: >-
+      a mechanical field-coverage check found declared diagnostics that the
+      runner never produced, so the earlier complete status was overstated
+    closed_in_design_revision_004: true
+    guard_added: >-
+      field coverage is now asserted against probability_diagnostics and
+      evaluation_slices as well as artifact_schemas, so the same class of gap
+      fails a test instead of passing review
+  synthetic_test_evidence:
+    evidence_scope: pre_design_revision_005_implementation
+    superseded_for_execution_approval: true
+    runner: pytest
+    total_tests: 76
+    failures: 0
+    warnings_promoted_to_errors: true
+    unresolved_warnings: 0
+    files:
+      - tests/test_gate2b_repair_v003.py
+      - tests/test_gate2b_repair_runner_v003.py
+      - tests/test_gate2b_repair_end_to_end_v003.py
+      - tests/test_gate2b_contract.py
+      - tests/test_gate2b_metrics.py
+    end_to_end_coverage: synthetic_fixture_only_no_project_data
+    end_to_end_numbers_are_not_scientific_results: true
+  required_before_execution_approval_status:
+    status_scope: pre_design_revision_005_implementation
+    superseded_for_execution_approval: true
+    grouped_numeric_preprocessing_implementation: complete
+    raw_decision_score_export: complete
+    previous_day_sigmoid_calibration_implementation: complete
+    equivalent_objective_reference_solver_and_C_mapping_implementation: complete
+    float64_regularized_objective_audit: complete
+    convergence_warning_capture_and_eligibility_logic: complete
+    same_alpha_eta0_primary_pair_selection_logic: complete
+    fixed_lifetime_and_w10_rule_diagnostics: complete
+    runtime_preflight_without_metric_read: complete
+    absolute_BL0_gate_implementation: complete
+    contract_validation_and_synthetic_unit_tests: complete
+  validate_only_verification:
+    evidence_scope: pre_design_revision_005_implementation
+    superseded_for_execution_approval: true
+    executed_at_local: "2026-08-15T13:54"
+    result: passed
+    learned_estimator_fits_performed: 0
+    scientific_metrics_read: 0
+    restricted_or_random_access: none
+    verified:
+      - frozen_input_size_and_sha256
+      - all_seven_declared_release_versions
+      - fit_operation_budget_reconciliation
+      - expected_target_rows_users_and_positives
+      - all_seven_temporal_split_expected_counts
+      - runner_covers_all_declared_artifacts
+  known_implementation_risks:
+    small_estimator_fit_set_nonconvergence:
+      observed_on: synthetic_data_only
+      condition: eta0_1e_3_with_fewer_than_about_4000_estimator_fit_rows
+      smallest_real_estimator_fit_set: 758746
+      expected_impact_on_this_run: low
+      required_handling_if_it_occurs: mark_that_configuration_ineligible_and_continue_the_frozen_search_grid
+      case_C_applies_only_if_no_optimization_adequate_required_configuration_remains: true
+      forbidden_handling: reopening_the_optimizer_search_or_raising_the_iteration_cap
+  independent_implementation_review:
+    status: pending
+    required_before_execution_approval: true
+    reason: the_review_opinion_and_the_implementation_were_authored_by_the_same_party
+    minimum_scope:
+      - clause_by_clause_correspondence_between_the_contract_and_the_runner
+      - confirmation_that_no_scientific_parameter_was_substituted
+      - confirmation_that_selection_cannot_observe_BL2
+      - confirmation_that_every_declared_stop_condition_is_reachable
+  implementation_must_follow_contract_without_parameter_substitution: true
+
+input_allowlist:
+  - path: reports/generated/gate2b_baselines_v002/gate2b_feature_matrix.parquet
+    role: frozen_point_in_time_train_only_feature_values_and_labels
+    expected_size_bytes: 79193207
+    expected_sha256: 4981ee32c4c367bf42f27fdff81171e2bedbe5eb7fabf66d6b3e2796b9e428cd
+    query_allowed: true
+input_policy:
+  query_allowed_meaning: read_only_projection_filter_and_contract_required_aggregation_over_the_single_declared_frozen_artifact
+  permitted_query_operations:
+    - project_only_declared_identity_label_and_feature_columns
+    - filter_only_by_frozen_origin_date_and_contract_defined_split_membership
+    - aggregate_only_contract_required_counts_prevalence_scaler_statistics_objectives_and_metrics_at_the_allowed_phase
+  arbitrary_feature_label_exploration_or_new_grouping: forbidden
+  mutation_or_additional_artifact_access: forbidden
+  recursive_input_discovery: forbidden
+  undeclared_parquet_access: forbidden
+  predecessor_prediction_artifact_access_during_fitting: forbidden
+  source_silver_access: forbidden
+  source_quarantine_access: forbidden
+  feature_rematerialization: forbidden
+  full_input_sha256_required_for_release: true
+  input_mismatch_action: stop_before_any_fit
+
+inherited_upstream_guarantees:
+  verification_layer: Gate_2B_v002_feature_construction
+  v003_inheritance_basis:
+    artifact_path_must_equal_input_allowlist: true
+    artifact_size_bytes_must_equal_input_allowlist: true
+    artifact_SHA256_must_equal_input_allowlist: true
+    expected_frozen_feature_artifact_SHA256: 4981ee32c4c367bf42f27fdff81171e2bedbe5eb7fabf66d6b3e2796b9e428cd
+  v003_runtime_scope_statement: >-
+    v003 reads only the frozen point-in-time feature artifact and is forbidden
+    to access Silver, quarantine, or other source event tables; consequently it
+    cannot and must not attempt to reconstruct these source-level guarantees.
+  inheritance_statement: >-
+    the guarantees below are inherited from the Gate 2B v002 construction
+    evidence only after the frozen artifact path, size, and SHA-256 have matched
+    the single input_allowlist entry
+  guarantees:
+    same_timestamp_semantics:
+      guaranteed_rule: whole_batch_features_exist_before_any_label_in_that_batch_updates_history
+      upstream_test: tests/test_gate2b_feature_sql.py::Gate2BFeatureSqlTests::test_same_timestamp_batch_is_excluded_as_a_whole
+      v003_reverification: structurally_impossible_and_forbidden
+    current_or_future_label_leakage_absent:
+      guaranteed_rule: current_batch_and_future_labels_do_not_enter_current_point_in_time_features
+      upstream_tests:
+        - tests/test_gate2b_feature_sql.py::Gate2BFeatureSqlTests::test_current_batch_label_flip_does_not_change_current_features
+        - tests/test_gate2b_feature_sql.py::Gate2BFeatureSqlTests::test_windows_are_monotone_and_entity_state_is_strict
+      v003_reverification: structurally_impossible_and_forbidden
+    predictor_denylist_intersection_empty:
+      guaranteed_rule: the_frozen_v002_model_matrix_excludes_the_registered_predictor_denylist
+      upstream_evidence:
+        upstream_contract_clause: configs/gate2b_fixed_row_baseline_contract_v002.yaml::hard_predictor_denylist
+        frozen_feature_artifact_schema_and_SHA256_attestation: 4981ee32c4c367bf42f27fdff81171e2bedbe5eb7fabf66d6b3e2796b9e428cd
+        feature_SQL_tests_role: support_point_in_time_history_semantics_not_direct_denylist_coverage
+        no_feature_SQL_test_is_claimed_as_direct_denylist_evidence: true
+      v003_structural_guard: tests/test_gate2b_repair_v003.py::Gate2BRepairTests::test_no_denylisted_predictor_appears_in_the_model_field_lists
+      v003_reverification_of_source_construction: structurally_impossible_and_forbidden
+  run_manifest_requirement:
+    field: inherited_upstream_guarantees
+    copy_this_attestation_and_its_evidence_sources: true
+
+population:
+  inherited_from: configs/gate2b_fixed_row_baseline_contract_v002.yaml
+  canonical_definition: early_standard_silver_union_exclusive_early_formula_mismatch_official_labels
+  construction_operator: UNION_ALL_then_assert_unique_source_identity
+  canonical_sources:
+    base:
+      source: data/silver/events_early_standard.parquet
+      source_table: early_standard
+      date_range: ["2022-04-08", "2022-04-17"]
+    additive:
+      source: data/quarantine/label_formula_mismatch_rows.parquet
+      source_table: early_standard
+      date_range: ["2022-04-08", "2022-04-17"]
+      exclusion_reason: LONG_VIEW_FORMULA_MISMATCH
+      exclusive_reason_required: true
+      preserve_official_long_view: true
+      expected_target_tab_rows: 14070
+      expected_target_tab_positives: 14069
+      expected_target_tab_negatives: 1
+  runtime_source_access:
+    base_silver_query: forbidden_use_frozen_feature_artifact
+    additive_quarantine_query: forbidden_use_frozen_feature_artifact
+  canonical_date_range: ["2022-04-08", "2022-04-17"]
+  target_tab: 1
+  history_tabs_used_by_frozen_feature_artifact: all
+  label: official_long_view
+  identity_key: [source_table, source_row_number]
+  expected_target_rows: 2399844
+  expected_target_users: 950
+  expected_target_videos: 974550
+  expected_target_positives: 765417
+  expected_all_target_identity_sha256: bf058e955f3f8dddaaf2686e6ff2e2a0516bcb6a94d28bc0716b78b0bde0ae0f
+  row_filter_changes_from_v002: forbidden
+
+point_in_time_semantics:
+  history_rule: history_time_ms_strictly_less_than_target_time_ms
+  batch_key: [user_id, time_ms]
+  same_timestamp_rule: whole_batch_features_exist_before_any_label_in_that_batch_updates_history
+  assessment_day_online_history: frozen_artifact_may_include_earlier_completed_timestamps_from_the_same_day
+  assessment_day_model_update: forbidden
+  assessment_day_calibrator_update: forbidden
+  current_batch_label_access: forbidden
+  future_label_access: forbidden
+
+temporal_protocol:
+  estimator_fit_rule: target_event_date_strictly_before_calibration_date
+  calibration_rule: target_event_date_equals_the_single_previous_calendar_date
+  assessment_rule: target_event_date_equals_origin_date
+  BL0_estimation_rule: mean_official_long_view_over_target_rows_with_event_date_strictly_before_origin
+  estimator_calibration_row_overlap: forbidden
+  estimator_assessment_row_overlap: forbidden
+  calibration_assessment_row_overlap: forbidden
+  origin_splits:
+    - origin: "2022-04-11"
+      estimator_fit_date_range_inclusive: ["2022-04-08", "2022-04-09"]
+      calibration_date: "2022-04-10"
+      calibration_expected: {rows: 268154, users: 855, positives: 83706}
+      assessment_date: "2022-04-11"
+      assessment_expected: {rows: 243361, users: 830, positives: 73659}
+    - origin: "2022-04-12"
+      estimator_fit_date_range_inclusive: ["2022-04-08", "2022-04-10"]
+      calibration_date: "2022-04-11"
+      calibration_expected: {rows: 243361, users: 830, positives: 73659}
+      assessment_date: "2022-04-12"
+      assessment_expected: {rows: 225275, users: 801, positives: 67349}
+    - origin: "2022-04-13"
+      estimator_fit_date_range_inclusive: ["2022-04-08", "2022-04-11"]
+      calibration_date: "2022-04-12"
+      calibration_expected: {rows: 225275, users: 801, positives: 67349}
+      assessment_date: "2022-04-13"
+      assessment_expected: {rows: 221706, users: 799, positives: 67630}
+    - origin: "2022-04-14"
+      estimator_fit_date_range_inclusive: ["2022-04-08", "2022-04-12"]
+      calibration_date: "2022-04-13"
+      calibration_expected: {rows: 221706, users: 799, positives: 67630}
+      assessment_date: "2022-04-14"
+      assessment_expected: {rows: 212584, users: 813, positives: 68275}
+    - origin: "2022-04-15"
+      estimator_fit_date_range_inclusive: ["2022-04-08", "2022-04-13"]
+      calibration_date: "2022-04-14"
+      calibration_expected: {rows: 212584, users: 813, positives: 68275}
+      assessment_date: "2022-04-15"
+      assessment_expected: {rows: 229542, users: 861, positives: 74990}
+    - origin: "2022-04-16"
+      estimator_fit_date_range_inclusive: ["2022-04-08", "2022-04-14"]
+      calibration_date: "2022-04-15"
+      calibration_expected: {rows: 229542, users: 861, positives: 74990}
+      assessment_date: "2022-04-16"
+      assessment_expected: {rows: 254081, users: 884, positives: 88626}
+    - origin: "2022-04-17"
+      estimator_fit_date_range_inclusive: ["2022-04-08", "2022-04-15"]
+      calibration_date: "2022-04-16"
+      calibration_expected: {rows: 254081, users: 884, positives: 88626}
+      assessment_date: "2022-04-17"
+      assessment_expected: {rows: 254549, users: 872, positives: 85413}
+  expected_count_validation:
+    preverified_against_frozen_input_sha256: 4981ee32c4c367bf42f27fdff81171e2bedbe5eb7fabf66d6b3e2796b9e428cd
+    preverified_at_contract_design_time: true
+    count_changes_or_monotonic_trend_assumptions: forbidden
+  calibration_minimum_requirements:
+    classes_required: [0, 1]
+    minimum_rows: 200000
+    minimum_users: 750
+    minimum_positives: 50000
+    minimum_negatives: 100000
+    exact_expected_counts_required: true
+    failure_action: stop_origin_before_fit
+
+feature_semantics:
+  scientific_fields: exactly_unchanged_from_gate2b_v002
+  categorical_fields:
+    - cat_user
+    - cat_video
+    - cat_author
+    - cat_music
+    - cat_video_type
+    - cat_upload_type
+    - cat_music_type
+    - cat_tag_combo
+    - cat_duration_bucket
+  static_continuous_fields:
+    - static_log_duration
+    - static_log_upload_age
+    - static_log_width
+    - static_log_height
+    - static_aspect
+  static_binary_fields:
+    - static_duration_valid
+    - static_upload_age_valid
+    - static_upload_future
+    - static_geometry_valid
+    - static_tag_missing
+  H2_derived_continuous_or_rate_fields:
+    - log1p_prior_batch_count
+    - log1p_prior_event_count
+    - log1p_prior_positive_count
+    - smoothed_lifetime_long_view_rate
+    - log1p_last_user_gap_seconds
+    - log1p_w10_event_count
+    - log1p_w10_positive_count
+    - smoothed_w10_long_view_rate
+    - log1p_w50_event_count
+    - log1p_w50_positive_count
+    - smoothed_w50_long_view_rate
+    - log1p_w200_event_count
+    - log1p_w200_positive_count
+    - smoothed_w200_long_view_rate
+  H2_derived_binary_fields:
+    - has_history
+    - w10_full_window_mask
+    - w50_full_window_mask
+    - w200_full_window_mask
+  H2_derivation:
+    count_and_gap_transform: log1p_nonnegative
+    smoothed_rate_prior: estimator_fit_target_prevalence
+    smoothed_rate_prior_strength: 20.0
+    assessment_or_calibration_label_tuning: forbidden
+  hard_predictor_denylist:
+    - long_view
+    - is_click
+    - is_like
+    - is_follow
+    - is_comment
+    - is_forward
+    - is_hate
+    - play_time_ms
+    - profile_stay_time
+    - comment_stay_time
+    - is_profile_enter
+    - source_table
+    - source_row_number
+    - event_date
+    - time_ms
+    - tab
+    - exclusion_reason
+    - any_quality_or_audit_field
+    - any_formula_recalculation_field
+    - any_video_statistic_field
+    - content_modality_proxy
+    - visible_status
+    - any_user_snapshot_field
+  denylist_intersection_with_model_matrix_must_be_empty: true
+  H3_materialization_or_use: forbidden
+
+preprocessing:
+  preprocessing_id: PIT_GROUPED_SCALE_V2
+  fit_scope: estimator_fit_rows_only_per_origin
+  calibration_rows_transform_only: true
+  assessment_rows_transform_only: true
+  categorical:
+    implementation: sklearn_OneHotEncoder
+    handle_unknown: infrequent_if_exist
+    minimum_frequency: 20
+    maximum_categories_per_input_field: 4096
+    sparse_output: true
+    output_dtype: float32
+    raw_id_numeric_or_ordinal_use: forbidden
+  continuous_and_rate:
+    applies_to:
+      - static_continuous_fields
+      - H2_derived_continuous_or_rate_fields
+    implementation: sklearn_StandardScaler
+    with_mean: true
+    with_std: true
+    statistics_dtype: float64
+    transformed_dtype: float32
+    dense_numeric_block_before_sparse_hstack: true
+    post_transform_clip: [-10.0, 10.0]
+    clip_fitted_or_tuned_on_observed_metrics: false
+  binary:
+    applies_to:
+      - static_binary_fields
+      - H2_derived_binary_fields
+    implementation: passthrough
+    allowed_values: [0.0, 1.0]
+    standardization: forbidden
+    output_dtype: float32
+  sparse_assembly:
+    implementation: scipy_sparse_hstack_CSR
+    final_dtype: float32
+    row_normalization: none
+  nested_matrix_invariants:
+    BL1_and_BL2_share_the_same_fitted_static_encoder_and_scaler_within_origin: true
+    BL1_static_matrix_must_be_an_exact_column_prefix_of_BL2: true
+    calibration_and_assessment_column_order_must_match_estimator_fit: true
+  rationale:
+    - v002_with_mean_false_amplified_nonzero_means_and_near_constant_indicators
+    - binary_indicators_must_not_be_divided_by_tiny_standard_deviations
+    - explicit_centering_and_clipping_bound_continuous_gradient_contributions
+  hard_numeric_checks_per_origin_and_bundle:
+    nonfinite_values: 0
+    binary_out_of_domain_values: 0
+    transformed_continuous_absolute_maximum: 10.0
+    maximum_row_l2_norm: 50.0
+    maximum_p99_row_l2_norm: 25.0
+    failure_scope: origin_level_shared_preprocessing_object_before_any_hyperparameter_fit
+    failure_action: fail_closed_for_the_run_before_any_configuration_uses_the_affected_origin
+    marking_only_one_configuration_ineligible: forbidden
+  required_numeric_diagnostics:
+    - raw_and_transformed_min_p01_median_p99_max_per_numeric_field
+    - scaler_mean_scale_and_zero_variance_flags
+    - row_l2_norm_p50_p90_p99_p999_max
+    - sparse_rows_columns_nonzeros_and_density
+    - categorical_observed_and_dedicated_category_count_per_field
+    - categorical_infrequent_category_count_and_event_share_per_field
+    - categorical_dedicated_event_coverage_per_field
+    - categorical_unknown_share_per_field_and_split
+
+models:
+  BL0:
+    role: absolute_constant_probability_reference
+    probability: mean_official_long_view_over_target_rows_with_event_date_strictly_before_origin
+    identical_to_v002_origin_training_target_prevalence: true
+    no_learned_estimator: true
+    learned_estimator_fit_count: 0
+    calibration: none
+  shared_sparse_linear_estimator:
+    implementation: sklearn_SGDClassifier
+    sklearn_version_required: 1.9.0
+    loss: log_loss
+    penalty: l2
+    l1_ratio_inactive_but_explicit: 0.15
+    fit_intercept: true
+    learning_rate: adaptive
+    alpha_values: [0.0001, 0.001]
+    eta0_values: [0.001, 0.01]
+    parameter_grid: cartesian_product
+    configurations_per_model: 4
+    max_iter: 100
+    tol: 0.0001
+    n_iter_no_change: 5
+    shuffle: true
+    verbose: 0
+    epsilon_inactive_but_explicit: 0.1
+    random_state: 20260814
+    early_stopping: false
+    early_stopping_reason: sklearn_random_validation_holdout_is_not_the_frozen_temporal_calibration_protocol
+    validation_fraction_inactive: 0.1
+    average: true
+    class_weight: null
+    warm_start: false
+    n_jobs: 1
+    power_t_inactive_but_explicit: 0.5
+    eta0_and_alpha_are_independently_varied: true
+    inherited_optimizer_defaults: forbidden
+    excluded_predecessor_alpha_values: [0.000001, 0.00001]
+    excluded_predecessor_alpha_reason: associated_with_extreme_coefficient_norms_and_probability_saturation_under_the_v002_optimal_schedule
+    grid_change_rationale:
+      alpha: remove_the_two_weakest_regularization_values_implicated_by_v002_saturation_and_add_one_stronger_value
+      eta0: explicitly_bound_the_learning_rate_that_v002_left_coupled_to_alpha_through_the_optimal_schedule
+      design: two_by_two_factorial_separates_regularization_strength_from_initial_step_size
+      scientific_feature_hypothesis_expanded: false
+      optimizer_repair_search_space_expanded: true
+  diagnostic_reference_solver:
+    role: optimization_adequacy_reference_for_the_same_L2_logistic_objective
+    implementation: sklearn_LogisticRegression
+    sklearn_version_required: 1.9.0
+    solver: lbfgs
+    penalty_argument_must_be_omitted: true
+    expected_get_params_penalty_sentinel: deprecated
+    l1_ratio: 0.0
+    C_per_origin_and_alpha: 1_divided_by_estimator_fit_rows_times_alpha
+    objective_equivalence:
+      SGDClassifier_normalized: mean_log_loss_plus_alpha_times_one_half_coefficient_L2_squared
+      LogisticRegression_normalized: mean_log_loss_plus_one_half_coefficient_L2_squared_divided_by_estimator_fit_rows_times_C
+      LogisticRegression_solver_scaled_equivalent: C_times_sum_log_loss_plus_one_half_coefficient_L2_squared
+      solver_scaled_and_normalized_forms_have_the_same_minimizer: true
+      sample_weight: null
+      class_weight: null
+      intercept_regularized: false
+      exact_mapping_required: C_equals_1_divided_by_estimator_fit_rows_times_alpha
+      mapping_derivation: one_divided_by_estimator_fit_rows_times_C_equals_alpha
+    alpha_values: [0.0001, 0.001]
+    eta0_applicable: false
+    model_bundles: [BL1, BL2]
+    search_origins: ["2022-04-11", "2022-04-14", "2022-04-17"]
+    search_alpha_scope: all_declared_alpha_values
+    search_fit_runs: 12
+    frozen_daily_origins: ["2022-04-12", "2022-04-13", "2022-04-15", "2022-04-16"]
+    frozen_daily_alpha_scope: selected_shared_pair_alpha_only
+    frozen_daily_model_bundles: [BL1, BL2]
+    frozen_daily_fit_runs: 8
+    frozen_daily_search_origin_reuse: reuse_the_search_reference_fits_at_the_selected_alpha_for_2022_04_11_2022_04_14_and_2022_04_17
+    frozen_daily_runs_after_primary_shared_configuration_selection: true
+    frozen_daily_may_change_selection_or_hyperparameters: false
+    frozen_daily_may_be_used_for_model_selection: false
+    total_fit_runs: 20
+    total_fit_runs_formula: 12_search_plus_8_frozen_daily
+    input_matrix_values_and_column_order_identical_to_SGD: true
+    input_dtype: float64
+    sparse_input_format: CSR
+    fit_intercept: true
+    dual: false
+    intercept_scaling: 1
+    class_weight: null
+    random_state: null
+    max_iter: 500
+    tol: 0.00000001
+    verbose: 0
+    warm_start: false
+    n_jobs: null
+    convergence_warning_count: 0
+    n_iter_must_be_strictly_less_than_max_iter: true
+    calibration: none
+    eligible_for_model_selection: false
+    eligible_for_primary_or_secondary_prediction_claim: false
+    assessment_metrics_role: optimization_diagnostic_only
+    budget_failure_action: stop_before_search_metric_materialization
+    search_nonconvergence_action: >-
+      mark_every_model_alpha_eta0_configuration_depending_on_that_reference_origin_ineligible_and_continue_the_frozen_search_grid
+    frozen_daily_nonconvergence_action: fail_closed_immediately_to_frozen_daily_component_convergence_failure_exit_10_before_any_daily_metric_aggregation
+  BL1:
+    role: repaired_static_no_history_probability_baseline
+    bundle: S_ID_CONTENT_V1_with_PIT_GROUPED_SCALE_V2
+    estimator: shared_sparse_linear_estimator
+  BL2:
+    role: repaired_strict_user_history_probability_candidate
+    bundle: H2_USER_STRICT_V1_with_PIT_GROUPED_SCALE_V2
+    estimator: shared_sparse_linear_estimator
+  fixed_nonfitted_history_diagnostics:
+    LIFETIME_SMOOTHED_RATE:
+      score_formula: (prior_positive_n + 20.0 * estimator_fit_prevalence) / (prior_event_n + 20.0)
+      numerator: prior_positive_n_plus_20_times_estimator_fit_prevalence
+      denominator: prior_event_n_plus_20
+      source_fields: [prior_event_n, prior_positive_n]
+    W10_SMOOTHED_RATE:
+      score_formula: (w10_positive_n + 20.0 * estimator_fit_prevalence) / (w10_event_n + 20.0)
+      numerator: w10_positive_n_plus_20_times_estimator_fit_prevalence
+      denominator: w10_event_n_plus_20
+      source_fields: [w10_event_n, w10_positive_n]
+    common_rules:
+      estimator_fit_prevalence_uses_only_estimator_fit_rows: true
+      calibration: none
+      fitted_parameters: none
+      role: ranking_diagnostic_only
+      eligible_for_model_selection: false
+      pass_fail_gate: none
+      hard_ROC_AUC_threshold: forbidden
+      metrics: [average_precision, roc_auc, user_gauc_event_weighted, user_gauc_user_equal]
+      search_stage_evaluations: 6
+      frozen_daily_stage_evaluations: 14
+      total_evaluations: 20
+      evaluation_definition: one_rule_score_vector_for_one_per_origin_assessment_row_set
+      search_per_origin_rows: 6
+      search_pooled_rows: 2
+      frozen_daily_per_origin_rows: 14
+      frozen_daily_pooled_rows: 2
+      pooled_rows_are_aggregations_of_already_frozen_per_origin_score_vectors: true
+      pooled_rows_count_as_additional_rule_evaluations: false
+      total_report_rows_if_both_stages_complete: 24
+      overlapping_search_and_daily_origin_scores_must_match_exactly: true
+      metrics_required_per_origin_and_pooled: true
+      final_combined_artifact_must_compare_each_per_origin_and_pooled_rule_row_to_primary_BL2: true
+  forbidden_model_changes:
+    - new_scientific_feature
+    - new_candidate_model_family
+    - tree_model
+    - H3_interaction
+    - sequence_model
+    - neural_model
+    - class_rebalancing
+
+convergence:
+  base_estimator_required_for_each_fit:
+    convergence_warning_count: 0
+    n_iter_must_be_strictly_less_than_max_iter: true
+    finite_coefficients: true
+    finite_intercept: true
+    finite_raw_decision_scores: true
+    finite_uncalibrated_probabilities: true
+  reaching_max_iter:
+    interpretation: sklearn_tolerance_stopping_was_not_reached_within_the_frozen_iteration_cap
+    status: nonconverged_configuration
+    eligible_for_selection: false
+    finite_output_does_not_override_nonconvergence: true
+    automatic_max_iter_increase: forbidden
+  convergence_decision:
+    requires_zero_ConvergenceWarning_and_n_iter_strictly_less_than_max_iter: true
+    no_manual_visual_override: true
+  required_diagnostics:
+    - n_iter
+    - t_value
+    - coefficient_l1_norm
+    - coefficient_l2_norm
+    - coefficient_absolute_maximum
+    - intercept
+    - raw_score_min_p001_p01_p10_median_p90_p99_p999_max
+    - uncalibrated_probability_distribution
+  completed_process_is_not_equal_to_converged_model: true
+  failed_or_nonconverged_fit_counts_toward_budget: true
+  replacement_with_changed_hyperparameters: forbidden
+  stage_specific_failure_semantics:
+    search:
+      base_estimator_nonconvergence_action: mark_that_model_alpha_eta0_configuration_ineligible_and_continue_the_frozen_search_grid
+      primary_calibrator_nonconvergence_action: mark_that_model_alpha_eta0_configuration_ineligible_and_continue_the_frozen_search_grid
+      primary_calibrator_nonconvergence_output_semantics:
+        precondition: stage_is_search_and_the_trial_is_marked_ineligible_for_primary_calibrator_nonconvergence
+        sole_nullable_fields: [calibrated_probability, calibration_intercept, calibration_slope]
+        physical_representation: Arrow_null
+        NaN_or_infinity_representation: forbidden
+        metric_or_selection_consumption: forbidden
+        raw_decision_score_and_uncalibrated_probability_if_the_base_estimator_converged: required_finite_and_nonnull
+        any_other_probability_parameter_or_stage_nullability: forbidden
+      reference_solver_nonconvergence_action: >-
+        mark_every_model_alpha_eta0_configuration_depending_on_that_reference_origin_ineligible_and_continue_the_frozen_search_grid
+      nonconvergence_is_a_release_stop_condition: false
+      all_frozen_trials_must_still_be_attempted_subject_to_the_frozen_budget: true
+      terminal_state_if_base_estimator_or_primary_calibrator_nonconvergence_exhausts_the_required_candidate_set: search_component_convergence_failure
+      terminal_state_if_reference_solver_nonconvergence_exhausts_the_required_optimization_adequacy_set: search_optimization_adequacy_failure
+    frozen_daily:
+      base_estimator_nonconvergence_action: fail_closed_immediately
+      primary_calibrator_nonconvergence_action: fail_closed_immediately
+      reference_solver_nonconvergence_action: fail_closed_immediately
+      nonconvergence_is_a_release_stop_condition: true
+      terminal_state: frozen_daily_component_convergence_failure
+      terminal_exit_code: 10
+      partial_daily_metric_aggregation_after_failure: forbidden
+
+optimization_adequacy:
+  role: mandatory_solver_health_gate_before_any_candidate_selection
+  evaluated_on: estimator_fit_rows_only
+  labels_or_metrics_from_calibration_or_assessment_rows: forbidden
+  objective_evaluation_dtype: float64
+  objective:
+    formula: mean_binary_log_loss_from_raw_score_plus_alpha_times_one_half_coefficient_L2_squared
+    intercept_regularized: false
+    sample_weight: null
+    class_weight: null
+  reference_pairing_key: [model_id, alpha, origin]
+  SGD_pairing_key: [model_id, alpha, eta0, origin]
+  reference_must_converge_before_comparison: true
+  reference_objective_must_not_exceed_SGD_objective_beyond_numerical_tolerance: true
+  reference_above_SGD_numerical_tolerance: 0.0000000001
+  maximum_allowed_SGD_objective_regret:
+    absolute_floor: 0.0001
+    relative_fraction: 0.005
+    formula: max(absolute_floor, relative_fraction * abs(reference_objective))
+    interpretation: at_most_0_5_percent_relative_regret_with_a_1e_4_absolute_floor
+  candidate_eligibility:
+    scope: search_phase_candidate_screening
+    objective_regret_gate_must_pass_on_all_three_search_origins: true
+    failed_origin_action: mark_that_alpha_eta0_model_configuration_ineligible
+    no_eligible_BL1_configuration_action: stop_before_metric_based_selection
+    no_eligible_primary_shared_pair_action: stop_before_daily_backtest
+  frozen_daily_adequacy:
+    role: mandatory_fail_closed_gate_on_the_fits_that_produce_the_released_numbers
+    rationale: the_seven_daily_fits_generate_pooled_daily_and_bootstrap_results_so_an_unverified_day_contaminates_every_headline_number
+    applies_to_all_seven_frozen_daily_origins: true
+    scope: selected_shared_pair_id_only
+    models: [BL1, BL2]
+    reference_source_for_2022_04_11_2022_04_14_2022_04_17: reuse_search_reference_fits_at_the_selected_alpha
+    reference_source_for_2022_04_12_2022_04_13_2022_04_15_2022_04_16: eight_additional_frozen_daily_reference_fits
+    same_regret_tolerance_as_search: true
+    tolerance_change_for_daily_phase: forbidden
+    failed_day_action: stop_release_before_metric_aggregation
+    day_level_exclusion_or_reweighting: forbidden
+    recomputation_with_changed_hyperparameters_or_iteration_cap: forbidden
+    runs_after_selection_and_cannot_change_selection: true
+    terminal_state_if_failed: frozen_daily_optimization_adequacy_failure
+  assessment_diagnostics_not_used_for_eligibility:
+    - raw_score_average_precision_regret_vs_reference
+    - raw_score_roc_auc_regret_vs_reference
+    - raw_score_user_gauc_regret_vs_reference
+    - coefficient_cosine_similarity
+    - coefficient_L2_norm_ratio
+  reference_solver_is_not_a_new_scientific_model_family: true
+  metric_informed_tolerance_change: forbidden
+
+calibration:
+  calibration_id: PREVIOUS_DAY_SIGMOID_V1
+  primary_probability_output: calibrated_probability
+  method_search: forbidden
+  method:
+    implementation: sklearn_LogisticRegression_on_one_raw_decision_score
+    interpretation: sigmoid_Platt_scaling
+    solver: lbfgs
+    penalty_argument_must_be_omitted: true
+    penalty_omission_reason: sklearn_1_9_non_deprecated_API_uses_l1_ratio_zero_for_L2
+    expected_get_params_penalty_sentinel: deprecated
+    l1_ratio: 0.0
+    C: 1.0
+    dual: false
+    fit_intercept: true
+    intercept_scaling: 1
+    class_weight: null
+    random_state: null
+    max_iter: 1000
+    tol: 0.0000000001
+    verbose: 0
+    warm_start: false
+    n_jobs: null
+    input: base_estimator_raw_decision_score
+    target: official_long_view
+    sample_weight: null
+  fit_scope: calibration_date_rows_only
+  base_estimator_refit_after_calibration: forbidden
+  calibration_on_clipped_probability: forbidden
+  calibration_on_assessment_rows: forbidden
+  calibration_on_future_rows: forbidden
+  calibration_method_selection_from_metrics: forbidden
+  required_fit_checks:
+    both_classes_present: true
+    raw_score_variance_strictly_positive: true
+    convergence_warning_count: 0
+    future_or_deprecation_warning_count: 0
+    n_iter_must_be_strictly_less_than_max_iter: true
+    finite_intercept: true
+    finite_slope: true
+    slope_must_be_strictly_positive: true
+  outputs_to_store:
+    - raw_decision_score
+    - uncalibrated_probability
+    - calibrated_probability_unclipped
+    - calibration_intercept
+    - calibration_slope
+    - calibration_fit_rows_users_positives_prevalence
+  probability_storage_clip: none
+  metric_only_numerical_clip: [0.000000000000001, 0.999999999999999]
+  metric_clip_role: numerical_safety_only_not_a_model_repair
+  primary_ranking_score: calibrated_probability
+  raw_decision_score_role: within_origin_discrimination_diagnostic
+  pooled_ranking_requires_calibrated_cross_origin_scale: true
+  monotonicity_check:
+    within_origin_calibrated_probability_order_must_match_raw_score_order: true
+    within_origin_raw_vs_calibrated_average_precision_difference_maximum: 0.0000000001
+    mismatch_action: stop_release
+
+search_and_selection:
+  search_origins: ["2022-04-11", "2022-04-14", "2022-04-17"]
+  metric_observation_policy:
+    materialize_all_SGD_reference_calibrator_and_rule_diagnostic_outputs_before_any_search_metric: true
+    metric_read_during_fit_or_runtime_preflight: forbidden
+    optimization_objective_may_be_read_only_for_the_frozen_solver_health_gate: true
+    all_nonpreflight_SGD_and_reference_fits_complete_before_objective_eligibility_decisions: true
+    objective_failure_may_not_prune_or_replace_an_unrun_frozen_configuration: true
+    sequential_metric_informed_pruning: forbidden
+    grid_expansion_after_metric_read: forbidden
+  search_phase_order:
+    - run_designated_runtime_preflight_components_without_scientific_metrics
+    - if_preflight_passes_complete_all_remaining_frozen_SGD_reference_and_calibrator_fits
+    - write_the_three_search_prediction_parquets_with_all_candidate_predictions_reference_scores_and_fixed_rule_raw_score_vectors
+    - freeze_and_SHA256_the_three_search_prediction_parquets_before_any_derived_rule_metric_is_materialized
+    - derive_the_six_per_origin_and_two_pooled_search_fixed_rule_metric_rows_only_from_the_frozen_parquet_vectors
+    - compute_training_only_reference_objective_adequacy_for_all_configurations
+    - materialize_all_search_assessment_metrics_in_one_batch
+    - apply_BL1_eligibility_and_BL1_only_shared_configuration_selection
+    - evaluate_same_configuration_primary_BL2_eligibility
+    - write_all_pair_and_secondary_diagnostics
+  BL1_metric_eligibility_and_selection_occur_only_after_all_search_outputs_are_frozen: true
+  search_fixed_rule_freeze_protocol:
+    frozen_parquet_count: 3
+    required_raw_score_vector_columns:
+      - fixed_rule_score_LIFETIME_SMOOTHED_RATE
+      - fixed_rule_score_W10_SMOOTHED_RATE
+    freeze_manifest: search_artifact_freeze_manifest.json
+    freeze_manifest_requires_path_size_and_SHA256_for_each_parquet: true
+    derived_metric_artifact: search_fixed_history_rule_diagnostics.csv
+    derived_metric_artifact_must_be_materialized_after_the_parquet_freeze: true
+    derived_metrics_may_read_only_the_frozen_identity_label_user_and_fixed_rule_score_columns: true
+    preselection_search_metric_artifact_contains_rule_only_metrics_without_primary_BL2_comparison: true
+    primary_BL2_comparison_is_joined_only_after_BL1_selection_and_primary_BL2_gate_into: fixed_history_rule_diagnostics.csv
+  trial_counts:
+    BL1_SGD_configurations: 4
+    BL2_SGD_configurations: 4
+    total_scientific_SGD_configurations: 8
+    origins_per_configuration: 3
+    SGD_base_estimator_fit_runs: 24
+    primary_calibrator_fit_runs: 24
+    diagnostic_reference_solver_fit_runs: 12
+    nonfitted_history_rule_evaluations: 6
+    total_search_fit_operations: 60
+  paired_configuration_registry:
+    pairing_key: [alpha, eta0]
+    configurations:
+      - {pair_id: A1em04_E1em03, alpha: 0.0001, eta0: 0.001}
+      - {pair_id: A1em04_E1em02, alpha: 0.0001, eta0: 0.01}
+      - {pair_id: A1em03_E1em03, alpha: 0.001, eta0: 0.001}
+      - {pair_id: A1em03_E1em02, alpha: 0.001, eta0: 0.01}
+    BL1_and_BL2_must_both_exist_for_every_pair_and_origin: true
+    missing_or_mismatched_pair_action: stop_before_metric_materialization
+  BL1_shared_configuration_eligibility:
+    all_three_SGD_fits_converged: true
+    all_three_optimization_adequacy_gates_pass: true
+    all_three_calibrators_converged: true
+    pooled_calibrated_log_loss_minus_BL0_must_be_nonpositive: true
+    pooled_calibrated_brier_minus_BL0_must_be_nonpositive: true
+    minimum_nonworse_log_loss_origins: 2
+    minimum_nonworse_brier_origins: 2
+    total_origins: 3
+    nonworse_baseline: same_origin_BL0
+    pooled_baseline_origin_count_role: reported_diagnostic_not_a_gate
+  primary_shared_configuration_selection:
+    selection_uses_only_BL1_metrics_and_parameters: true
+    BL2_metrics_or_deltas_used_for_selection: forbidden
+    rationale: select_a_probability_safe_static_configuration_before_measuring_the_increment_from_adding_history
+    order_semantics: at_each_metric_key_retain_all_configurations_within_tolerance_then_apply_the_next_key
+    floating_metric_tie_tolerance: 0.0000000001
+    alpha_and_eta0_ties_use_exact_decimal_values: true
+    final_deterministic_fallback: ascending_pair_id
+    order:
+      - minimum_BL1_pooled_calibrated_log_loss
+      - minimum_BL1_pooled_calibrated_brier
+      - maximum_BL1_pooled_calibrated_average_precision
+      - maximum_BL1_pooled_calibrated_user_gauc_event_weighted
+      - larger_alpha
+      - smaller_eta0
+    output: one_frozen_pair_id_shared_by_BL1_and_BL2
+    no_eligible_BL1_configuration_action: stop_before_primary_BL2_gate_and_daily_backtest
+  primary_BL2_same_configuration_eligibility:
+    alpha_and_eta0_must_equal_selected_BL1: true
+    all_three_SGD_fits_converged: true
+    all_three_optimization_adequacy_gates_pass: true
+    all_three_calibrators_converged: true
+    pooled_calibrated_log_loss_minus_BL0_must_be_nonpositive: true
+    pooled_calibrated_brier_minus_BL0_must_be_nonpositive: true
+    minimum_nonworse_log_loss_origins_vs_BL0: 2
+    minimum_nonworse_brier_origins_vs_BL0: 2
+    pooled_calibrated_average_precision_minus_paired_BL1_must_be_positive: true
+    pooled_calibrated_user_gauc_minus_paired_BL1_must_be_nonnegative: true
+    pooled_calibrated_log_loss_minus_paired_BL1_must_be_nonpositive: true
+    pooled_calibrated_brier_minus_paired_BL1_must_be_nonpositive: true
+    minimum_positive_average_precision_origins_vs_paired_BL1: 2
+    total_origins: 3
+    failure_action: stop_before_daily_backtest
+  all_pair_sensitivity_report:
+    all_four_pairwise_BL2_minus_BL1_deltas_required: true
+    metrics: [average_precision, user_gauc_event_weighted, log_loss, brier]
+    per_origin_and_pooled: true
+    minimum_or_all_pairs_positive_gate: none
+    role: optimizer_configuration_robustness_diagnostic
+    configuration_count_disclosure:
+      eligible_configuration_count_required_in_selected_models_json: true
+      paired_configuration_count_used_by_this_diagnostic_required_in_main_report: true
+      count_definition: pairs_with_complete_eligible_BL1_and_BL2_metrics_for_the_reported_scope
+      if_fewer_than_four_pairs: explicitly_state_that_the_robustness_diagnostic_uses_fewer_than_the_four_frozen_pairs
+      if_exactly_one_pair_required_exact_disclosure: cross_optimizer_configuration_robustness_cannot_be_assessed
+      ineligible_pair_ids_and_reasons_required: true
+  secondary_independently_optimized_pipeline_comparison:
+    allowed: true
+    BL1_selection: reuse_primary_shared_configuration_BL1
+    BL2_selection_order_semantics: at_each_metric_key_retain_all_configurations_within_1e_minus_10_then_apply_the_next_key
+    BL2_final_deterministic_fallback: ascending_pair_id
+    BL2_selection_order:
+      - maximum_pooled_calibrated_average_precision_among_absolute_safe_and_optimization_adequate_candidates
+      - maximum_pooled_calibrated_user_gauc_event_weighted
+      - minimum_pooled_calibrated_log_loss
+      - minimum_pooled_calibrated_brier
+      - larger_alpha
+      - smaller_eta0
+    role: engineering_diagnostic_only
+    may_change_primary_shared_configuration: false
+    may_support_primary_H2_claim: false
+    may_override_primary_gate_failure: false
+    receives_seven_day_refit: false
+  frozen_daily_backtest:
+    origins: ["2022-04-11", "2022-04-12", "2022-04-13", "2022-04-14", "2022-04-15", "2022-04-16", "2022-04-17"]
+    models: [BL1, BL2]
+    shared_pair_id_required: true
+    alpha_and_eta0_identical_between_BL1_and_BL2: true
+    base_estimator_fit_runs: 14
+    calibrator_fit_runs: 14
+    reference_solver_fit_runs: 8
+    reference_solver_scope: selected_shared_pair_alpha_only
+    reference_solver_origins: ["2022-04-12", "2022-04-13", "2022-04-15", "2022-04-16"]
+    reference_solver_reused_search_origins: ["2022-04-11", "2022-04-14", "2022-04-17"]
+    optimization_adequacy_required_on_every_origin: true
+    frozen_daily_phase_order:
+      - fit_all_seven_origin_BL1_and_BL2_SGD_estimators_at_the_selected_pair_id
+      - fit_the_eight_additional_frozen_daily_reference_solvers
+      - evaluate_frozen_daily_optimization_adequacy_on_all_seven_origins
+      - if_any_origin_fails_stop_before_metric_aggregation
+      - only_then_fit_calibrators_and_materialize_daily_predictions_and_metrics
+    hyperparameter_changes: forbidden
+    preprocessing_changes: forbidden
+    calibration_changes: forbidden
+
+probability_quality_gate:
+  role: mandatory_absolute_sanity_not_descriptive
+  scientific_noninferiority_margin:
+    log_loss: 0.0
+    brier: 0.0
+  numerical_comparison_tolerance: 0.0000000001
+  required_for_each_of: [BL1, BL2]
+  pooled_requirements:
+    calibrated_log_loss_minus_BL0_must_be_nonpositive: true
+    calibrated_brier_minus_BL0_must_be_nonpositive: true
+  daily_stability_requirements:
+    minimum_nonworse_log_loss_days: 5
+    minimum_nonworse_brier_days: 5
+    total_days: 7
+    nonworse_baseline: same_day_BL0
+    nonworse_baseline_rationale: >-
+      pooled_requirements already states the pooled-BL0 comparison, so the
+      separately declared daily block is per day in both the metric and the
+      baseline; each day is judged against its own BL0
+    pooled_baseline_day_count_role: reported_diagnostic_not_a_gate
+  probability_sanity_failure_action:
+    - mark_gate2b_probability_repair_failed
+    - stop_at_baseline_layer
+    - forbid_sequence_model_submission
+    - forbid_validation_access_request_based_on_this_run
+  not_sufficient_alone_for_advancement: true
+
+relative_history_gate:
+  comparison: frozen_BL2_minus_frozen_BL1_at_the_same_primary_shared_pair_id
+  alpha_and_eta0_identical_between_models: true
+  independently_optimized_secondary_comparison_cannot_satisfy_this_gate: true
+  ranking_input: calibrated_probability
+  raw_decision_score_role: within_origin_supporting_diagnostic
+  probability_input: calibrated_probability
+  pooled_requirements:
+    average_precision_delta_must_be_positive: true
+    user_gauc_event_weighted_delta_must_be_nonnegative: true
+    calibrated_log_loss_delta_must_be_nonpositive: true
+    calibrated_brier_delta_must_be_nonpositive: true
+  daily_requirements:
+    minimum_positive_average_precision_days: 5
+    minimum_nonnegative_user_gauc_days: 5
+    total_days: 7
+  paired_user_cluster_bootstrap_requirement:
+    average_precision_delta_95_percentile_CI_lower_must_be_positive: true
+  failure_action:
+    - retain_only_probability_repair_diagnostics
+    - do_not_claim_stable_history_increment_from_v003
+    - stop_before_sequence_models_or_validation
+
+probability_diagnostics:
+  pass_fail_role:
+    log_loss_and_brier_vs_BL0: mandatory
+    ECE20: descriptive_only
+    calibration_intercept_and_slope: descriptive_only
+    clip_and_extreme_share: descriptive_only
+    roc_auc: descriptive_only
+  required_per_model_origin_and_pooled:
+    - observed_prevalence
+    - mean_prediction
+    - minimum_p001_p01_p10_median_p90_p99_p999_maximum
+    - share_probability_le_1e_6
+    - share_probability_ge_1_minus_1e_6
+    - share_probability_le_0_01
+    - share_probability_ge_0_99
+    - log_loss
+    - brier
+    - ECE20_equal_width
+    - assessment_calibration_intercept
+    - assessment_calibration_slope
+    - calibrated_average_precision
+    - calibrated_user_gauc_event_weighted
+    - calibrated_user_gauc_user_equal
+    - raw_score_average_precision_within_origin
+    - raw_score_user_gauc_event_weighted_within_origin
+    - raw_score_user_gauc_user_equal_within_origin
+  raw_score_field_applicability:
+    scope_rule: raw_score_within_origin_fields_are_defined_only_for_per_origin_rows_and_are_not_pooled_across_origins
+    BL0:
+      status: not_applicable
+      reason: constant_probability_reference_has_no_base_estimator_raw_decision_score
+      affected_fields:
+        - raw_score_average_precision_within_origin
+        - raw_score_user_gauc_event_weighted_within_origin
+        - raw_score_user_gauc_user_equal_within_origin
+      required_recorded_value: null
+    BL1_and_BL2:
+      per_origin_rows: required_numeric_values
+      pooled_rows:
+        status: not_applicable
+        reason: within_origin_raw_scores_do_not_have_a_registered_cross_origin_scale
+        affected_fields:
+          - raw_score_average_precision_within_origin
+          - raw_score_user_gauc_event_weighted_within_origin
+          - raw_score_user_gauc_user_equal_within_origin
+        required_recorded_value: null
+  ECE20:
+    bins: 20
+    binning: equal_width_on_0_1
+    probability_one_in_last_bin: true
+  assessment_calibration_regression:
+    input: metric_clipped_logit_of_calibrated_probability
+    target: official_long_view
+    scope: frozen_daily_BL0_BL1_BL2_per_origin_plus_one_pooled_fit_per_model
+    daily_origin_fits: 21
+    pooled_fits: 3
+    declared_slots: 24
+    BL0_handling:
+      status: not_applicable
+      reason: >-
+        BL0 emits one constant probability per origin, so the logit predictor has
+        zero variance and no function of any form - linear, polynomial,
+        exponential or otherwise - is determined by a single predictor value
+      attempted_fits: 0
+      recorded_intercept_and_slope: null
+      rows_still_reported_for_coverage: true
+    executed_fits:
+      BL1_and_BL2_daily_origin_fits: 14
+      BL1_and_BL2_pooled_fits: 2
+      total_executed: 16
+      declared_cap_unchanged: 24
+    functional_form:
+      parametric_fit: linear_in_the_logit
+      implementation: sklearn_LogisticRegression
+      solver: lbfgs
+      penalty: "none"
+      sklearn_1_9_no_penalty_representation:
+        penalty_argument_must_be_omitted: true
+        expected_get_params_penalty_sentinel: deprecated
+        l1_ratio: 0.0
+        C: numpy_positive_infinity
+      tol: 0.0000000001
+      max_iter: 1000
+      fit_intercept: true
+      class_weight: null
+      sample_weight: null
+      rationale: >-
+        this diagnostic measures how far the assessment calibration slope departs
+        from one; regularization would shrink the slope toward zero and conflict
+        with that measurement purpose, while an unpenalized fit is the standard
+        descriptive calibration-analysis convention
+      parametric_fit_is_not_a_claim_that_miscalibration_is_linear: true
+      nonparametric_companion: ECE20_equal_width_bins_in_calibration_bins_csv
+      nonparametric_companion_role: >-
+        the twenty binned pairs of mean predicted probability and observed rate
+        expose miscalibration of any shape and may be inspected after the run
+      additional_nonlinear_calibration_fit: not_registered_for_v003
+      adding_one_after_seeing_results: forbidden
+    search_candidate_assessment_calibration_regression: forbidden
+    search_dates_are_included_only_through_their_frozen_daily_refits: true
+    role: descriptive_only
+  report_uncalibrated_and_calibrated_probability_metrics_side_by_side: true
+
+discrimination_diagnostics:
+  BL1_minus_BL0:
+    BL1_score: calibrated_probability
+    BL0_score: origin_training_target_prevalence
+    metrics: [average_precision, roc_auc, user_gauc_event_weighted, user_gauc_user_equal]
+    per_origin_and_pooled: true
+    paired_user_cluster_bootstrap_for_average_precision: required
+    superiority_gate: none
+    reason_no_hard_gate: a_correctly_optimized_static_bundle_may_have_little_true_discriminative_signal
+    claim_if_AP_CI_lower_not_positive: current_static_bundle_has_not_demonstrated_discrimination_beyond_BL0
+    optimization_failure_interpretation_requires_reference_solver_failure: true
+  fixed_history_rules:
+    models: [LIFETIME_SMOOTHED_RATE, W10_SMOOTHED_RATE]
+    metrics: [average_precision, roc_auc, user_gauc_event_weighted, user_gauc_user_equal]
+    per_origin_and_pooled: true
+    compare_to_primary_BL2: required
+    hard_threshold_or_candidate_selection_use: forbidden
+    role: detect_large_unexplained_underuse_of_available_history_signal_without_posthoc_ROC_gate
+
+evaluation_slices:
+  fixed_target_rows_within_each_comparison: required
+  scopes:
+    - pooled_seven_days
+    - per_frozen_daily_origin
+  scope_column_required: true
+  expected_rows: 40
+  expected_rows_formula: 5_slices_times_1_pooled_plus_7_origins
+  both_scopes_are_descriptive_only: true
+  slices:
+    - all_assessment_rows
+    - history_0_49
+    - history_50_199
+    - history_200_plus
+    - history_500_plus_exploratory
+  slice_probability_gates: descriptive_only
+  required_context: [rows, users, positives, prevalence, BL0_metric, BL1_metric, BL2_metric, paired_delta]
+  cross_slice_raw_average_precision_comparison: forbidden
+
+bootstrap:
+  inherited_implementation_from_v002: true
+  cluster: user_id
+  replicates: 2000
+  seed: 20260814
+  bit_generator: numpy_PCG64
+  expected_users: 943
+  expected_multiplicity_matrix_sha256: c954a293bfc21ef3bb1630607184754b7656964f787d66cf1165c5685ef4aaff
+  user_universe_definition: distinct_user_id_over_the_seven_frozen_daily_assessment_dates
+  user_universe_is_not_the_target_population_user_count: true
+  target_population_user_count_for_contrast: 950
+  superseded_950_user_digest: 582d0ef006da0f61fb753fa6d15d6ee801f7fce5f820fc1c92a376268112d972
+  superseded_reason: >-
+    950 counts every user in the 2022-04-08..04-17 target population, but the
+    bootstrap clusters only the users actually present on the seven assessment
+    dates, which is 943; seven users never appear in that window
+  user_count_mismatch_action: stop_before_any_bootstrap_replicate
+  digest_check_may_be_skipped: false
+  shared_multiplicities_across_comparisons: [BL2_minus_BL1, BL1_minus_BL0]
+  average_precision_computation:
+    implementation_constant: AP_BOOTSTRAP_BLOCK_SIZE
+    replicate_block_size: 8
+    role: memory_bounded_computational_partition_only
+    changes_multiplicities_estimates_or_interval: false
+    changing_without_a_contract_revision: forbidden
+  interval: percentile_2.5_97.5
+  role: posthoc_train_only_developmental_uncertainty_not_validation_MDE_or_confirmatory_test_CI
+
+runtime_preflight:
+  role: pre_metric_resource_feasibility_gate_using_real_search_components
+  extra_fit_operations: 0
+  designated_existing_search_components:
+    origin: "2022-04-17"
+    pair_id: A1em04_E1em03
+    SGD_models: [BL1, BL2]
+    primary_calibrators: [BL1, BL2]
+    reference_solver_models: [BL1, BL2]
+    reference_alpha: 0.0001
+    component_fit_operations: 6
+  execution_order_before_other_search_components: required
+  representativeness:
+    uses_largest_search_origin_by_estimator_fit_rows: true
+    covers_every_fitted_component_type: [SGD_BL1, SGD_BL2, calibrator_BL1, calibrator_BL2, reference_BL1, reference_BL2]
+    does_not_claim_to_execute_all_search_components: true
+    remaining_runtime_is_projected_with_the_frozen_safety_multiplier: true
+  outputs_reused_in_search_if_preflight_passes: true
+  scientific_metric_materialization_or_read: forbidden
+  allowed_observations:
+    - elapsed_seconds
+    - peak_RAM_GB
+    - temporary_disk_GB
+    - artifact_size_GB
+    - convergence_and_nonfinite_status
+    - observed_native_thread_pools_inside_the_fit_scoped_limit
+  projection:
+    method: observed_component_type_seconds_times_explicit_remaining_frozen_counts_with_safety_multiplier
+    safety_multiplier: 1.5
+    total_SGD_fits: 38
+    preflight_SGD_fits: 2
+    remaining_SGD_fits: 36
+    total_primary_calibrator_fits: 38
+    preflight_primary_calibrator_fits: 2
+    remaining_primary_calibrator_fits: 36
+    total_reference_fits: 20
+    preflight_reference_fits: 2
+    remaining_reference_fits: 18
+    diagnostic_calibration_regression_fits_using_primary_calibrator_time_proxy: 24
+    fixed_nonfit_reserve_seconds: 600
+    literal_coefficients_in_the_projection_formula: forbidden
+    elapsed_projection_formula: preflight_elapsed + safety_multiplier * (max_preflight_SGD_seconds * remaining_SGD_fits + max_preflight_primary_calibrator_seconds * (remaining_primary_calibrator_fits + diagnostic_calibration_regression_fits_using_primary_calibrator_time_proxy) + max_preflight_reference_seconds * remaining_reference_fits) + fixed_nonfit_reserve_seconds
+    projection_formula_coefficients_must_equal_declared_counts: true
+    remaining_count_identity_required: remaining_equals_total_minus_preflight_for_every_component_type
+    include_feature_loading_preprocessing_rule_diagnostics_bootstrap_and_report_in_fixed_reserve: true
+    projected_total_elapsed_must_not_exceed_minutes: 120
+    projected_peak_RAM_must_not_exceed_GB: 12
+    projected_artifact_storage_must_not_exceed_GB: 20
+  failure_action:
+    - stop_before_remaining_search_fits
+    - write_preflight_and_usage_ledgers
+    - do_not_read_scientific_metrics
+    - require_successor_contract_for_any_budget_or_parameter_change
+
+operational_budget:
+  budget_status: proposed_not_active
+  scientific_configuration_definition: one_model_bundle_times_one_alpha_times_one_eta0
+  primary_component_fit_definition: one_SGD_estimator_or_one_primary_calibrator_fit_for_one_origin
+  reference_fit_definition: one_nonselectable_LogisticRegression_fit_for_one_model_bundle_alpha_and_origin_in_either_search_or_frozen_daily_stage
+  diagnostic_fit_definition: one_assessment_calibration_regression_for_one_frozen_model_and_scope
+  nonfitted_rule_evaluation_definition: one_fixed_history_score_for_one_origin
+  accelerator: cpu_only
+  gpu_device_hours: 0
+  maximum_cpu_threads: 8
+  SGD_estimator_threads: 1
+  reference_solver_threads: 8
+  primary_calibrator_threads: 8
+  diagnostic_calibration_regression_threads: 8
+  threadpool_limit_enforcement:
+    implementation: threadpoolctl.threadpool_limits
+    scope: every_individual_fit_operation
+    user_APIs_covered: [blas, openmp]
+    component_limits:
+      SGD_estimator: 1
+      diagnostic_reference_solver: 8
+      primary_previous_day_sigmoid_calibrator: 8
+      assessment_calibration_regression: 8
+    limit_context_must_wrap_the_entire_fit_call: true
+    observed_pool_capture_implementation: threadpoolctl.threadpool_info
+    observed_inside_context: [immediately_before_fit, immediately_after_fit]
+    any_observed_pool_num_threads_above_component_limit: fail_closed
+    missing_threadpool_observation_for_an_executed_fit: fail_closed
+    overlimit_fit_output_may_enter_objective_metric_gate_or_selection: false
+  maximum_search_scientific_SGD_configurations: 8
+  maximum_search_SGD_fit_runs: 24
+  maximum_search_primary_calibrator_fit_runs: 24
+  maximum_search_reference_solver_fit_runs: 12
+  maximum_daily_reference_solver_fit_runs: 8
+  reference_solver_scope: search_origins_at_all_alphas_plus_frozen_daily_origins_at_the_selected_alpha
+  maximum_daily_SGD_fit_runs: 14
+  maximum_daily_primary_calibrator_fit_runs: 14
+  maximum_primary_component_fit_runs: 76
+  maximum_reference_solver_fit_runs: 20
+  maximum_diagnostic_calibration_regression_fits: 24
+  maximum_nonfitted_history_rule_evaluations: 20
+  reference_and_diagnostic_fits_are_separate_from_primary_component_cap: true
+  all_fits_are_included_in_total_fit_operations: true
+  nonfitted_rule_evaluations_are_not_fit_operations: true
+  maximum_total_fit_operations: 120
+  total_fit_operations_formula: 76_primary_plus_20_reference_plus_24_diagnostic
+  runtime_preflight_extra_fit_operations: 0
+  maximum_SGD_seconds_per_fit: 180
+  maximum_reference_solver_seconds_per_fit: 600
+  maximum_calibrator_seconds_per_fit: 120
+  maximum_diagnostic_seconds_per_fit: 120
+  maximum_elapsed_minutes: 120
+  maximum_peak_ram_gb: 12
+  maximum_artifact_storage_gb: 20
+  overrun_tolerance: 0
+  failed_and_nonconverged_fits_count_toward_caps: true
+  planning_envelope_reconciliation:
+    BL1_SGD_configurations: 4
+    BL1_reference_alpha_configurations: 2
+    BL1_total_search_linear_fit_runs: 18
+    BL1_maximum_allowed_fit_runs_in_compute_search_budget_v002: 24
+    BL2_SGD_configurations: 4
+    BL2_reference_alpha_configurations: 2
+    BL2_total_search_linear_fit_runs: 18
+    BL2_maximum_allowed_fit_runs_in_compute_search_budget_v002: 36
+    total_search_linear_fit_runs: 36
+    total_search_fit_operations_including_calibrators: 60
+    maximum_search_fit_runs_in_compute_search_budget_v002: 141
+    frozen_daily_reference_solver_fit_runs: 8
+    total_all_fit_operations: 120
+    maximum_train_backtest_fit_runs_total_in_compute_search_budget_v002: 204
+    within_frozen_planning_envelope: true
+    elapsed_cap_unchanged_at_minutes: 120
+    elapsed_cap_adjudicated_by_runtime_preflight_not_by_static_worst_case: true
+  on_projected_or_actual_breach: stop_before_next_component_fit_and_write_usage_ledger
+  budget_expansion_after_any_metric_read: forbidden
+  expansion_requires:
+    - successor_contract_version
+    - complete_actual_usage_ledger
+    - exact_requested_increment
+    - explicit_project_owner_approval
+    - confirmation_no_validation_restricted_test_or_random_metric_was_used
+  exact_infrastructure_replacement:
+    maximum_per_stage: 1
+    scientific_configuration_must_be_identical: true
+    no_metric_from_failed_attempt_may_be_used: true
+    reason_and_evidence_must_be_logged: true
+
+execution_environment:
+  python_executable: ../.venv/Scripts/python.exe
+  release_versions:
+    python: 3.11.9
+    scikit_learn: 1.9.0
+    numpy: 2.4.6
+    scipy: 1.17.1
+    pyarrow: 25.0.1
+    duckdb: 1.5.5
+    threadpoolctl: 3.6.0
+  exact_version_match_required: true
+  environment_manifest_required: true
+  estimator_get_params_snapshot_required: true
+  reference_solver_get_params_snapshot_required: true
+  calibrator_get_params_snapshot_required: true
+  assessment_calibration_regression_get_params_snapshot_required: true
+  silent_library_default_inheritance: forbidden
+  code_config_input_and_output_SHA256_required: true
+
+artifact_schemas:
+  fit_threadpool_observation:
+    required_for_every_executed_fit_operation: true
+    measurement_moments: [inside_limit_context_immediately_before_fit, inside_limit_context_immediately_after_fit]
+    observed_pool_entry_required_fields: [user_api, internal_api, prefix, filepath, version, num_threads]
+    per_fit_required_fields:
+      - threadpool_limit
+      - observed_thread_pools_before_fit
+      - observed_thread_pools_after_fit
+      - maximum_observed_pool_threads
+      - threadpool_limit_passed
+    no_discovered_pool_representation: empty_list
+    num_threads_must_be_a_positive_integer_when_a_pool_is_present: true
+    maximum_observed_pool_threads_must_not_exceed_threadpool_limit: true
+    overlimit_or_missing_observation_action: implementation_or_governance_failure
+    overlimit_fit_output_may_enter_any_scientific_artifact_or_decision: false
+  prediction_artifacts:
+    identity_columns: [source_table, source_row_number, user_id, video_id, origin, long_view]
+    common_columns: [prior_batch_n, p_BL0]
+    per_SGD_model_columns:
+      - pair_id
+      - alpha
+      - eta0
+      - raw_decision_score
+      - uncalibrated_probability
+      - calibrated_probability
+      - calibration_intercept
+      - calibration_slope
+    probability_and_parameter_nullability:
+      default: every_probability_intercept_and_slope_value_must_be_finite_and_nonnull
+      sole_exception:
+        stage: search
+        condition: primary_calibrator_nonconverged_and_trial_marked_ineligible
+        nullable_fields: [calibrated_probability, calibration_intercept, calibration_slope]
+        required_physical_value: Arrow_null
+        NaN_or_infinity: forbidden
+        may_enter_any_metric_gate_or_selection: false
+      daily_or_eligible_search_trial_nulls: forbidden
+    reference_column_naming: reference_raw_decision_score_{model_id}_{alpha_slug}
+    reference_metadata_columns: [reference_model_id, reference_alpha, reference_C]
+    reference_columns_scope: search_prediction_artifacts_only
+    raw_decision_score_export_location: search_and_daily_prediction_artifacts
+    search_fixed_rule_raw_score_columns:
+      - fixed_rule_score_LIFETIME_SMOOTHED_RATE
+      - fixed_rule_score_W10_SMOOTHED_RATE
+  search_artifact_freeze_manifest:
+    required_fields: [status, artifact_count, artifacts]
+    required_status: frozen_before_any_derived_search_rule_or_candidate_assessment_metric
+    required_artifact_count: 3
+    artifact_entry_required_fields: [path, size_bytes, sha256]
+    exact_paths:
+      - search_predictions_origin_2022-04-11.parquet
+      - search_predictions_origin_2022-04-14.parquet
+      - search_predictions_origin_2022-04-17.parquet
+    each_parquet_must_include_prediction_reference_and_both_fixed_rule_raw_score_columns: true
+  search_trial_manifest:
+    row_granularity: one_model_pair_origin_search_trial
+    required_fields:
+      - stage
+      - origin
+      - model_id
+      - bundle
+      - pair_id
+      - alpha
+      - eta0
+      - fit_converged
+      - calibrator_converged
+      - optimization_adequate
+      - eligible
+      - ineligible_reason
+    configuration_level_eligibility_may_be_repeated_on_each_origin_row: true
+    every_frozen_search_trial_must_have_an_eligible_boolean_and_reason_if_false: true
+  selected_models:
+    required_fields:
+      - eligible_configuration_count
+      - paired_robustness_configuration_count
+      - paired_robustness_ineligible_pairs
+    eligible_configuration_count_definition: BL1_configurations_passing_every_shared_configuration_eligibility_condition
+    paired_robustness_configuration_count_definition: pairs_with_complete_eligible_BL1_and_BL2_metrics_for_every_required_search_scope
+    paired_robustness_ineligible_pairs_schema:
+      type: list
+      item_required_fields: [pair_id, reasons]
+      reasons_must_be_nonempty: true
+  get_params_snapshots:
+    storage_location: run_manifest.json
+    required_components:
+      - shared_SGD_estimator
+      - diagnostic_reference_solver
+      - primary_previous_day_sigmoid_calibrator
+      - assessment_calibration_regression
+    entry_required_fields: [component_id, sklearn_class, get_params]
+    get_params_must_be_the_fitted_or_instantiated_object_snapshot_not_a_handwritten_subset: true
+    penalty_sentinel_and_inactive_parameters_must_be_retained: true
+    exact_match_to_the_contract_declared_parameters_required: true
+    active_release_failure_retention:
+      every_snapshot_for_a_component_instantiated_or_fitted_before_failure_must_be_retained: true
+      every_executed_assessment_calibration_regression_snapshot_must_be_retained: true
+      a_not_executed_assessment_calibration_regression_slot_may_not_fabricate_a_snapshot: true
+  coefficient_diagnostics:
+    convergence_ledger_fields:
+      - coefficient_L1_norm
+      - coefficient_L2_norm
+      - coefficient_absolute_maximum
+      - intercept
+    optimization_objective_audit_fields:
+      - coefficient_cosine_similarity
+      - coefficient_L2_norm_ratio
+    assessment_only_coefficient_diagnostics_may_not_change_eligibility: true
+  convergence_ledger_required_fields:
+    - fit_run_id
+    - fit_type
+    - stage
+    - origin
+    - model_id
+    - bundle
+    - pair_id
+    - alpha
+    - eta0
+    - estimator_fit_rows
+    - feature_columns
+    - max_iter
+    - n_iter
+    - convergence_warning_count
+    - coefficient_L1_norm
+    - coefficient_L2_norm
+    - coefficient_absolute_maximum
+    - intercept
+    - raw_score_quantiles
+    - elapsed_seconds
+    - threadpool_limit
+    - observed_thread_pools_before_fit
+    - observed_thread_pools_after_fit
+    - maximum_observed_pool_threads
+    - threadpool_limit_passed
+    - status
+  calibration_fit_ledger_required_fields:
+    - fit_run_id
+    - stage
+    - origin
+    - model_id
+    - pair_id
+    - calibration_date
+    - calibration_rows
+    - calibration_users
+    - calibration_positives
+    - calibration_prevalence
+    - raw_score_source
+    - solver
+    - C
+    - l1_ratio
+    - tol
+    - max_iter
+    - n_iter
+    - convergence_warning_count
+    - future_or_deprecation_warning_count
+    - calibration_intercept
+    - calibration_slope
+    - elapsed_seconds
+    - threadpool_limit
+    - observed_thread_pools_before_fit
+    - observed_thread_pools_after_fit
+    - maximum_observed_pool_threads
+    - threadpool_limit_passed
+    - status
+  reference_solver_ledger_required_fields:
+    - fit_run_id
+    - phase
+    - origin
+    - model_id
+    - alpha
+    - estimator_fit_rows
+    - C
+    - solver
+    - tol
+    - max_iter
+    - n_iter
+    - convergence_warning_count
+    - reference_regularized_training_objective
+    - elapsed_seconds
+    - peak_RAM_GB
+    - threadpool_limit
+    - observed_thread_pools_before_fit
+    - observed_thread_pools_after_fit
+    - maximum_observed_pool_threads
+    - threadpool_limit_passed
+    - status
+  assessment_calibration_regression_threadpool_fields:
+    artifact: calibration_intercept_slope.csv
+    required_for_each_executed_fit:
+      - threadpool_limit
+      - observed_thread_pools_before_fit
+      - observed_thread_pools_after_fit
+      - maximum_observed_pool_threads
+      - threadpool_limit_passed
+    not_applicable_BL0_slots_have_no_fit_and_no_fabricated_pool_observation: true
+  usage_ledger_threadpool_fields:
+    every_executed_fit_row_requires:
+      - threadpool_limit
+      - observed_thread_pools_before_fit
+      - observed_thread_pools_after_fit
+      - maximum_observed_pool_threads
+      - threadpool_limit_passed
+    every_fit_run_id_must_match_its_component_ledger_observation_exactly: true
+  optimization_objective_audit_required_fields:
+    - phase
+    - origin
+    - model_id
+    - pair_id
+    - alpha
+    - eta0
+    - SGD_regularized_training_objective
+    - reference_regularized_training_objective
+    - reference_fit_source
+    - objective_regret
+    - maximum_allowed_regret
+    - adequacy_passed
+    - assessment_AP_regret_diagnostic
+    - assessment_ROC_AUC_regret_diagnostic
+    - assessment_user_GAUC_regret_diagnostic
+    - coefficient_cosine_similarity
+    - coefficient_L2_norm_ratio
+  paired_configuration_metrics_required_fields:
+    - comparison_id
+    - origin_or_pooled
+    - pair_id
+    - alpha
+    - eta0
+    - metric
+    - BL1_metric
+    - BL2_metric
+    - BL2_minus_BL1_delta
+    - primary_shared_pair
+    - configuration_eligible
+    - ineligible_reason
+  search_fixed_history_rule_diagnostics_required_fields:
+    - stage
+    - origin_or_pooled
+    - diagnostic_id
+    - rows
+    - users
+    - prevalence
+    - average_precision
+    - roc_auc
+    - user_gauc_event_weighted
+    - user_gauc_user_equal
+    - frozen_search_prediction_artifact_SHA256_source
+  search_fixed_history_rule_diagnostics_primary_BL2_fields: forbidden_before_selection
+  fixed_history_rule_diagnostics_required_fields:
+    - stage
+    - origin_or_pooled
+    - diagnostic_id
+    - rows
+    - users
+    - prevalence
+    - average_precision
+    - roc_auc
+    - user_gauc_event_weighted
+    - user_gauc_user_equal
+    - primary_BL2_pair_id
+    - primary_BL2_average_precision
+    - primary_BL2_roc_auc
+    - primary_BL2_user_gauc_event_weighted
+    - primary_BL2_user_gauc_user_equal
+    - diagnostic_minus_primary_BL2_average_precision
+    - diagnostic_minus_primary_BL2_roc_auc
+    - diagnostic_minus_primary_BL2_user_gauc_event_weighted
+    - diagnostic_minus_primary_BL2_user_gauc_user_equal
+  fixed_history_rule_scope_semantics:
+    per_origin: evaluate_the_frozen_rule_and_primary_BL2_on_identical_origin_rows
+    pooled: concatenate_the_already_frozen_per_origin_rule_scores_labels_users_and_primary_BL2_probabilities_then_compute_once
+    cross_origin_average_of_metrics_as_pooled_value: forbidden
+  paired_user_cluster_bootstrap_required_fields:
+    - comparison_id
+    - metric
+    - point_estimate
+    - replicate_count
+    - seed
+    - CI_lower
+    - CI_upper
+    - eligible_users
+    - eligible_rows
+  runtime_preflight_required_fields:
+    - designated_component_ids
+    - observed_seconds_by_component_type
+    - observed_peak_RAM_GB
+    - observed_artifact_GB
+    - safety_multiplier
+    - projected_total_elapsed_minutes
+    - projected_peak_RAM_GB
+    - projected_artifact_GB
+    - observed_thread_pools_by_designated_fit_run_id
+    - all_designated_fit_threadpool_limits_passed
+    - passed
+    - stop_reason
+  terminal_state:
+    filename: terminal_state.json
+    required_fields:
+      - run_id
+      - state
+      - exit_code
+      - stage
+      - message
+      - contract_sha256
+      - active_release_started
+      - completion_scope
+      - fit_operations
+      - fit_operations_by_type
+      - fit_operations_by_stage
+    state_must_be_a_key_in_terminal_state_registry: true
+    exit_code_must_exactly_match_terminal_state_registry: true
+    completion_scope_values: [full, partial_failure]
+  run_manifest:
+    filename: run_manifest.json
+    required_fields:
+      - run_id
+      - contract_sha256
+      - terminal_state
+      - exit_code
+      - completion_scope
+      - inherited_upstream_guarantees
+      - environment
+      - code_sha256
+      - get_params_snapshots
+      - threadpool_control
+      - artifact_inventory
+      - artifact_hash_manifest
+    terminal_state_and_exit_code_must_match_terminal_state_json: true
+    full_completion_artifact_inventory:
+      entry_required_fields: [path, size_bytes, sha256]
+      coverage: required_outputs_artifacts_excluding_run_manifest_and_artifact_hash_manifest
+      expected_entry_count: 34
+      all_entries_must_have_been_generated_or_atomically_replaced_by_this_run_id: true
+    partial_failure_artifact_inventory:
+      coverage: every_current_run_artifact_present_before_run_manifest_except_run_manifest_and_artifact_hash_manifest
+      stale_preexisting_artifacts_may_not_be_listed: true
+    partial_failure_get_params_snapshots:
+      preserve_every_component_snapshot_available_before_failure: true
+      preserve_every_executed_assessment_calibration_regression_snapshot: true
+      omission_of_an_executed_assessment_calibration_regression_snapshot: forbidden
+    threadpool_control:
+      required_fields:
+        - threadpoolctl_version
+        - hard_limits_by_fit_type
+        - per_fit_observations
+        - all_observed_pools_within_limit
+      per_fit_observation_required_fields:
+        - fit_run_id
+        - fit_type
+        - stage
+        - threadpool_limit
+        - observed_thread_pools_before_fit
+        - observed_thread_pools_after_fit
+        - maximum_observed_pool_threads
+        - threadpool_limit_passed
+      every_executed_fit_run_id_must_appear_exactly_once: true
+      values_must_match_the_corresponding_fit_and_usage_ledgers_exactly: true
+      preserve_completed_fit_observations_in_partial_failure_manifest: true
+  artifact_hash_manifest:
+    filename: artifact_hash_manifest.json
+    format: JSON
+    hash_algorithm: SHA-256
+    top_level_required_fields:
+      - run_id
+      - completion_scope
+      - hash_algorithm
+      - self_hash_status
+      - required_artifact_count
+      - artifact_count
+      - missing_required_artifacts
+      - artifacts
+    artifact_entry_required_fields: [path, size_bytes, sha256]
+    path_uniqueness_required: true
+    size_bytes_must_be_positive: true
+    sha256_format: lowercase_64_hexadecimal_characters
+    full_completion_coverage: every_other_entry_in_required_outputs_artifacts
+    full_completion_expected_required_artifact_count: 36
+    full_completion_expected_artifact_count: 35
+    full_completion_missing_required_artifacts: []
+    partial_failure_coverage: every_artifact_generated_or_atomically_replaced_by_the_current_active_run_except_this_manifest
+    partial_failure_missing_required_artifacts_must_be_listed: true
+    self_hash_status: excluded_to_avoid_self_reference
+    final_recomputation_must_exactly_match_every_entry: true
+    missing_empty_or_hash_mismatched_artifact_action: fail_before_any_complete_release_state
+
+required_outputs:
+  output_directory: reports/generated/gate2b_probability_repair_v003
+  artifacts:
+    - contract_snapshot.yaml
+    - input_verification.json
+    - target_row_manifests.csv
+    - temporal_split_manifest.csv
+    - preprocessing_manifest.json
+    - numeric_scaling_audit.csv
+    - categorical_frequency_audit.csv
+    - runtime_preflight.json
+    - search_artifact_freeze_manifest.json
+    - search_fixed_history_rule_diagnostics.csv
+    - search_trial_manifest.csv
+    - convergence_ledger.csv
+    - reference_solver_ledger.csv
+    - optimization_objective_audit.csv
+    - calibration_fit_ledger.csv
+    - usage_ledger.csv
+    - search_predictions_origin_2022-04-11.parquet
+    - search_predictions_origin_2022-04-14.parquet
+    - search_predictions_origin_2022-04-17.parquet
+    - search_metrics.csv
+    - paired_configuration_metrics.csv
+    - fixed_history_rule_diagnostics.csv
+    - selected_models.json
+    - selected_primary_shared_configuration.json
+    - daily_predictions.parquet
+    - daily_metrics.csv
+    - pooled_and_slice_metrics.csv
+    - probability_distribution_audit.csv
+    - calibration_bins.csv
+    - calibration_intercept_slope.csv
+    - paired_user_cluster_bootstrap.csv
+    - terminal_state.json
+    - run_manifest.json
+    - artifact_hash_manifest.json
+    - reports/analysis/gate2b_probability_repair_results_v003.md
+    - reports/figures/gate2b_probability_repair_results_v003.png
+  current_run_generation_policy:
+    one_unique_run_id_required: true
+    every_counted_artifact_must_be_generated_or_atomically_replaced_during_that_run_id: true
+    a_preexisting_file_with_a_matching_name_or_hash_cannot_satisfy_current_run_completeness: true
+    produced_path_registry_must_be_in_memory_until_manifest_finalization: true
+  lifecycle_policy:
+    pre_execution_nonrun_operation_or_refusal:
+      applies_before_active_release_boundary:
+        - validate_only_success_or_failure
+        - missing_or_false_execution_authorization
+        - approved_contract_hash_mismatch
+        - required_precondition_not_satisfied
+        - implementation_SHA256_mismatch
+        - environment_version_mismatch
+        - input_path_size_or_SHA256_mismatch
+      artifact_behavior: return_or_refuse_without_creating_replacing_or_deleting_any_run_artifact
+      terminal_state_artifact: forbidden
+      run_manifest_artifact: forbidden
+      artifact_hash_manifest_artifact: forbidden
+    active_release_boundary:
+      starts_only_after_all_pre_execution_contract_authorization_implementation_environment_and_input_checks_pass: true
+      run_id_must_be_committed_at_boundary: true
+    active_release_failure:
+      required_completion_scope: partial_failure
+      required_governance_artifacts:
+        - terminal_state.json
+        - run_manifest.json
+        - artifact_hash_manifest.json
+        - usage_ledger.csv
+      include_all_current_run_checkpoints_and_ledgers_that_exist: true
+      hash_every_current_run_artifact_except_artifact_hash_manifest_itself: true
+      list_every_missing_full_required_artifact: true
+      may_not_claim_all_required_artifacts_complete: true
+    full_completion:
+      states:
+        - pass
+        - absolute_probability_fail
+        - absolute_probability_pass_but_relative_history_fail
+      all_36_required_artifacts_must_exist_and_belong_to_this_run_id: true
+      run_manifest_inventory_entry_count: 34
+      artifact_hash_manifest_entry_count: 35
+      all_budget_resource_schema_identity_and_hash_checks_must_finish_before_completion_is_committed: true
+      terminal_state_may_be_written_provisionally_but_is_not_complete_until_both_manifests_verify: true
+      after_completion_commit_no_operation_that_can_change_artifacts_or_raise_a_release_failure_is_allowed: true
+
+release_stop_conditions:
+  - contract_not_explicitly_approved_for_execution
+  - contract_or_input_SHA256_mismatch
+  - environment_version_mismatch
+  - canonical_count_or_identity_mismatch
+  - undeclared_input_access
+  - predecessor_prediction_used_for_fit_calibration_or_selection
+  - estimator_calibration_or_assessment_date_overlap
+  - calibration_assessment_date_overlap
+  - preprocessing_numeric_hard_check_failure
+  - nonfinite_feature_coefficient_intercept_score_or_probability
+  - frozen_daily_base_estimator_reference_solver_or_calibrator_nonconvergence
+  - reference_solver_objective_mapping_failure
+  - frozen_daily_optimization_adequacy_failure_on_any_of_the_seven_origins
+  - frozen_daily_origin_exclusion_or_reweighting_after_an_adequacy_failure
+  - runtime_preflight_failure
+  - calibrated_probability_order_not_monotone_with_raw_score
+  - paired_configuration_or_prediction_identity_label_mismatch
+  - primary_BL1_BL2_alpha_or_eta0_mismatch
+  - fit_or_resource_budget_breach
+  - threadpool_limit_or_observation_failure
+  - search_grid_or_metric_read_order_violation
+
+release_stop_condition_scoping:
+  threadpool_limit_or_observation_failure:
+    applies_to: every_search_frozen_daily_primary_reference_calibrator_and_assessment_diagnostic_fit
+    action: fail_closed_and_forbid_the_affected_fit_output_from_any_scientific_use
+    terminal_state_after_active_release_boundary: implementation_or_governance_failure
+  search_configuration_objective_inadequacy:
+    per_configuration_action: mark_ineligible_and_continue_the_complete_frozen_grid
+    global_stop_only_if_no_required_optimization_adequate_configuration_remains: true
+    terminal_state_if_exhausted: search_optimization_adequacy_failure
+  search_reference_solver_nonconvergence:
+    per_dependent_configuration_action: mark_ineligible_and_continue_the_complete_frozen_grid
+    terminal_state_if_required_optimization_adequacy_set_is_exhausted: search_optimization_adequacy_failure
+  frozen_daily_objective_inadequacy:
+    action: fail_closed_before_metric_aggregation
+    terminal_state: frozen_daily_optimization_adequacy_failure
+  frozen_daily_component_nonconvergence:
+    components: [base_estimator, reference_solver, primary_calibrator]
+    action: fail_closed_before_metric_aggregation
+    terminal_state: frozen_daily_component_convergence_failure
+
+terminal_state_registry:
+  pass:
+    exit_code: 0
+    completion_scope: full
+    scientific_role: final_gate_success
+  implementation_or_governance_failure:
+    exit_code: 2
+    completion_scope: partial_failure
+    pre_active_release_refusal_creates_no_terminal_state_artifact: true
+    scientific_role: no_scientific_decision
+  absolute_probability_fail:
+    exit_code: 3
+    completion_scope: full
+    scientific_role: final_absolute_probability_gate_failure
+  absolute_probability_pass_but_relative_history_fail:
+    exit_code: 4
+    completion_scope: full
+    scientific_role: final_relative_history_gate_failure_after_absolute_probability_pass
+  search_optimization_adequacy_failure:
+    exit_code: 5
+    completion_scope: partial_failure
+    scientific_role: no_search_configuration_meets_the_registered_objective_adequacy_requirement
+    includes_exhaustion_caused_by_search_reference_solver_nonconvergence: true
+  frozen_daily_optimization_adequacy_failure:
+    exit_code: 6
+    completion_scope: partial_failure
+    scientific_role: all_components_converged_but_a_selected_frozen_daily_fit_fails_the_objective_adequacy_gate
+  search_probability_quality_failure:
+    exit_code: 7
+    completion_scope: partial_failure
+    scientific_role: optimization_and_component_eligible_BL1_configurations_exist_but_none_passes_the_search_absolute_probability_gate
+  search_primary_pair_gate_failure:
+    exit_code: 8
+    completion_scope: partial_failure
+    scientific_role: the_BL1_selected_same_configuration_BL2_is_component_and_optimization_eligible_but_fails_the_registered_primary_BL2_search_gate
+  search_component_convergence_failure:
+    exit_code: 9
+    completion_scope: partial_failure
+    scientific_role: required_search_candidates_are_exhausted_by_base_estimator_or_primary_calibrator_nonconvergence
+  frozen_daily_component_convergence_failure:
+    exit_code: 10
+    completion_scope: partial_failure
+    scientific_role: frozen_daily_base_estimator_reference_solver_or_primary_calibrator_nonconvergence
+scientific_annotation_registry:
+  annotation_only_not_terminal_states:
+    - case_A_static_baseline_is_informative
+    - case_B_static_baseline_is_uninformative_with_adequate_fit
+    - case_B2_static_baseline_is_significantly_worse_with_adequate_fit
+  may_not_appear_as_terminal_state_json_state: true
+
+final_decision_states:
+  pass:
+    requirements:
+      - reference_solver_and_all_selected_SGD_optimization_adequacy_gates_pass
+      - frozen_daily_optimization_adequacy_passes_on_all_seven_origins
+      - all_absolute_BL0_probability_quality_gates_pass
+      - same_alpha_eta0_primary_BL2_over_BL1_history_gate_passes
+      - all_required_artifacts_complete_and_hashed
+    advancement_effect: eligible_to_request_separate_Gold_and_next_stage_approval_only
+    automatic_Gold_sequence_or_validation_authorization: false
+  absolute_probability_pass_but_relative_history_fail:
+    interpretation: probability_pipeline_repaired_but_v003_does_not_retain_the_history_increment
+    advancement_effect: stop_and_review_at_baseline_layer
+  absolute_probability_fail:
+    interpretation: probability_pipeline_remains_unfit
+    advancement_effect: stop_at_baseline_layer
+  frozen_daily_optimization_adequacy_failure:
+    interpretation: the_selected_configuration_components_converge_but_objective_adequacy_does_not_hold_on_every_frozen_daily_origin
+    scientific_conclusion: none
+    advancement_effect: stop_before_metric_aggregation_and_require_a_successor_contract
+  search_optimization_adequacy_failure:
+    interpretation: no_optimization_adequate_BL1_configuration_or_no_optimization_adequate_primary_shared_pair_remains_due_to_objective_regret_or_reference_solver_nonconvergence
+    scientific_conclusion: none
+    excludes_probability_quality_only_ineligibility: true
+    advancement_effect: stop_before_daily_backtest_and_require_a_successor_contract
+  search_probability_quality_failure:
+    interpretation: search_optimization_and_component_eligibility_exists_but_no_BL1_configuration_passes_the_absolute_probability_search_gate
+    scientific_conclusion: the_frozen_search_probability_repair_gate_failed
+    advancement_effect: stop_before_daily_backtest
+  search_primary_pair_gate_failure:
+    interpretation: the_BL1_selected_same_configuration_BL2_fails_the_registered_primary_search_gate_after_component_and_optimization_eligibility
+    scientific_conclusion: no_valid_primary_same_configuration_history_increment_pipeline_for_daily_backtest
+    advancement_effect: stop_before_daily_backtest
+  search_component_convergence_failure:
+    interpretation: the_required_search_candidate_set_is_exhausted_by_base_estimator_or_primary_calibrator_nonconvergence
+    scientific_conclusion: none
+    advancement_effect: stop_before_daily_backtest_and_require_a_successor_contract
+  frozen_daily_component_convergence_failure:
+    interpretation: a_selected_frozen_daily_base_estimator_reference_solver_or_primary_calibrator_does_not_converge
+    scientific_conclusion: none
+    advancement_effect: stop_before_daily_metric_aggregation_and_require_a_successor_contract
+  implementation_or_governance_failure:
+    interpretation: no_scientific_gate_decision
+    advancement_effect: fix_under_a_versioned_or_exact_infrastructure_replacement_rule
+
+preregistered_outcome_interpretation:
+  registered_before_any_v003_fit_or_scientific_metric_read: true
+  registered_in: design_revision_002
+  post_hoc_reinterpretation_of_these_states: forbidden
+  layer_mapping:
+    revision_002_four_outcome_phrase_means: four_scientific_interpretation_families_A_through_D_not_four_exhaustive_process_exit_codes
+    case_A_case_B_and_case_B2:
+      role: secondary_static_baseline_discrimination_annotation
+      may_annotate_final_decision_states:
+        - pass
+        - absolute_probability_pass_but_relative_history_fail
+        - absolute_probability_fail
+      does_not_by_itself_choose_a_terminal_state: true
+    case_C_search_optimization_adequacy_failure:
+      maps_to_final_decision_state: search_optimization_adequacy_failure
+      reference_solver_nonconvergence_is_within_the_case_C_search_adequacy_family: true
+    search_component_convergence_failure:
+      scientific_interpretation_family: none
+      reason: the_registered_search_model_or_calibration_pipeline_did_not_leave_a_complete_candidate_set
+    case_D_frozen_daily_optimization_adequacy_failure:
+      maps_to_final_decision_state: frozen_daily_optimization_adequacy_failure
+    frozen_daily_component_convergence_failure:
+      scientific_interpretation_family: none
+      reason: no_complete_seven_day_probability_or_history_result_exists
+    implementation_or_governance_failure:
+      scientific_interpretation_family: none
+      reason: no_scientific_gate_decision_is_valid
+  case_A_static_baseline_is_informative:
+    trigger:
+      all_optimization_adequacy_gates_pass: true
+      BL1_minus_BL0_average_precision_direction: positive_with_bootstrap_CI_lower_above_zero
+    meaning: the_static_identity_and_content_features_carry_marginal_ranking_signal
+    permitted_claim: strict_user_history_adds_an_increment_on_top_of_an_effective_static_baseline
+    permitted_delta_wording: increment_over_static_baseline
+  case_B_static_baseline_is_uninformative_with_adequate_fit:
+    trigger:
+      all_optimization_adequacy_gates_pass: true
+      BL1_minus_BL0_average_precision_bootstrap_CI_includes_zero: true
+    meaning: the_fit_is_verified_adequate_and_the_static_one_hot_features_carry_no_marginal_ranking_signal_at_this_capacity
+    status: scientific_finding_not_a_defect
+    permitted_claim: under_this_specification_strict_user_history_is_the_principal_effective_information_source
+    forbidden_claim: increment_on_top_of_an_effective_static_baseline
+    forbidden_action:
+      - reopen_the_optimizer_search_on_the_basis_of_this_outcome
+      - expand_the_hyperparameter_grid_on_the_basis_of_this_outcome
+      - relax_the_objective_regret_tolerance_on_the_basis_of_this_outcome
+      - reclassify_this_outcome_as_an_implementation_failure
+    required_disclosure: BL1_minus_BL0_point_estimates_and_paired_user_cluster_bootstrap_intervals
+  case_B2_static_baseline_is_significantly_worse_with_adequate_fit:
+    interpretation_family: B
+    trigger:
+      all_optimization_adequacy_gates_pass: true
+      BL1_minus_BL0_average_precision_bootstrap_CI_upper_strictly_below_zero: true
+    meaning: the_static_one_hot_pipeline_is_significantly_worse_than_BL0_under_this_frozen_training_and_calibration_protocol
+    status: scientific_finding_distinct_from_no_detectable_increment
+    permitted_claim: the_frozen_static_pipeline_is_harmful_relative_to_BL0_under_this_specification
+    forbidden_claim:
+      - the_static_bundle_is_merely_not_distinguishable_from_BL0
+      - increment_on_top_of_an_effective_static_baseline
+    required_disclosure: BL1_minus_BL0_point_estimates_and_paired_user_cluster_bootstrap_intervals
+  case_C_search_optimization_adequacy_failure:
+    trigger:
+      no_required_search_configuration_remains_because_the_objective_regret_gate_or_reference_solver_convergence_requirement_failed: true
+      base_estimator_or_primary_calibrator_nonconvergence_only_maps_to_search_component_convergence_failure: true
+      probability_quality_only_ineligibility_does_not_trigger_case_C: true
+    meaning: the_required_SGD_objective_and_reference_optimization_adequacy_could_not_be_established_within_the_frozen_envelope
+    reference_solver_nonconvergence_is_in_scope: true
+    scientific_conclusion: none
+    permitted_next_step: successor_contract_with_a_declared_optimizer_change
+  case_D_frozen_daily_optimization_adequacy_failure:
+    trigger:
+      search_phase_adequacy_passed: true
+      any_of_the_seven_frozen_daily_origins_fails_the_regret_gate: true
+    meaning: the_frozen_configuration_does_not_transfer_across_all_daily_refits
+    scientific_conclusion: none
+    forbidden_action:
+      - exclude_the_failing_day_and_reaggregate
+      - reweight_days_to_recover_a_pooled_result
+      - report_pooled_daily_or_bootstrap_results_from_a_partially_adequate_seven_day_set
+    permitted_next_step: successor_contract_with_a_declared_optimizer_or_protocol_change
+
+claim_boundary:
+  permitted_if_passed:
+    - posthoc_train_only_probability_baseline_repair_under_the_v003_contract
+    - strict_user_history_retains_a_train_only_ranking_increment_at_the_same_alpha_eta0_if_the_primary_relative_gate_passes
+  required_disclosures:
+    - v003_was_designed_after_v002_metrics_were_observed
+    - all_v003_dates_are_developmental_source_train_dates
+    - probability_calibration_uses_the_previous_completed_train_date
+    - BL1_minus_BL0_discrimination_estimate_and_CI_whether_or_not_positive
+    - reference_solver_objective_gap_and_assessment_diagnostics
+    - all_four_same_configuration_BL2_minus_BL1_search_deltas
+    - fixed_lifetime_and_w10_rule_diagnostics
+  forbidden:
+    - use_secondary_independently_optimized_comparison_as_the_primary_H2_claim
+    - claim_BL1_static_discrimination_superiority_without_positive_paired_CI
+    - use_a_posthoc_ROC_AUC_0_70_threshold_as_a_gate
+    - preregistered_v002_probability_success_claim
+    - independent_confirmation_claim
+    - validation_generalization_claim
+    - restricted_test_or_random_performance_claim
+    - causal_or_online_business_lift_claim
+    - Gold_dataset_claim
+    - sequence_or_long_sequence_model_claim

@@ -1,0 +1,10 @@
+{
+  "bootstrap_multiplicity_sha256": "58dfb3565a899e6f7d5514071a1586cf672269bdc1c80d83dee73212a5f90e56",
+  "prediction_sha256": "48ae0793e554b1eb82d3ba75684915f471cf52f005039a6ad674075b4afffc31",
+  "streams": [
+    "BL0",
+    "ADAM_BL1",
+    "ADAM_BL2"
+  ],
+  "target_manifest_sha256": "20eb0c596482c93d91df71567332b3b5d06002f3cd04f3a914faa1fd128255b8"
+}
