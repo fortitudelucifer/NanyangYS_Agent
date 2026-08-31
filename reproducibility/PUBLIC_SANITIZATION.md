@@ -13,6 +13,8 @@ byte mirror. The following changes are intentional and non-scientific:
 - public Raw/Silver expected manifests use repository-relative paths; their
   sizes, row counts, timestamps, and SHA-256 values are copied from the formal
   evidence records and were rechecked against the local files.
+- the owner-supplied supplementary v013 preflight is published as a sanitized
+  relative metadata record; its machine-specific source path is omitted.
 
 No model metric, confidence interval, seed, split, row count, artifact digest,
 or scientific contract value was modified by this sanitization.

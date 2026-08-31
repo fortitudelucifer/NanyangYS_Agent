@@ -41,6 +41,21 @@ retraining_v012:
   final_temporal_replay_is_internal: true
 
 supplementary_learning_curve_v013:
-  fit_seed: 20260814
+  contract_sha256: 0e67c6d5388fba55157fd5f2af7d0681a55e280b96ebed492a9d3c77ac522c24
+  optimizer: GPU Adam
+  learning_rate: 0.03
+  training_steps: 100
+  l2_alpha: 0.0001
+  initialization: all_zeros
+  pytorch_deterministic_algorithms: true
+  cpu_fallback_allowed: false
+  bl1_bl2_share_training_configuration: true
+  adam_fit_seed: 20260814
+  a_training_window_seed: 20260814
+  b_user_cluster_sampling_seeds: [20260814, 20260815, 20260816]
   bootstrap_seed: 20260814
+  bootstrap_replicates: 2000
+  bootstrap_generator: numpy.PCG64
+  cluster: user
+  paired_sampling: BL1_and_BL2_share_users_and_bootstrap_weights_at_each_curve_point
   note: reused Validation rows; not independent confirmation and not a neural result
