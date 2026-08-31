@@ -77,6 +77,190 @@ Brier `-0.008907`; the paired user-cluster bootstrap 95% CI for AP was
 `[0.037661, 0.045054]`. These values support only a **Train-only preliminary
 statement**. They are not Validation, Gold, sealed-test, or release claims.
 
+## Experiment walkthrough
+
+This section presents the experiment as a compact, slide-like research story.
+The figures are transparent PNG exports generated from the versioned research
+artifacts. BL1 and BL2 are **sparse logistic-regression baselines**, not neural
+networks. Confidence intervals below are paired 95% user-cluster bootstrap
+intervals unless stated otherwise.
+
+### 1. Define the estimand before fitting a model
+
+The study first separates the population, exposure domain, temporal window,
+and evaluable row set. This prevents a gain measured on one scope from being
+silently generalized to another.
+
+<img src="docs/assets/experiment-story/P03_nested_scope.png" width="100%" alt="Nested evaluation scope from population to eligible rows">
+
+Feature families are then assigned a point-in-time availability rule. A field
+is usable only when it would have been available at the target event; post-hoc
+aggregates are not treated as historical features.
+
+<img src="docs/assets/experiment-story/P04_field_families.png" width="100%" alt="Feature families and point-in-time availability">
+
+**Takeaway:** the experiment contract fixes *who*, *when*, *which exposure
+domain*, and *which information* before model comparison.
+
+### 2. Audit the data before modeling
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/assets/experiment-story/P05a_missingness.png" width="100%" alt="Missingness audit"></td>
+    <td width="50%"><img src="docs/assets/experiment-story/P05b_duration_skew.png" width="100%" alt="Video duration distribution and skew"></td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Missingness is semantic.</b> Sentinel values and absent fields are audited by meaning rather than removed with a single global rule.</td>
+    <td valign="top"><b>Duration is strongly skewed.</b> The distribution view keeps the median, the 18-second reference, and the tail behavior visually distinct.</td>
+  </tr>
+</table>
+
+Raw rows are reconciled into governed analytical scopes instead of being
+treated as one undifferentiated table. The diagram makes the early-standard,
+late-standard, and random-exposure paths explicit.
+
+<img src="docs/assets/experiment-story/P06_row_reconciliation.png" width="100%" alt="Raw-to-Silver row reconciliation across exposure domains">
+
+Pooled discrimination and user-level discrimination answer different
+questions. Event-weighted user-gAUC is therefore reported alongside pooled
+metrics instead of being replaced by them.
+
+<img src="docs/assets/experiment-story/P07_pooled_vs_usergauc.png" width="100%" alt="Pooled metric versus event-weighted user-gAUC">
+
+**Takeaway:** missingness, heavy tails, row reconciliation, and metric
+aggregation are part of the scientific design—not cleanup details.
+
+### 3. Build leakage-safe features and diagnose optimization
+
+BL1 and BL2 are nested sparse logistic regressions: BL2 adds the audited
+long-sequence feature block while preserving the shared evaluation contract.
+This makes the BL2-minus-BL1 contrast interpretable.
+
+<img src="docs/assets/experiment-story/P08_nested_feature_blocks.png" width="100%" alt="Nested BL1 and BL2 feature blocks">
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/assets/experiment-story/P09a_sgd_prediction_shape.png" width="100%" alt="Ranking and prediction shape under SGD"></td>
+    <td width="50%"><img src="docs/assets/experiment-story/P09b_optimizer_adequacy.png" width="100%" alt="Optimizer adequacy comparison for SGD and Adam"></td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Prediction shape is a diagnostic.</b> Ranking behavior alone can hide an optimization problem in the probability scale.</td>
+    <td valign="top"><b>Optimizer adequacy is tested, not assumed.</b> Repeated Adam fits and the recorded SGD runs are shown against the pre-specified gate.</td>
+  </tr>
+</table>
+
+The frozen release configuration uses GPU Adam with the same fitting settings
+for BL1 and BL2; it does not change the model family.
+
+### 4. Freeze chronology, then compare domains
+
+The temporal audit separates the standard and random exposure domains and
+records exactly which slices were consumed at each stage.
+
+<img src="docs/assets/experiment-story/P10_data_timeline.png" width="100%" alt="Audited timeline for standard and random exposure data">
+
+The v010 random slice contains **43,027 rows**. The v011 and v012 ledgers each
+reconcile to the same 43,027-row, hash-pinned canonical slice. Their use is a
+**post-audit temporal replay**, not a new independent data confirmation.
+
+The primary comparison uses common 0–1 precision-recall axes and a separate
+forest panel for the paired user-cluster bootstrap effect estimates.
+
+<img src="docs/assets/experiment-story/P11_main_result.png" width="100%" alt="BL1 versus BL2 precision-recall curves and delta AP forest plot">
+
+| Evaluation domain | Rows | BL1 AP | BL2 AP | BL2 − BL1 ΔAP (95% CI) |
+|---|---:|---:|---:|---:|
+| Validation | 886,452 | 0.549387 | 0.585013 | +0.035626 [0.031302, 0.040028] |
+| Sealed | 4,431,299 | 0.537281 | 0.578308 | +0.040651 [0.036937, 0.044402] |
+| Random | 43,027 | 0.169530 | 0.196344 | +0.026188 [0.018296, 0.034667] |
+
+All three paired 95% intervals exclude zero. The precision-recall panels and
+the forest estimates use their explicitly declared row sets and should not be
+treated as interchangeable summaries.
+
+<img src="docs/assets/experiment-story/P11_robustness_strip_candidate.png" width="100%" alt="Training-user-fraction robustness strip with three seeds per fraction">
+
+The supplementary sensitivity check uses five discrete training-user
+fractions and three seeds per fraction. All 15 lower confidence bounds exceed
+zero. It reuses Validation rows, so it is **not independent confirmation** and
+does not introduce a neural-network result.
+
+### 5. Repair probability quality without changing ranking
+
+Monotone calibration changes the probability scale while preserving ranking.
+The held-out calibration evaluation contains **23,752 rows**, with a true
+event rate of **0.086856**.
+
+<img src="docs/assets/experiment-story/P12_calibration.png" width="100%" alt="Reliability diagram, probability shift, and calibration metrics">
+
+| Metric | Before | After | Interpretation |
+|---|---:|---:|---|
+| Log Loss | 0.512076 | 0.268939 | Δ = −0.243137 [−0.258633, −0.226836] |
+| Brier score | 0.169978 | 0.074827 | Δ = −0.095151 [−0.102219, −0.087959] |
+| ECE (20 bins) | 0.281335 | 0.006724 | Descriptive; no bootstrap CI claimed |
+| AP | 0.197730 | 0.197730 | Ranking invariant |
+| ROC-AUC | 0.727128 | 0.727128 | Ranking invariant |
+| event-gAUC | 0.623640 | 0.623640 | Ranking invariant |
+
+**Takeaway:** calibration substantially improves probability quality without
+being misreported as a ranking improvement.
+
+### 6. Replay the final model on a later internal window
+
+The final replay contains **12,399 rows from 857 users**. It is an internal
+temporal replay, not external independent validation.
+
+<img src="docs/assets/experiment-story/P13_replay_ranking.png" width="100%" alt="Temporal replay ranking results">
+
+The replay AP values are 0.187896 for the incumbent, 0.176476 for retrained
+BL1, and 0.204928 for retrained BL2. Against the incumbent, BL2 improves AP by
+**+0.017032 [0.005265, 0.031319]** and event-gAUC by
+**+0.024183 [0.007412, 0.041419]**. Against retrained BL1, the corresponding
+gains are **+0.028452 [0.015166, 0.041826]** and
+**+0.031612 [0.011644, 0.050783]**.
+
+<img src="docs/assets/experiment-story/P14_replay_probability.png" width="100%" alt="Temporal replay probability-quality improvements">
+
+Probability improvements are plotted rightward after sign-normalizing loss
+reductions. Log Loss is reduced by **0.003307 [0.001725, 0.005145]** versus the
+incumbent and **0.008684 [0.006119, 0.011364]** versus retrained BL1. Brier
+score is reduced by **0.000752 [0.000333, 0.001243]** and
+**0.001515 [0.000970, 0.002099]**, respectively.
+
+**Takeaway:** ranking and probability quality both improve on the internal
+replay, with paired intervals above zero after orienting every estimate so that
+improvement is to the right.
+
+### 7. Turn the result into an auditable Agent workflow
+
+The system keeps ranking and calibration as two coordinated but separately
+evaluated tracks.
+
+<img src="docs/assets/experiment-story/P15_rank_calibrate.png" width="100%" alt="Separate ranking and calibration tracks">
+
+The evidence boundary prevents a producer artifact from becoming a release
+claim merely because the file exists. Admission, claim review, and approval
+remain explicit gates.
+
+<img src="docs/assets/experiment-story/P16_evidence_boundary.png" width="100%" alt="Supported and blocked claims at the evidence boundary">
+
+The contribution is therefore a chain: governed data, point-in-time features,
+paired evaluation, probability repair, and a fail-closed Agent Harness.
+
+<img src="docs/assets/experiment-story/P17_contribution_chain.png" width="100%" alt="Experiment and Agent contribution chain">
+
+Future work must pass new gates rather than extend the present claim by prose.
+The next validation step is evaluation on other suitable public datasets, plus
+the additional release checks shown below; these are planned, not completed.
+
+<img src="docs/assets/experiment-story/P18_future_gates.png" width="100%" alt="Future evidence and release gates">
+
+**Overall conclusion:** BL2 provides a consistent ranking gain over BL1 across
+the audited evaluation domains, monotone calibration repairs probability
+quality, and the later window supports an internal temporal-replay result. The
+repository deliberately stops short of claiming external validation, online
+causal lift, or release approval.
+
 ## Run the Agent demo
 
 From the repository root on PowerShell:
@@ -194,6 +378,7 @@ NanyangYS_Agent/
 ├─ demo/
 │  ├─ DEMO_GUIDE.md
 │  └─ gpu_train_only_snapshot/       # compact historical summaries only
+├─ docs/assets/experiment-story/     # PNG figures used in this README
 ├─ reproducibility/                  # download, verification, environment, QA
 ├─ reference/
 │  ├─ evidence-summaries/            # compact v007-v012 direct summaries
