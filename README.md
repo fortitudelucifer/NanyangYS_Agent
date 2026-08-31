@@ -80,10 +80,13 @@ statement**. They are not Validation, Gold, sealed-test, or release claims.
 ## Experiment walkthrough
 
 This section presents the experiment as a compact, slide-like research story.
-The figures are transparent PNG exports generated from the versioned research
-artifacts. BL1 and BL2 are **sparse logistic-regression baselines**, not neural
-networks. Confidence intervals below are paired 95% user-cluster bootstrap
-intervals unless stated otherwise.
+The README uses white-background PNG exports so every chart remains legible in
+both light and dark GitHub themes. The original transparent exports are
+preserved in
+[`docs/assets/experiment-story/transparent-backup/`](docs/assets/experiment-story/transparent-backup/).
+BL1 and BL2 are **sparse logistic-regression baselines**, not neural networks.
+Confidence intervals below are paired 95% user-cluster bootstrap intervals
+unless stated otherwise.
 
 ### 1. Define the estimand before fitting a model
 
@@ -378,7 +381,8 @@ NanyangYS_Agent/
 ├─ demo/
 │  ├─ DEMO_GUIDE.md
 │  └─ gpu_train_only_snapshot/       # compact historical summaries only
-├─ docs/assets/experiment-story/     # PNG figures used in this README
+├─ docs/assets/experiment-story/     # white-background README figures
+│  └─ transparent-backup/            # original transparent PNG exports
 ├─ reproducibility/                  # download, verification, environment, QA
 ├─ reference/
 │  ├─ evidence-summaries/            # compact v007-v012 direct summaries
