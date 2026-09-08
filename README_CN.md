@@ -9,7 +9,7 @@
 
 <img src="docs/assets/experiment-story/P10_data_timeline.png" width="100%" alt="KuaiRand standard 与 random exposure 的审计实验时间线">
 
-**为什么重要：**这张时间线把 standard 与 random exposure 数据明确分开，保证目标窗口遵守时间顺序，并说明后续运行仅将哈希固定的 v010 random 片段用于 post-audit temporal replay，而不是新的独立确认。
+**为什么重要**这张时间线把 standard 与 random exposure 数据明确分开，保证目标窗口遵守时间顺序，并说明后续运行仅将哈希固定的 v010 random 片段用于 post-audit temporal replay，而不是新的独立确认。
 
 NanyangYS Agent 是一个面向**真实开源大厂视频播放数据**的轻量级、可审计的视频推荐 Agent 系统闭环。目标不是堆叠大模型，而是用更小巧、更精确的方式挖掘用户长时序视频偏好，并让系统在收到新的用户反馈后能够持续优化迭代。
 
