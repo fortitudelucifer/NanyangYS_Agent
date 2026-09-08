@@ -9,6 +9,15 @@
 > arrays, checkpoints, or model states. Download KuaiRand-1K from its official
 > source and use the versioned reproducibility workflow below.
 
+## Experiment at a glance
+
+<img src="docs/assets/experiment-story/P10_data_timeline.png" width="100%" alt="Audited KuaiRand experiment timeline across standard and random exposure domains">
+
+**Why this matters:** the timeline keeps standard and random exposure data
+separate, enforces time-ordered target windows, and shows that later runs reuse
+the hash-pinned v010 random slice only as post-audit temporal replay—not as new
+independent confirmation.
+
 ## Branch policy
 
 [`main`](https://github.com/fortitudelucifer/NanyangYS_Agent/tree/main) is the
