@@ -1,0 +1,38 @@
+# Python and Jupyter
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+.env.*
+
+# Local experiments and archives
+outputs/
+archive/
+repro/
+notebook_assets/
+mate/
+.research-guard/
+.devin/
+*.joblib
+*.pkl
+*.pickle
+*.zip
+*.7z
+*.tar
+*.tar.gz
+
+# Presentation/video production files
+*.mp4
+*.mov
+*.avi
+*.wav
+*.pptx
+
+# Local editor/OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+nul
