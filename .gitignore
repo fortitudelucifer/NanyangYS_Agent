@@ -9,6 +9,7 @@ venv/
 
 # Local experiments and archives
 outputs/
+figures/
 archive/
 repro/
 notebook_assets/
