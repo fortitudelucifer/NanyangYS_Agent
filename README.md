@@ -17,6 +17,8 @@
 separate, enforces time-ordered target windows, and shows that later runs reuse
 the hash-pinned v010 random slice only as post-audit temporal replay—not as new
 independent confirmation.
+(No independent holdout was locked before analysis of the random-exposure data,
+so v012 is an internal temporal replay.)
 
 ## Branch policy
 
